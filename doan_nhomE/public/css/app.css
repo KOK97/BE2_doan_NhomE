@@ -1935,7 +1935,7 @@ input::-ms-clear {
   position: relative; }
 
 .header--style-1 {
-  background-color: #ffffff; }
+  background-color: #b9f7ff; }
 
 .header--style-2 {
   background-color: #242424; }
@@ -1951,7 +1951,7 @@ input::-ms-clear {
 
 /* 6.1 Primary Nav */
 .primary-nav-wrapper--border {
-  border-bottom: 1px solid #f8f8f8; }
+  border-bottom: 1px solid #020202; }
 
 .primary-nav {
   display: -ms-flexbox;
