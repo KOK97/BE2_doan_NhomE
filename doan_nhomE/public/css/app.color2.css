@@ -1951,7 +1951,7 @@ input::-ms-clear {
 
 /* 6.1 Primary Nav */
 .primary-nav-wrapper--border {
-  border-bottom: 1px solid #f8f8f8; }
+  border-bottom: 1px solid #000000; }
 
 .primary-nav {
   display: -ms-flexbox;
