@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('wishlist', function (Blueprint $table) {
-            $table->bigInteger('product_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+            $table->integer('product_id');
+            $table->integer('user_id');
+            $table->timestamps();
             
-            // Kết nối foreign key với bảng products
-            $table->foreign('product_id')->references('id')->on('product');
+            // // Kết nối foreign key với bảng products
+            // $table->foreign('product_id')->references('id')->on('product');
             
-            // Kết nối foreign key với bảng users
-            $table->foreign('user_id')->references('id')->on('user');
+            // // Kết nối foreign key với bảng users
+            // $table->foreign('user_id')->references('id')->on('user');
         });
     }
 
