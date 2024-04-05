@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('wishlist', function (Blueprint $table) {
+        Schema::create('wishlist', function (Blueprint $table) {
             $table->integer('product_id');
             $table->integer('user_id');
             $table->timestamps();
-            
-            // // Kết nối foreign key với bảng products
-            // $table->foreign('product_id')->references('id')->on('product');
-            
-            // // Kết nối foreign key với bảng users
-            // $table->foreign('user_id')->references('id')->on('user');
         });
     }
 
