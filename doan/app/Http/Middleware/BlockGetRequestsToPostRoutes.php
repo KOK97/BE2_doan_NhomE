@@ -16,7 +16,7 @@ class BlockGetRequestsToPostRoutes
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->method() === 'GET') {
-            return redirect()->route('BookStore');
+            return redirect()->route('Book Store');
           }
           return $next($request);
     }
