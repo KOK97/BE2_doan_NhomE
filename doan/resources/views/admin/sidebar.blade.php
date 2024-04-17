@@ -13,7 +13,15 @@
               <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="fa-regular fa-user nav-icon"></i>
-                  <p>User Management</p>
+                  <p>User</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('category.index')}}" class="nav-link">
+                  <i class="fa-regular fa-user nav-icon"></i>
+                  <p>Category</p>
                 </a>
               </li>
             </ul>
