@@ -53,7 +53,7 @@ class AccountController extends Controller
 
     public function customRegister(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = Validator::make($request->all(), [
             'name' => 'required|string|max:20',
             'phone' => 'required|string|max:11',
             'email' => 'required|string|email|max:255|unique:users',
@@ -75,6 +75,31 @@ class AccountController extends Controller
             'password.min' => 'Your password must be at least 6 characters long.',
             'password.max' => 'Your password must not exceed 255 characters.',
         ]);
+
+        if ($validatedData->fails()) {
+
+            if ($validatedData->errors()->has('phone')) {
+                $errors['phone'] = $validatedData->errors()->first('phone');
+            }
+            if ($validatedData->errors()->has('email')) {
+                $errors['email'] = $validatedData->errors()->first('email');
+            }
+
+            if ($validatedData->errors()->has('name')) {
+                $errors['name'] = $validatedData->errors()->first('name');
+            }
+
+            if ($validatedData->errors()->has('password')) {
+                $errors['password'] = $validatedData->errors()->first('password');
+            }
+
+            if ($validatedData->errors()->has('avatar')) {
+                $errors['avatar'] = $validatedData->errors()->first('avatar');
+            }
+            return redirect()->route('auth.register')
+                ->withErrors($errors)
+                ->withInput();
+        }
 
         $user = new User();
         $user->name = $validatedData['name'];
