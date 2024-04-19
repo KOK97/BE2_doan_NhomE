@@ -7,15 +7,6 @@ Route::get('/', function () {
 });
 
 ### ADMIN ###
-Route::GET('/admin', function () {
-        return view('admin.index');
-})->name('admin.index');
-    //User
-    //Product
-    //Category
-    //Author
-    //...
-
 Route::prefix('/admin')->group(function () {
     Route::GET('/', function () {
         return view('admin.index');
