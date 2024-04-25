@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('layout');
-});
+Route::get('/', [HomeController::class, 'index'])->name('Book Store');
 
 ### ADMIN ###
 Route::GET('/admin', function () {
