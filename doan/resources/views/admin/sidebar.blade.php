@@ -15,6 +15,10 @@
                   <i class="fa-regular fa-user nav-icon"></i>
                   <p>User Management</p>
                 </a>
+                <a href="{{route('listProduct')}}" class="nav-link">
+                  <i class="fa-solid fa-box nav-icon"></i>
+                  <p>Product</p>
+                </a>
               </li>
             </ul>
           </li>

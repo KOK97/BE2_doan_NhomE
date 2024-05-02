@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 // use App\Http\Controllers\AccountController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('layout');
@@ -32,3 +33,14 @@ Route::prefix('/')->middleware('IsAdmin')->group(function () {
     Route::POST('/update-user/{user_id}', [UserController::class, 'update'])->name('user.update');
     Route::POST('/delete-user/{user_id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
+
+### PRODUCT ###
+Route::GET('/listproduct',[ProductController::class,'listProduct'])->name('listProduct');
+//create
+Route::GET('/createproduct',[ProductController::class,'showAddProduct'])->name('createProduct');
+Route::POST('/createproduct',[ProductController::class,'createProduct'])->name('saveProduct');
+//edit
+Route::GET('/editproducts/{id}',[ProductController::class,'getDataEdit'])->name('getdataedit');
+Route::PUT('/updateproducts/{id}', [ProductController::class,'updateProduct'])->name('updateProduct');
+//dele
+Route::DELETE('/destroyproduct/{id}', [ProductController::class,'destroy'])->name('destroyProduct');
