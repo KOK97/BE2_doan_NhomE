@@ -23,16 +23,22 @@ class CategoryController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'category_name' => 'required|unique:categories|max:255',
+            'category_description' => 'required|max:500',
         ], [
             'category_name.required' => 'Tên thể loại là bắt buộc.',
             'category_name.unique' => 'Tên thể loại đã tồn tại.',
             'category_name.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
+            'category_description.max' => 'Mô tả không được vượt quá 500 ký tự.',
         ]);
 
         if ($validatedData->fails()) {
 
             if ($validatedData->errors()->has('category_name')) {
                 $errors['category_name'] = $validatedData->errors()->first('category_name');
+            }
+
+            if ($validatedData->errors()->has('category_description')) {
+                $errors['category_description'] = $validatedData->errors()->first('category_description');
             }
 
             return redirect()->route('category.create')
@@ -63,14 +69,34 @@ class CategoryController extends Controller
             return back()->with('error', 'Category not found');
         }
 
-        $validatedData = $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+        $validatedData = Validator::make($request->all(), [
+            'category_name' => 'required|max:255',
+            'category_description' => 'required|max:500',
+        ], [
+            'category_name.required' => 'Tên thể loại là bắt buộc.',
+            'category_name.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
+            'category_description.max' => 'Mô tả không được vượt quá 500 ký tự.',
         ]);
 
-        $category->category_name = $validatedData['category_name'];
-        $category->save();
+        if ($validatedData->fails()) {
 
-        return redirect()->route('category.index')->with('success', 'Đã cập nhật thành công thể loại!');
+            if ($validatedData->errors()->has('category_name')) {
+                $errors['category_name'] = $validatedData->errors()->first('category_name');
+            }
+
+            if ($validatedData->errors()->has('category_description')) {
+                $errors['category_description'] = $validatedData->errors()->first('category_description');
+            }
+
+            return redirect()->route('category.create')
+                ->withErrors($errors)
+                ->withInput();
+        } else {
+            $category->category_name = $request->input('category_name');
+            $category->category_description = $request->input('category_description');
+            $category->save();
+            return redirect()->route('category.index')->with('success', 'Đã cập nhật thành công thể loại!');
+        }
     }
 
 
