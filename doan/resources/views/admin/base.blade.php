@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{asset('css/adminlte.min.css')}}">
+  <!-- Include Editor style. -->
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>@yield('title')</title>
 </head>
@@ -77,6 +79,12 @@
       <script src="{{asset('js/jquery.min.js')}}"></script>
       <script src="{{asset('js/adminlte.js')}}"></script>
       <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+      <!-- Include Editor JS files. -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+      <!-- Initialize the editor. -->
+      <script>
+        new FroalaEditor('textarea');
+      </script>
   </body>
 
 </html>

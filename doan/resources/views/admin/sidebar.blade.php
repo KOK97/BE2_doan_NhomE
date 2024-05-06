@@ -19,7 +19,7 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('category.index')}}" class="nav-link">
+                <a href="{{ route('category.index' )}}" class="nav-link">
                   <i class="fa-regular fa-user nav-icon"></i>
                   <p>Category</p>
                 </a>

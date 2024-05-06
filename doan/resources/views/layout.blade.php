@@ -165,7 +165,7 @@
                                         <a>TÁC GIẢ<i class="fas fa-angle-down u-s-m-l-6"></i></a>
                                         <!--====== Dropdown ======-->
                                         <span class="js-menu-toggle"></span>
-                                        <ul style="width:100px">
+                                        <ul style="width:200px">
                                             <li>
                                                 <a href="blog-left-sidebar.html">Tác giả 1</a>
                                             </li>
@@ -176,10 +176,10 @@
                                         <a>THỂ LOẠI<i class="fas fa-angle-down u-s-m-l-6"></i></a>
                                         <!--====== Dropdown ======-->
                                         <span class="js-menu-toggle"></span>
-                                        <ul style="width:150px">
-                                            @foreach ($categories as $index => $category)
-                                            <li>
-                                                <a href="blog-left-sidebar.html">{{ $category->category_name }}</a>
+                                        <ul id="category-columns" style="max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap;">
+                                            @foreach ($categories as $category)
+                                            <li class="column" style="width: 150px;">
+                                                <a href="#">{{ $category->category_name }}</a>
                                             </li>
                                             @endforeach
                                         </ul>

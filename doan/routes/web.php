@@ -15,6 +15,7 @@ Route::GET('/admin', function () {
 
 ### CATEGORY ###
 Route::GET('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::GET('/search', [CategoryController::class, 'search'])->name('category.search');
 Route::GET('/create-category', [CategoryController::class, 'create'])->name('category.create');
 Route::POST('/store-category', [CategoryController::class, 'store'])->name('category.store');
 Route::GET('/edit-category/{id}', [CategoryController::class, 'edit'])->name('category.edit');

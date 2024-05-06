@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +14,8 @@ class WishlistController extends Controller
 {
     public function index()
     {
+        $categories = Category::get();
+
         if (auth()->check()) {
             $products = DB::table('products')
                 ->join('product_favorites', 'product_favorites.product_id', '=', 'products.id')
@@ -23,7 +27,7 @@ class WishlistController extends Controller
         } else {
             $products = null;
         }
-        return view('wishlist.wishlist', compact('products'));
+        return view('wishlist.wishlist', compact('products', 'categories'));
     }
 
     public function WishlisttAdd(Request $request)

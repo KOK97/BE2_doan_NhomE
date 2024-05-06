@@ -4,7 +4,7 @@
 <!-- title -->
 @section('title') Trang quản lý @endsection
 <!-- slide -->
-@section('breadcrumb') Dashboard @endsection
+@section('breadcrumb') Category @endsection
 @section('content')
 <!-- Main content -->
 <section class="content">
