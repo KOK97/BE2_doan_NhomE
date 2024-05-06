@@ -3,7 +3,7 @@
 <!-- title -->
 @section('title') Trang Quan ly @endsection 
 <!-- breadcrumb --> 
-@section('breadcrumb') Cateory @endsection 
+@section('breadcrumb') User @endsection 
 <!-- content --> 
 @section('content')
 <div class="container">
