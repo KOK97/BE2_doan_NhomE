@@ -44,7 +44,7 @@
                         <label for="category_id">Danh Mục Sản Phẩm</label>
                         <select placeholder="ID Category" name="category_id" id="category_id"
                             class="form-control custom-select">
-                            <option selected disabled>Select one</option>
+                            <option disabled>Select one</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
 
@@ -62,7 +62,9 @@
                         <label for="sale_id">Giảm giá</label>
                         <select class ="form-control custom-select" name="sale_id">
                             <option selected disabled>Select one</option>
-                            <option value="1">10%</option>
+                            @foreach ($sales as $sale)
+                            <option value="{{$sale->id}}">{{$sale->discount}}%<p>-|{{$sale->sale_content}}|</p></option>
+                            @endforeach
                         </select>
 
                     </div>
@@ -75,10 +77,10 @@
 
                     </div>
                     <div class="form-group mb-3">
-                        <label for="publication_date">Ngày Xuất Bản</label>
-                        <input class ="form-control" name="publication_date" id="publication_date" type="date">
-                        @if ($errors->has('publication_date'))
-                            <span class="text-danger">{{ $errors->first('publication_date') }}</span>
+                        <label for="publishing_year">Năm Xuất Bản</label>
+                        <input class ="form-control" name="publishing_year" id="publishing_year" type="text">
+                        @if ($errors->has('publishing_year'))
+                            <span class="text-danger">{{ $errors->first('publishing_year') }}</span>
                         @endif
                     </div>
                     

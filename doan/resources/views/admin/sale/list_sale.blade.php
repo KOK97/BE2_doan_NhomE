@@ -6,7 +6,7 @@
 @endsection
 <!-- breadcrumb -->
 @section('breadcrumb')
-    Product
+    Sale
 @endsection
 <!-- content -->
 @section('content')
@@ -24,36 +24,23 @@
             <thead>
                 <tr>
                     <th scope="col">STT</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Reduced Price</th>
-                    <th>Price</th>
-                    <th>Author</th>
-                    <th>Publishing Year</th>
+                    <th>Discount</th>
+                    <th>Sale Content</th>
                 </tr>
             </thead>
             <tbody>
-                @if (isset($products))
-                    @foreach ($products as $key => $product)
+                @if (isset($sales))
+                    @foreach ($sales as $key => $sale)
                         <tr>
                             <th scope="row">{{ ++$key }}</th>
-                            <td>{{ $product->name }}</td>
+                            <td>{{ $sale->discount }}%</td>
+                            <td>{{ $sale->sale_content }}</td>
                             <td>
-                                <img src="{{ asset('images/products/' . $product->image) }}"
-                                    width="50px"class="img-thumbnail" alt="">
-                            </td>
-                            <td>{{ $product->description }}</td>
-                            <td>{{ $product->reduced_price }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->author_id }}</td>
-                            <td>{{ $product->publishing_year }}</td>
-                            <td>
-                                <form action="{{ route('destroyProduct', $product->id) }}" method="post">
+                                <form action="{{ route('destroySale', $sale->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('getdataeditProduct', $product->id) }}"
-                                        class="btn btn-sm btn-info"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('getdataeditSale', $sale->id) }}" class="btn btn-sm btn-info"><i
+                                            class="fa-solid fa-pen-to-square"></i></a>
                                     <button onclick="confirmDelete()" class="btn btn-sm btn-danger"><i
                                             class="fa-solid fa-trash"></i></button>
                                 </form>
@@ -61,13 +48,10 @@
                         </tr>
                     @endforeach
                 @endif
-
             </tbody>
         </table>
-        {{ $products->links('pagination::bootstrap-5') }}
-        <a href="{{ route('createProduct') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
-                class="fa-solid fa-box nav-icon"></i></a>
-       
+        <a href="{{ route('createSale') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
+                class="fa-solid fa-percent nav-icon"></i></a>
     </div>
     <script>
         function confirmDelete() {

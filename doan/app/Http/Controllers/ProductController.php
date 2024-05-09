@@ -15,12 +15,14 @@ class ProductController extends Controller
 {
     public function listProduct()
     {
-        $products = Product::all();
+        $products = Product::paginate(5);
+
         return view('admin.product.list_product', ['products' => $products]);
     }
     public function showAddProduct()
     {
-        return view('admin.product.create_product');
+        $sales = Sale::all();
+        return view('admin.product.create_product', ['sales' => $sales]);
     }
     public function createProduct(Request $request)
     {
@@ -29,7 +31,7 @@ class ProductController extends Controller
             'description' => 'required', 'min:1', 'max:255',
             'price' => 'required', 'numeric', 'min:1', 'max:9999999.99',
             'image' => 'required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048',
-            'publication_date' => 'required',
+            'publishing_year' => 'required', 'numeric', 'max:2024',
             'author_id' => 'required',
             'sale_id' => 'nullable',
             'category_id' => 'required',
@@ -45,7 +47,6 @@ class ProductController extends Controller
             'description.min' => 'Mô tả sản phẩm phải có ít nhất 1 ký tự',
             'description.max' => 'Mô tả sản phẩm không được vượt quá 255 ký tự',
 
-            'price.required' => 'Vui lòng nhập giá sản phẩm',
             'price.numeric' => 'Giá sản phẩm phải là một số hợp lệ',
             'price.min' => 'Giá sản phẩm phải ít nhất là 1',
             'price.max' => 'Giá sản phẩm không được vượt quá 9,999,999.99',
@@ -55,7 +56,9 @@ class ProductController extends Controller
             'image.mimes' => 'Hình ảnh sản phẩm phải ở một trong các định dạng sau: jpeg, png, jpg, gif',
             'image.max' => 'Dung lượng ảnh vượt quá giới hạn',
 
-            'publication_date.required ' => 'Vui lòng chọn ngày xuất bản',
+            'publishing_year.required ' => 'Vui lòng nhập năm xuất bản',
+            'publishing_year.numeric' => 'Năm xuất bản phải là số',
+            'publishing_year.max' => 'Năm xuất bản không được vượt quá năm hiện tại',
 
             'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
 
@@ -66,7 +69,7 @@ class ProductController extends Controller
             'description' => 'Mô tả sản phẩm',
             'price' => 'Giá sản phẩm',
             'image' => 'Ảnh sản phẩm',
-            'publication_date' => 'Ngày xuất bản',
+            'publishing_year' => 'Năm xuất bản',
             'sale_id' => 'Giảm giá',
             'author_id' => 'Tác giả',
             'category_id' => 'Danh mục sản phẩm',
@@ -82,6 +85,17 @@ class ProductController extends Controller
         $file->move($path, $fileName);
         $product = new Product($request->all());
         $product->image = $fileName;
+
+        $sale = Sale::findOrFail($request->sale_id);
+        if ($request->sale_id !== null) {
+            $reduce = ($request->price * $sale->discount) / 100;
+            $newReducedPrice = $request->price - $reduce;
+        } else {
+            $product->reduced_price = 0;
+        }
+        if ($product->reduced_price !== $newReducedPrice) {
+            $product->reduced_price = $newReducedPrice;
+        }
         $product->save();
         return redirect("listproduct")->with('success', 'Thêm Sản Phẩm Thành Công');
     }
@@ -94,12 +108,12 @@ class ProductController extends Controller
     }
     public function updateProduct(Request $request, $id)
     {
-        $required = [
-            'name' => ['required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50'],
-            'description' => ['required', 'min:1', 'max:255'],
-            'price' => ['required', 'numeric', 'min:1', 'max:9999999.99'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'publication_date' => 'required',
+        $requied = [
+            'name' => 'required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
+            'description' => 'required', 'min:1', 'max:255',
+            'price' => 'required', 'numeric', 'min:1', 'max:9999999.99',
+            'image' => 'nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048',
+            'publishing_year' => 'required', 'numeric', 'max:2024',
             'author_id' => 'required',
             'sale_id' => 'nullable',
             'category_id' => 'required',
@@ -124,8 +138,12 @@ class ProductController extends Controller
             'image.mimes' => 'Hình ảnh sản phẩm phải ở một trong các định dạng sau: jpeg, png, jpg, gif',
             'image.max' => 'Dung lượng ảnh vượt quá giới hạn',
 
-            'publication_date.required' => 'Vui lòng chọn ngày xuất bản',
-            'author_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
+            'publishing_year.required ' => 'Vui lòng nhập năm xuất bản',
+            'publishing_year.numeric' => 'Năm xuất bản phải là số',
+            'publishing_year.max' => 'Năm xuất bản không được vượt quá năm hiện tại',
+
+            'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
+
             'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
         ];
         $attribute = [
@@ -133,16 +151,17 @@ class ProductController extends Controller
             'description' => 'Mô tả sản phẩm',
             'price' => 'Giá sản phẩm',
             'image' => 'Ảnh sản phẩm',
-            'publication_date' => 'Ngày xuất bản',
+            'publishing_year' => 'Năm xuất bản',
             'sale_id' => 'Giảm giá',
             'author_id' => 'Tác giả',
             'category_id' => 'Danh mục sản phẩm',
         ];
-        $validator = Validator::make($request->all(), $required, $messages, $attribute);
+        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         $product = Product::findOrFail($id);
+
         if ($request->hasFile('image')) {
             if ($product->image) {
                 $oldImagePath = public_path('images/products/' . $product->image);
@@ -155,6 +174,16 @@ class ProductController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/products'), $imageName);
             $product->image = $imageName;
+        }
+        $sale = Sale::findOrFail($request->sale_id);
+        if ($request->sale_id !== null) {
+            $reduce = ($request->price * $sale->discount) / 100;
+            $newReducedPrice = $request->price - $reduce;
+        } else {
+            $product->reduced_price = 0;
+        }
+        if ($product->reduced_price !== $newReducedPrice) {
+            $product->reduced_price = $newReducedPrice;
         }
         $product->update($request->all());
         return redirect("listproduct")->with('success', 'Sửa Sản Phẩm Thành Công');

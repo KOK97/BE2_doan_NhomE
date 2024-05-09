@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -13,10 +14,20 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'reduced_price'.
         'image',
-        'publication_date',
+        'publishing_year',
         'sale_id',
         'author_id',
         'category_id',
     ];
+
+    public function sales():HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
+    public function author():HasMany
+    {
+        return $this->hasMany(Author::class);
+    }
 }

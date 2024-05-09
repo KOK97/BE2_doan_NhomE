@@ -15,9 +15,23 @@
                   <i class="fa-regular fa-user nav-icon"></i>
                   <p>User Management</p>
                 </a>
+              </li>
+              <li>
                 <a href="{{route('listProduct')}}" class="nav-link">
                   <i class="fa-solid fa-box nav-icon"></i>
                   <p>Product</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('listSale')}}" class="nav-link">
+                  <i class="fa-solid fa-percent nav-icon"></i>
+                  <p>Sale</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('listSale')}}" class="nav-link">
+                  <i class="fa-solid fa-at nav-icon"></i>
+                  <p>Author</p>
                 </a>
               </li>
             </ul>
