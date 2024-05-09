@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 
 class HomeController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $categories = Category::get();
-        return view('layout', compact('categories'));
+        $products = Product::get();
+        return view('product.index', compact('categories', 'products'));
     }
 }

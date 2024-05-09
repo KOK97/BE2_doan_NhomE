@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
     <title>Ludus - Books</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
     <!--====== Vendor Css ======-->
@@ -44,7 +44,6 @@
                         <!--====== Main Logo ======-->
 
                         <a class="main-logo" href="{{ url('/') }}">
-
                             <img src="images/logo/logo-1.png" alt=""></a>
                         <!--====== End - Main Logo ======-->
 
@@ -60,48 +59,36 @@
 
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation">
-
                             <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cogs" type="button"></button>
-
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
-
                                 <span class="ah-close">✕ Close</span>
-
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
                                     <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
-
                                         <a><i class="far fa-user-circle"></i></a>
-
                                         <!--====== Dropdown ======-->
-
                                         <span class="js-menu-toggle"></span>
                                         <ul style="width:120px">
+                                            @if(!auth()->check())
                                             <li>
-
-                                                <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
-
+                                                <a href=""><i class="fas fa-user-plus u-s-m-r-6"></i>
+                                                    <span>Log in</span></a>
+                                            </li>
+                                            <li>
+                                                <a href=""><i class="fas fa-lock u-s-m-r-6"></i>
+                                                    <span>Register</span></a>
+                                            </li>
+                                            @else
+                                            <li>
+                                                <a href=""><i class="fas fa-user-circle u-s-m-r-6"></i>
                                                     <span>Account</span></a>
                                             </li>
                                             <li>
-
-                                                <a href="signup.html"><i class="fas fa-user-plus u-s-m-r-6"></i>
-
-                                                    <span>Signup</span></a>
+                                                <a href=""><i class="fas fa-lock-open u-s-m-r-6"></i>
+                                                    <span>Log out</span></a>
                                             </li>
-                                            <li>
-
-                                                <a href="signin.html"><i class="fas fa-lock u-s-m-r-6"></i>
-
-                                                    <span>Signin</span></a>
-                                            </li>
-                                            <li>
-
-                                                <a href="signup.html"><i class="fas fa-lock-open u-s-m-r-6"></i>
-
-                                                    <span>Signout</span></a>
-                                            </li>
+                                            @endif
                                         </ul>
                                         <!--====== End - Dropdown ======-->
                                     </li>
@@ -565,6 +552,14 @@
 
     <!--====== App ======-->
     <script src='{{ asset("js/app.js") }}'></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var message = "{{ session('success') }}";
+            if (message) {
+                alert(message);
+            }
+        });
+    </script>
 </body>
 
 </html>

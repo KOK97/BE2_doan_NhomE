@@ -33,15 +33,26 @@ class WishlistController extends Controller
     public function add(Request $request)
     {
         $productId = $request->input('product_id');
-        $user = Auth::user();
+        $userId = 1; // Thay đổi thành Auth::id() nếu bạn muốn lấy ID của người dùng đã đăng nhập
+    
+        // Kiểm tra xem sản phẩm đã tồn tại trong danh sách mong muốn của người dùng hay chưa
+        $existingWishlistItem = Wishlist::where('user_id', $userId)
+                                        ->where('product_id', $productId)
+                                        ->first();
+    
+        // Nếu sản phẩm đã tồn tại trong danh sách mong muốn của người dùng
+        if ($existingWishlistItem) {
+            return redirect()->route('product.wishlist')->with('message', 'Sản phẩm đã tồn tại trong danh sách wishlist của bạn.');
+        }
+    
+        // Nếu sản phẩm chưa tồn tại trong danh sách mong muốn của người dùng, thêm vào
         $wishlist = new Wishlist([
             'product_id' => $productId,
-            'user_id' => $user->id,
+            'user_id' => $userId,
         ]);
-
+    
         $wishlist->save();
-
-        return redirect()->back();
+        return redirect()->route('Book Store')->with('success', 'Sản phẩm đã được thêm vào danh sách của bạn.');
     }
 
     public function destroy(Request $request)
