@@ -30,7 +30,7 @@ class WishlistController extends Controller
         return view('wishlist.wishlist', compact('products', 'categories'));
     }
 
-    public function WishlisttAdd(Request $request)
+    public function add(Request $request)
     {
         $productId = $request->input('product_id');
         $user = Auth::user();
@@ -44,7 +44,7 @@ class WishlistController extends Controller
         return redirect()->back();
     }
 
-    public function WishlistRemove(Request $request)
+    public function destroy(Request $request)
     {
         $wishlist = Wishlist::find($request->wishlist_id);
         if ($wishlist) {
