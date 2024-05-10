@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-// use App\Http\Controllers\AccountController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
@@ -11,15 +12,42 @@ use App\Http\Controllers\AuthorController;
 Route::get('/', function () {
     return view('content.home');
 })->name('Book Store');
+Route::get('/', [HomeController::class, 'index'])->name('Book Store');
+
+### ADMIN ###
+Route::GET('/admin', function () {
+    return view('admin.index');
+})->name('admin.index');
+
+
+### CATEGORY ###
+Route::GET('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::GET('/search-category', [CategoryController::class, 'search'])->name('category.search');
+Route::GET('/create-category', [CategoryController::class, 'create'])->name('category.create');
+Route::POST('/store-category', [CategoryController::class, 'store'])->name('category.store');
+Route::GET('/edit-category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+Route::POST('/update-category/{id}', [CategoryController::class, 'update'])->name('category.update');
+Route::POST('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+//Wishlist
+Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
+Route::POST('/add-wishlist', [WishlistController::class, 'add'])->name('product.wishlist.add');
+
+### USER ###
+Route::GET('/user', [UserController::class, 'index'])->name('user.index');
+Route::GET('/search-user', [UserController::class, 'search'])->name('user.search');
+Route::GET('/create-user', [UserController::class, 'create'])->name('user.create');
+Route::POST('/store-user', [UserController::class, 'store'])->name('user.store');
+Route::GET('/edit-user/{user_id}', [UserController::class, 'edit'])->name('user.edit');
+Route::POST('/update-user/{user_id}', [UserController::class, 'update'])->name('user.update');
+Route::POST('/delete-user/{user_id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 //Account
 //Login
-Route::GET('/login', function () {
-    return view('auth.login');
-})->name('auth.login');
+// Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
 // Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
-//Register
-Route::GET('/register')->name('auth.register');
+// //Register
+// Route::GET('/register', [AccountController::class, 'register'])->name('auth.register');
 // Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
 //Log out
 // Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
@@ -70,3 +98,4 @@ Route::PUT('/updateauthor/{id}', [AuthorController::class,'updateAuthor'])->name
 //dele
 Route::DELETE('/destroyauthor/{id}', [AuthorController::class,'destroyAuthor'])->name('destroyAuthor');
 
+// Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');

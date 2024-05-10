@@ -5635,9 +5635,11 @@ input::-ms-clear {
     padding: 0 0 10px;
     opacity: 1;
     visibility: visible;
-    display: none; }
+    display: flex;
+    flex-wrap: wrap; }
     .has-dropdown > ul > li {
-      padding: 0; }
+      padding: 0;
+      width: 50%; }
       .has-dropdown > ul > li > a {
         display: block; }
   .ah-list > li > ul > li > a {

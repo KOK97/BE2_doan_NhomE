@@ -23,6 +23,12 @@
                 </a>
               </li>
               <li>
+                <a href="{{ route('category.index' )}}" class="nav-link">
+                  <i class="fa-solid fa-list nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+              <li>
                 <a href="{{route('listSale')}}" class="nav-link">
                   <i class="fa-solid fa-percent nav-icon"></i>
                   <p>Sale</p>
