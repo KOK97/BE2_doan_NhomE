@@ -72,11 +72,11 @@
                                         <ul style="width:120px">
                                             @if(!auth()->check())
                                             <li>
-                                                <a href=""><i class="fas fa-user-plus u-s-m-r-6"></i>
+                                                <a href="{{route('auth.login')}}"><i class="fas fa-user-plus u-s-m-r-6"></i>
                                                     <span>Log in</span></a>
                                             </li>
                                             <li>
-                                                <a href=""><i class="fas fa-lock u-s-m-r-6"></i>
+                                                <a href="{{route('auth.register')}}"><i class="fas fa-lock u-s-m-r-6"></i>
                                                     <span>Register</span></a>
                                             </li>
                                             @else
@@ -85,7 +85,7 @@
                                                     <span>Account</span></a>
                                             </li>
                                             <li>
-                                                <a href=""><i class="fas fa-lock-open u-s-m-r-6"></i>
+                                                <a href="{{route('auth.logout')}}"><i class="fas fa-lock-open u-s-m-r-6"></i>
                                                     <span>Log out</span></a>
                                             </li>
                                             @endif

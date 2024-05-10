@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
             'category_id' => '1',
         ]);
 
-        for ($i = 1; $i < 4; $i++) {
+        for ($i = 1; $i < 20; $i++) {
             Product::factory()->create([
                 'name' => 'Product' . $i,
                 'price' => '100' . $i,

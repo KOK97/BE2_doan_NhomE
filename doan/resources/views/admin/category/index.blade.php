@@ -44,7 +44,7 @@
             @if(isset($categories) && count($categories) > 0)
             @foreach($categories as $key => $category)
             <tr>
-                <th scope="row" style="text-align: center;">{{ ++$key }}</th>
+                <th scope="row" style="text-align: center;">{{ $startIndex + $key }}</th>
                 <td><a href="{{ route('category.edit', $category->id) }}" style="color: black;">{{ $category->category_name }}</a></td>
                 <td>
                     @if (strlen(strip_tags($category->category_description)) > 100)

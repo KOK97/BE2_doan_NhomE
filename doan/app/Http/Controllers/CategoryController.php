@@ -10,8 +10,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-        return view('admin.category.index', compact('categories'));
+        $categories = Category::orderBy('created_at', 'desc')->paginate(5)->withPath(route('category.index'));
+        $currentPage = $categories->currentPage();
+        $startIndex = ($currentPage - 1) * $categories->perPage() + 1;
+        return view('admin.category.index', compact('categories', 'startIndex'));
     }
 
     public function search(Request $request)
@@ -23,12 +25,14 @@ class CategoryController extends Controller
             $categories = $categories->where('category_name', 'like', '%' . $searchTerm . '%');
         }
         
-        $categories = $categories->paginate(5); // Phân trang
+        $categories = $categories->paginate(5)->withPath(route('category.index'));
+        $currentPage = $categories->currentPage();
+        $startIndex = ($currentPage - 1) * $categories->perPage() + 1;
     
         if ($categories->isEmpty()) {
             return redirect()->route('category.index')->with('message', 'Không tìm thấy !!!');
         } else {
-            return view('admin.category.index', compact('categories'));
+            return view('admin.category.index', compact('categories','startIndex'));
         }
     }
 

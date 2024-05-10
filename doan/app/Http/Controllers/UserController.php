@@ -11,9 +11,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(5);
-        return view('admin.user.index', compact('users'));
+        $users = User::paginate(5)->withPath(route('user.index'));
+        $currentPage = $users->currentPage();
+        $startIndex = ($currentPage - 1) * $users->perPage() + 1;
+        return view('admin.user.index', compact('users', 'startIndex'));
     }
+    
 
     public function search(Request $request)
     {
@@ -24,12 +27,14 @@ class UserController extends Controller
             $users = $users->where('name', 'like', '%' . $searchTerm . '%');
         }
         
-        $users = $users->paginate(5); // Phân trang
+        $users = $users->paginate(5)->withPath(route('user.index'));
+        $currentPage = $users->currentPage();
+        $startIndex = ($currentPage - 1) * $users->perPage() + 1;
     
         if ($users->isEmpty()) {
             return redirect()->route('user.index')->with('message', 'Không tìm thấy !!!');
         } else {
-            return view('admin.user.index', compact('users'));
+            return view('admin.user.index', compact('users','startIndex'));
         }
     }
 

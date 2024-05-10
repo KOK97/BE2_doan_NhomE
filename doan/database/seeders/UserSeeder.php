@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin1'),
             'role' => 'admin',
         ]);
-        for ($i=1; $i < 10; $i++) { 
+        for ($i=1; $i < 20; $i++) { 
             User::factory()->create([
                 'name' => 'customer' . $i,
                 'email' => 'customer'. $i . '@gmail.com',
