@@ -11,8 +11,26 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(5);
         return view('admin.user.index', compact('users'));
+    }
+
+    public function search(Request $request)
+    {
+        $users = User::orderBy('created_at', 'desc');
+    
+        if ($request->has('search')) { // Kiểm tra xem có tham số search không
+            $searchTerm = $request->input('search');
+            $users = $users->where('name', 'like', '%' . $searchTerm . '%');
+        }
+        
+        $users = $users->paginate(5); // Phân trang
+    
+        if ($users->isEmpty()) {
+            return redirect()->route('user.index')->with('message', 'Không tìm thấy !!!');
+        } else {
+            return view('admin.user.index', compact('users'));
+        }
     }
 
     public function create()
@@ -26,6 +44,7 @@ class UserController extends Controller
             'name' => 'required|string|max:20',
             'phone' => 'required|string|max:11',
             'email' => 'required|string|email|max:255|unique:users',
+            'address' => 'required|string|max:255',
             'avatar' => 'nullable|image|max:2048',
             'password' => 'required|string|min:6,max:255',
             'role' => 'required|string',
@@ -35,6 +54,7 @@ class UserController extends Controller
         $user->name = $validatedData['name'];
         $user->phone = $validatedData['phone'];
         $user->email = $validatedData['email'];
+        $user->address = $validatedData['address'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
         //avatar
@@ -50,7 +70,7 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('user.index')->with('success', 'Thêm thành công người dùng!');
     }
-    public function destroy(Request $request, $user_id)
+    public function destroy($user_id)
     {
         $user = User::find($user_id);
         if (!$user) {
@@ -78,6 +98,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user_id,
+            'address' => 'required|string|max:255',
             'avatar' => 'nullable|image|max:2048',
             'password' => 'required|string|min:8,max:255',
             'role' => 'required|string',
@@ -98,6 +119,7 @@ class UserController extends Controller
         $user->name = $validatedData['name'];
         $user->phone = $validatedData['phone'];
         $user->email = $validatedData['email'];
+        $user->address = $validatedData['address'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
         $user->save();

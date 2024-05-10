@@ -56,18 +56,18 @@ class ProductSeeder extends Seeder
             'category_id' => '1',
         ]);
 
-       for ($i=1; $i < 4; $i++) { 
-        Product::factory()->create([
-            'name' => 'Product'.$i,
-            'price' => '100'.$i,
-            'reduced_price' => ''.$i,
-            'description' => 'description for product '.$i,
-            'image' => 'TheEndofMoney.jpg',
-            'publishing_year' => '2013',
-            'sale_id' => ''.$i,
-            'author_id' => '1',
-            'category_id' => '1',
-        ]);
-       }
+        for ($i = 1; $i < 4; $i++) {
+            Product::factory()->create([
+                'name' => 'Product' . $i,
+                'price' => '100' . $i,
+                'reduced_price' => '' . $i,
+                'description' => 'description for product ' . $i,
+                'image' => 'TheEndofMoney.jpg',
+                'publishing_year' => '2013',
+                'sale_id' => '' . $i,
+                'author_id' => '1',
+                'category_id' => '1',
+            ]);
+        }
     }
 }

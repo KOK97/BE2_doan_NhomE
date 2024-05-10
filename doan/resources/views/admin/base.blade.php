@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{asset('css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="{{asset('css/admin.css')}}">
   <!-- Include Editor style. -->
   <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -38,12 +39,12 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
+        @if(isset($users))
         <a href="{{route('admin.index')}}" class="brand-link">
-          @if(isset($users))
           <img src="{{ asset('images/users/' . $user->avatar) }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
           <span class="brand-text font-weight-light">{{$user->name}}</span>
-          @endif
         </a>
+        @endif
 
         <!-- Sidebar -->
         <div class="sidebar">

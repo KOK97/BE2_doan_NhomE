@@ -17,16 +17,18 @@ class CategoryController extends Controller
     public function search(Request $request)
     {
         $categories = Category::orderBy('created_at', 'desc');
+    
         if ($request->has('search')) { // Kiểm tra xem có tham số search không
             $searchTerm = $request->input('search');
-            $categories = $categories->where('category_name', 'like', '%' . $searchTerm . '%')->get();
-            if ($categories->isEmpty()) {
-                return redirect()->route('category.index')->with('message', 'Không tìm thấy !!!');
-            } else {
-                return view('admin.category.index', compact('categories'));
-            }
+            $categories = $categories->where('category_name', 'like', '%' . $searchTerm . '%');
+        }
+        
+        $categories = $categories->paginate(5); // Phân trang
+    
+        if ($categories->isEmpty()) {
+            return redirect()->route('category.index')->with('message', 'Không tìm thấy !!!');
         } else {
-            return redirect()->route('category.index');
+            return view('admin.category.index', compact('categories'));
         }
     }
 
