@@ -22,7 +22,8 @@ class ProductController extends Controller
     public function showAddProduct()
     {
         $sales = Sale::all();
-        return view('admin.product.create_product', ['sales' => $sales]);
+        $authors = Author::all();
+        return view('admin.product.create_product', ['sales' => $sales,'authors'=>$authors]);
     }
     public function createProduct(Request $request)
     {

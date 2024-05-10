@@ -5,9 +5,11 @@ use App\Http\Controllers\AdminController;
 // use App\Http\Controllers\AccountController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\AuthorController;
 
 Route::get('/', function () {
-    return view('layout');
+    return view('content.home');
 })->name('Book Store');
 
 //Account
@@ -34,13 +36,37 @@ Route::prefix('/')->middleware('IsAdmin')->group(function () {
     Route::POST('/delete-user/{user_id}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
+
 ### PRODUCT ###
 Route::GET('/listproduct',[ProductController::class,'listProduct'])->name('listProduct');
 //create
 Route::GET('/createproduct',[ProductController::class,'showAddProduct'])->name('createProduct');
 Route::POST('/createproduct',[ProductController::class,'createProduct'])->name('saveProduct');
 //edit
-Route::GET('/editproducts/{id}',[ProductController::class,'getDataEdit'])->name('getdataedit');
+Route::GET('/editproducts/{id}',[ProductController::class,'getDataEdit'])->name('getdataeditProduct');
 Route::PUT('/updateproducts/{id}', [ProductController::class,'updateProduct'])->name('updateProduct');
 //dele
 Route::DELETE('/destroyproduct/{id}', [ProductController::class,'destroy'])->name('destroyProduct');
+
+### SALE ###
+Route::GET('/listsale',[SaleController::class,'listSale'])->name('listSale');
+//create
+Route::GET('/createsale',[SaleController::class,'showAddSale'])->name('createSale');
+Route::POST('/createsale',[SaleController::class,'createSale'])->name('saveSale');
+//edit
+Route::GET('/editsale/{id}',[SaleController::class,'getDataEdit'])->name('getdataeditSale');
+Route::PUT('/updatesale/{id}', [SaleController::class,'updateSale'])->name('updateSale');
+//dele
+Route::DELETE('/destroysale/{id}', [SaleController::class,'destroySale'])->name('destroySale');
+
+### AUTHOR ###
+Route::GET('/listauthor',[AuthorController::class,'listAuthor'])->name('listAuthor');
+//create
+Route::GET('/createauthor',[AuthorController::class,'showAddAuthor'])->name('createAuthor');
+Route::POST('/createauthor',[AuthorController::class,'createAuthor'])->name('saveAuthor');
+//edit
+Route::GET('/editauthor/{id}',[AuthorController::class,'getDataEditAuthor'])->name('getDataEditAuthor');
+Route::PUT('/updateauthor/{id}', [AuthorController::class,'updateAuthor'])->name('updateAuthor');
+//dele
+Route::DELETE('/destroyauthor/{id}', [AuthorController::class,'destroyAuthor'])->name('destroyAuthor');
+

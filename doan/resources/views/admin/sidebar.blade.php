@@ -29,7 +29,7 @@
                 </a>
               </li>
               <li>
-                <a href="{{route('listSale')}}" class="nav-link">
+                <a href="{{route('listAuthor')}}" class="nav-link">
                   <i class="fa-solid fa-at nav-icon"></i>
                   <p>Author</p>
                 </a>

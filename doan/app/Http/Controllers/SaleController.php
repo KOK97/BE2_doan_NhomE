@@ -10,7 +10,7 @@ class SaleController extends Controller
 {
     public function listSale()
     {
-        $sales = Sale::all();
+        $sales = Sale::paginate(5);
         return view('admin.sale.list_sale', ['sales' => $sales]);
     }
     public function showAddSale()

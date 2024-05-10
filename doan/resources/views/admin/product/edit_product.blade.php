@@ -66,11 +66,10 @@
                         <label for="author_id">Tác Giả</label>
                         <select class ="form-control custom-select" name="author_id">
                             <option selected disabled>Select one</option>
-                            <option value="1">me</option>
-                            @foreach ($authors as $auth)
-                                <option value="{{ $auth->id }}"
-                                    {{ $auth->id == $product->author_id ? 'selected' : '' }}>
-                                    {{ $auth->auth_name }}</option>
+                            @foreach ($authors as $author)
+                                <option value="{{ $author->id }}"
+                                    {{ $author->id == $product->author_id ? 'selected' : '' }}>
+                                    {{ $author->author_name }}</option>
                             @endforeach
                         </select>
 

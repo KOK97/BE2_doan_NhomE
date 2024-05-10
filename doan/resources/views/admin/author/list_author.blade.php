@@ -6,7 +6,7 @@
 @endsection
 <!-- breadcrumb -->
 @section('breadcrumb')
-    Sale
+    Author
 @endsection
 <!-- content -->
 @section('content')
@@ -24,25 +24,31 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Mức giảm giá</th>
-                    <th scope="col">Nội dung giảm giá</th>
+                    <th scope="col">Tên tác giả</th>
+                    <th scope="col">Bút danh tác giả</th>
+                    <th scope="col">Năm sinh tác giả</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if (isset($sales) && count($sales) > 0)
-                    @foreach ($sales as $key => $sale)
+                @if (isset($authors) && count($authors) > 0)
+                    @foreach ($authors as $key => $author)
                         <tr>
                             <th scope="row">{{ ++$key }}</th>
-                            <td><a href="{{ route('getdataeditSale', $sale->id) }}"
-                                    style="color: black;">{{ $sale->discount }}%</a>
+                            <td><a href="{{ route('getDataEditAuthor', $author->id) }}"
+                                    style="color: black;">{{ $author->author_name }}</a>
                             </td>
-                            <td>{{ $sale->sale_content }}</td>
+                            <td style="text-align: center">
+                                {{ $author->pseudonym }}
+                            </td>
+                            <td style="text-align: center">
+                                {{ $author->year_of_birth }}
+                            </td>
                             <td>
-                                <form action="{{ route('destroySale', $sale->id) }}" method="post">
+                                <form action="{{ route('destroyAuthor', $author->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('getdataeditSale', $sale->id) }}" class="btn btn-sm btn-info"><i
+                                    <a href="{{ route('getDataEditAuthor', $author->id) }}" class="btn btn-sm btn-info"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
                                     <button onclick="confirmDelete()" class="btn btn-sm btn-danger"><i
                                             class="fa-solid fa-trash"></i></button>
@@ -52,17 +58,17 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="4">Không tìm thấy giảm giá nào trong cơ sở dữ liệu</td>
+                        <td colspan="5">Không tìm thấy tác giả nào trong cơ sở dữ liệu</td>
                     </tr>
                 @endif
             </tbody>
         </table>
         <div class="pagination-wrap">
-            {{ $sales->links('pagination::bootstrap-5') }}
+            {{ $authors->links('pagination::bootstrap-5') }}
         </div>
-        <a href="{{ route('createSale') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
-                class="fa-solid fa-percent nav-icon"></i></a>
-
+        <a href="{{ route('createAuthor') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
+                class="fa-solid fa-at nav-icon"></i></a>
+       
     </div>
     <script>
         function confirmDelete() {

@@ -72,7 +72,9 @@
                         <label for="author_id">Tác Giả</label>
                         <select class ="form-control custom-select" name="author_id">
                             <option selected disabled>Select one</option>
-                            <option value="1">me</option>
+                            @foreach ($authors as $author)
+                            <option value="{{$author->id}}">{{$author->author_name}}<p>-|{{$author->pseudonym}}|</p></option>
+                            @endforeach
                         </select>
 
                     </div>

@@ -20,51 +20,72 @@
         @if (session('update'))
             <div id="alert" class="alert alert-info" role="alert">{{ session('update') }}</div>
         @endif
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-hover" style="text-align: center">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">STT</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Reduced Price</th>
-                    <th>Price</th>
-                    <th>Author</th>
-                    <th>Publishing Year</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Giá ưu đãi</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Tác giả</th>
+                    <th scope="col">Ngày xuất bản</th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @if (isset($products))
+                @if (isset($products) && count($products) > 0)
                     @foreach ($products as $key => $product)
                         <tr>
                             <th scope="row">{{ ++$key }}</th>
-                            <td>{{ $product->name }}</td>
-                            <td>
-                                <img src="{{ asset('images/products/' . $product->image) }}"
-                                    width="50px"class="img-thumbnail" alt="">
+                            <td><a href="{{ route('getdataeditProduct', $product->id) }}"
+                                    style="color: black;">{{ $product->name }}</a>
                             </td>
-                            <td>{{ $product->description }}</td>
+                            <td>
+                                <img class="img-fluid" src="{{ asset('images/products/' . $product->image) }}"
+                                width="50px"class="img-thumbnail" alt="">
+                            </td>
+                            <td>
+                                @if (strlen(strip_tags($product->description)) > 100)
+                                <?php
+                                $truncatedDescription = substr(strip_tags($product->description), 0, 100);
+                                $lastSpacePos = strrpos($truncatedDescription, ' ');
+                                echo substr($truncatedDescription, 0, $lastSpacePos) . ' ...';
+                                ?>
+                                @else
+                                {{ strip_tags($product->description) }}
+                                @endif
+                            
+                            </td>
                             <td>{{ $product->reduced_price }}</td>
                             <td>{{ $product->price }}</td>
-                            <td>{{ $product->author_id }}</td>
+                            <td>{{ $product->author->author_name }}</td>
                             <td>{{ $product->publishing_year }}</td>
+                            <td>{{ $product->category_id }}</td>
                             <td>
                                 <form action="{{ route('destroyProduct', $product->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('getdataeditProduct', $product->id) }}"
-                                        class="btn btn-sm btn-info"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('getdataeditProduct', $product->id) }}" class="btn btn-sm btn-info"><i
+                                            class="fa-solid fa-pen-to-square"></i></a>
                                     <button onclick="confirmDelete()" class="btn btn-sm btn-danger"><i
                                             class="fa-solid fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
+                @else
+                    <tr>
+                        <td colspan="10">Không tìm thấy sản phẩm nào trong cơ sở dữ liệu</td>
+                    </tr>
                 @endif
-
             </tbody>
         </table>
-        {{ $products->links('pagination::bootstrap-5') }}
+        <div class="pagination-wrap">
+            {{ $products->links('pagination::bootstrap-5') }}
+        </div>
         <a href="{{ route('createProduct') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
                 class="fa-solid fa-box nav-icon"></i></a>
        
