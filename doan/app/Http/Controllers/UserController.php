@@ -49,7 +49,6 @@ class UserController extends Controller
                 'name' => 'required|string|max:20',
                 'phone' => 'required|string|max:11',
                 'email' => 'required|string|email|max:50|unique:users',
-                'address' => 'required|string|max:255',
                 'avatar' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif',
                 'password' => 'required|string|min:6|max:50',
                 'role' => 'required|string',
@@ -63,8 +62,6 @@ class UserController extends Controller
                 'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
                 'email.max' => 'Địa chỉ email của bạn không được vượt quá 50 ký tự.',
                 'email.unique' => 'Địa chỉ email này đã được đăng ký.',
-                'address.required' => 'Vui lòng cung cấp địa chỉ của bạn.',
-                'address.max' => 'Địa chỉ của bạn không được vượt quá 255 ký tự.',
                 'avatar.image' => 'Ảnh đại diện phải là một tệp hình ảnh.',
                 'avatar.max' => 'Ảnh đại diện không được lớn hơn 2MB.',
                 'avatar.mimes' => 'Ảnh đại diện phải là tệp JPEG, PNG, JPG, hoặc GIF.',
@@ -122,7 +119,6 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user_id,
-            'address' => 'required|string|max:255',
             'avatar' => 'nullable|image|max:2048',
             'password' => 'required|string|min:8,max:255',
             'role' => 'required|string',
@@ -143,7 +139,6 @@ class UserController extends Controller
         $user->name = $validatedData['name'];
         $user->phone = $validatedData['phone'];
         $user->email = $validatedData['email'];
-        $user->address = $validatedData['address'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
         $user->save();

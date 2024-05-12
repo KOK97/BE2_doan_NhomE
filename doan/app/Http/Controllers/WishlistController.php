@@ -17,12 +17,13 @@ class WishlistController extends Controller
         $categories = Category::get();
 
         if (auth()->check()) {
-            $products = DB::table('products')
-                ->join('product_favorites', 'product_favorites.product_id', '=', 'products.id')
-                ->leftJoin('product_images', 'products.id', '=', 'product_images.product_id')
-                ->groupBy('products.id', 'products.productName', 'products.productPrice')
-                ->select('products.id', 'products.productName', 'products.productPrice', DB::raw('MIN(product_images.product_imageName) AS product_imageName'))
-                ->where('product_favorites.user_id', '=', auth()->user()->id)
+            // Lấy ID của người dùng hiện tại
+            $userId = Auth::id();
+
+            // Lấy tất cả các sản phẩm trong danh sách mong muốn của người dùng
+            $products = Wishlist::where('user_id', $userId)
+                ->join('products', 'wishlist.product_id', '=', 'products.id')
+                ->select('products.*')
                 ->get();
         } else {
             $products = null;
@@ -34,23 +35,23 @@ class WishlistController extends Controller
     {
         $productId = $request->input('product_id');
         $userId = 1; // Thay đổi thành Auth::id() nếu bạn muốn lấy ID của người dùng đã đăng nhập
-    
+
         // Kiểm tra xem sản phẩm đã tồn tại trong danh sách mong muốn của người dùng hay chưa
         $existingWishlistItem = Wishlist::where('user_id', $userId)
-                                        ->where('product_id', $productId)
-                                        ->first();
-    
+            ->where('product_id', $productId)
+            ->first();
+
         // Nếu sản phẩm đã tồn tại trong danh sách mong muốn của người dùng
         if ($existingWishlistItem) {
             return redirect()->route('product.wishlist')->with('message', 'Sản phẩm đã tồn tại trong danh sách wishlist của bạn.');
         }
-    
+
         // Nếu sản phẩm chưa tồn tại trong danh sách mong muốn của người dùng, thêm vào
         $wishlist = new Wishlist([
             'product_id' => $productId,
             'user_id' => $userId,
         ]);
-    
+
         $wishlist->save();
         return redirect()->route('Book Store')->with('success', 'Sản phẩm đã được thêm vào danh sách của bạn.');
     }

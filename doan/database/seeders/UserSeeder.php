@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin1@gmail.com',
-            'address' => 'aaaaaaaaaaaaaaaaaaaaaaaa',
             'phone' => '0989748659',
             'avatar' => 'avatar.png',
             'password' => Hash::make('admin1'),
@@ -27,7 +26,6 @@ class UserSeeder extends Seeder
             User::factory()->create([
                 'name' => 'customer' . $i,
                 'email' => 'customer'. $i . '@gmail.com',
-                'address' => 'aaaaaaaaaaaaaaaaaaaaaaaa',
                 'phone' => $i,
                 'avatar' => 'avatar.png',
                 'password' => Hash::make('customer'. $i),
