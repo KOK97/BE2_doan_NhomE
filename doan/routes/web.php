@@ -85,3 +85,5 @@ Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
 //Wishlist
 Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
 Route::POST('/add-wishlist', [WishlistController::class, 'add'])->name('product.wishlist.add');
+Route::POST('/destroy-wishlist', [WishlistController::class, 'destroy'])->name('product.wishlist.destroy');
+Route::POST('/remove-all', [WishlistController::class, 'removeAll'])->name('product.wishlist.remove-all');

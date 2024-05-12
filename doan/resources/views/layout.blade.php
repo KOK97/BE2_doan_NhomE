@@ -9,16 +9,17 @@
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
     <title>Ludus - Books</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
     <!--====== Vendor Css ======-->
-    <link rel="stylesheet" href='{{ asset("css/vendor.css") }}'>
+    <link rel="stylesheet" href='{{ asset('css/vendor.css') }}'>
     <!--====== Utility-Spacing ======-->
-    <link rel="stylesheet" href='{{ asset("css/utility.css") }}'>
+    <link rel="stylesheet" href='{{ asset('css/utility.css') }}'>
 
     <!--====== App ======-->
-    <link rel="stylesheet" href='{{ asset("css/app.css") }}'>
+    <link rel="stylesheet" href='{{ asset('css/app.css') }}'>
 </head>
 
 <body class="config">
@@ -51,7 +52,8 @@
                         <!--====== Search Form ======-->
                         <form class="main-form">
                             <label for="main-search"></label>
-                            <input class="input-text input-text--border-radius input-text--style-1" type="text" id="main-search" placeholder="Bạn cần tìm gì ?">
+                            <input class="input-text input-text--border-radius input-text--style-1" type="text"
+                                id="main-search" placeholder="Bạn cần tìm gì ?">
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>
                         <!--====== End - Search Form ======-->
@@ -59,35 +61,40 @@
 
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation">
-                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cogs" type="button"></button>
+                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cogs"
+                                type="button"></button>
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
                                 <span class="ah-close">✕ Close</span>
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
-                                    <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
+                                    <li class="has-dropdown" data-tooltip="tooltip" data-placement="left"
+                                        title="Account">
                                         <a><i class="far fa-user-circle"></i></a>
                                         <!--====== Dropdown ======-->
                                         <span class="js-menu-toggle"></span>
                                         <ul style="width:120px">
-                                            @if(!auth()->check())
-                                            <li>
-                                                <a href="{{route('auth.login')}}"><i class="fas fa-user-plus u-s-m-r-6"></i>
-                                                    <span>Log in</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('auth.register')}}"><i class="fas fa-lock u-s-m-r-6"></i>
-                                                    <span>Register</span></a>
-                                            </li>
+                                            @if (!auth()->check())
+                                                <li>
+                                                    <a href="{{ route('auth.login') }}"><i
+                                                            class="fas fa-user-plus u-s-m-r-6"></i>
+                                                        <span>Log in</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('auth.register') }}"><i
+                                                            class="fas fa-lock u-s-m-r-6"></i>
+                                                        <span>Register</span></a>
+                                                </li>
                                             @else
-                                            <li>
-                                                <a href=""><i class="fas fa-user-circle u-s-m-r-6"></i>
-                                                    <span>Account</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="{{route('auth.logout')}}"><i class="fas fa-lock-open u-s-m-r-6"></i>
-                                                    <span>Log out</span></a>
-                                            </li>
+                                                <li>
+                                                    <a href=""><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                                        <span>Account</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('auth.logout') }}"><i
+                                                            class="fas fa-lock-open u-s-m-r-6"></i>
+                                                        <span>Log out</span></a>
+                                                </li>
                                             @endif
                                         </ul>
                                         <!--====== End - Dropdown ======-->
@@ -142,7 +149,8 @@
 
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation2">
-                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog" type="button"></button>
+                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-cog"
+                                type="button"></button>
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
                                 <span class="ah-close">✕ Close</span>
@@ -163,11 +171,12 @@
                                         <a>THỂ LOẠI<i class="fas fa-angle-down u-s-m-l-6"></i></a>
                                         <!--====== Dropdown ======-->
                                         <span class="js-menu-toggle"></span>
-                                        <ul id="category-columns" style="max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap;">
+                                        <ul id="category-columns"
+                                            style="max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap;">
                                             @foreach ($categories as $category)
-                                            <li class="column" style="width: 150px;">
-                                                <a href="#">{{ $category->category_name }}</a>
-                                            </li>
+                                                <li class="column" style="width: 150px;">
+                                                    <a href="#">{{ $category->category_name }}</a>
+                                                </li>
                                             @endforeach
                                         </ul>
                                         <!--====== End - Dropdown ======-->
@@ -186,7 +195,9 @@
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation3">
 
-                            <button class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop" type="button"></button>
+                            <button
+                                class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop"
+                                type="button"></button>
 
                             <span class="total-item-round">2</span>
 
@@ -226,17 +237,21 @@
 
                                                             <a class="mini-product__link" href="product-detail.html">
 
-                                                                <img class="u-img-fluid" src="images/product/electronic/product3.jpg" alt=""></a>
+                                                                <img class="u-img-fluid"
+                                                                    src="images/product/electronic/product3.jpg"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="mini-product__info-wrapper">
 
                                                             <span class="mini-product__category">
 
-                                                                <a href="shop-side-version-2.html">Electronics</a></span>
+                                                                <a
+                                                                    href="shop-side-version-2.html">Electronics</a></span>
 
                                                             <span class="mini-product__name">
 
-                                                                <a href="product-detail.html">Yellow Wireless Headphone</a></span>
+                                                                <a href="product-detail.html">Yellow Wireless
+                                                                    Headphone</a></span>
 
                                                             <span class="mini-product__quantity">1 x</span>
 
@@ -256,17 +271,21 @@
 
                                                             <a class="mini-product__link" href="product-detail.html">
 
-                                                                <img class="u-img-fluid" src="images/product/electronic/product18.jpg" alt=""></a>
+                                                                <img class="u-img-fluid"
+                                                                    src="images/product/electronic/product18.jpg"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="mini-product__info-wrapper">
 
                                                             <span class="mini-product__category">
 
-                                                                <a href="shop-side-version-2.html">Electronics</a></span>
+                                                                <a
+                                                                    href="shop-side-version-2.html">Electronics</a></span>
 
                                                             <span class="mini-product__name">
 
-                                                                <a href="product-detail.html">Nikon DSLR Camera 4k</a></span>
+                                                                <a href="product-detail.html">Nikon DSLR Camera
+                                                                    4k</a></span>
 
                                                             <span class="mini-product__quantity">1 x</span>
 
@@ -286,17 +305,21 @@
 
                                                             <a class="mini-product__link" href="product-detail.html">
 
-                                                                <img class="u-img-fluid" src="images/product/women/product8.jpg" alt=""></a>
+                                                                <img class="u-img-fluid"
+                                                                    src="images/product/women/product8.jpg"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="mini-product__info-wrapper">
 
                                                             <span class="mini-product__category">
 
-                                                                <a href="shop-side-version-2.html">Women Clothing</a></span>
+                                                                <a href="shop-side-version-2.html">Women
+                                                                    Clothing</a></span>
 
                                                             <span class="mini-product__name">
 
-                                                                <a href="product-detail.html">New Dress D Nice Elegant</a></span>
+                                                                <a href="product-detail.html">New Dress D Nice
+                                                                    Elegant</a></span>
 
                                                             <span class="mini-product__quantity">1 x</span>
 
@@ -316,17 +339,21 @@
 
                                                             <a class="mini-product__link" href="product-detail.html">
 
-                                                                <img class="u-img-fluid" src="images/product/men/product8.jpg" alt=""></a>
+                                                                <img class="u-img-fluid"
+                                                                    src="images/product/men/product8.jpg"
+                                                                    alt=""></a>
                                                         </div>
                                                         <div class="mini-product__info-wrapper">
 
                                                             <span class="mini-product__category">
 
-                                                                <a href="shop-side-version-2.html">Men Clothing</a></span>
+                                                                <a href="shop-side-version-2.html">Men
+                                                                    Clothing</a></span>
 
                                                             <span class="mini-product__name">
 
-                                                                <a href="product-detail.html">New Fashion D Nice Elegant</a></span>
+                                                                <a href="product-detail.html">New Fashion D Nice
+                                                                    Elegant</a></span>
 
                                                             <span class="mini-product__quantity">1 x</span>
 
@@ -351,9 +378,11 @@
                                                 </div>
                                                 <div class="mini-action">
 
-                                                    <a class="mini-link btn--e-brand-b-2" href="checkout.html">PROCEED TO CHECKOUT</a>
+                                                    <a class="mini-link btn--e-brand-b-2" href="checkout.html">PROCEED
+                                                        TO CHECKOUT</a>
 
-                                                    <a class="mini-link btn--e-transparent-secondary-b-2" href="cart.html">VIEW CART</a>
+                                                    <a class="mini-link btn--e-transparent-secondary-b-2"
+                                                        href="cart.html">VIEW CART</a>
                                                 </div>
                                             </div>
                                             <!--====== End - Mini Product Statistics ======-->
@@ -394,19 +423,24 @@
                                 <div class="outer-footer__social">
                                     <ul>
                                         <li>
-                                            <a class="s-fb--color-hover" href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                                            <a class="s-fb--color-hover" href="https://www.facebook.com/"><i
+                                                    class="fab fa-facebook-f"></i></a>
                                         </li>
                                         <li>
-                                            <a class="s-tw--color-hover" href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                                            <a class="s-tw--color-hover" href="https://twitter.com/"><i
+                                                    class="fab fa-twitter"></i></a>
                                         </li>
                                         <li>
-                                            <a class="s-youtube--color-hover" href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                                            <a class="s-youtube--color-hover" href="https://www.youtube.com/"><i
+                                                    class="fab fa-youtube"></i></a>
                                         </li>
                                         <li>
-                                            <a class="s-insta--color-hover" href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                                            <a class="s-insta--color-hover" href="https://www.instagram.com/"><i
+                                                    class="fab fa-instagram"></i></a>
                                         </li>
                                         <li>
-                                            <a class="s-gplus--color-hover" href="https://www.google.com/"><i class="fab fa-google-plus-g"></i></a>
+                                            <a class="s-gplus--color-hover" href="https://www.google.com/"><i
+                                                    class="fab fa-google-plus-g"></i></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -498,12 +532,15 @@
 
                                         <label for="newsletter"></label>
 
-                                        <input class="input-text input-text--only-white" type="text" id="newsletter" placeholder="Enter your Email">
+                                        <input class="input-text input-text--only-white" type="text"
+                                            id="newsletter" placeholder="Enter your Email">
 
-                                        <button class="btn btn--e-brand newsletter__btn" type="submit">SUBSCRIBE</button>
+                                        <button class="btn btn--e-brand newsletter__btn"
+                                            type="submit">SUBSCRIBE</button>
                                     </div>
 
-                                    <span class="newsletter__text">Subscribe to the mailing list to receive updates on promotions, new arrivals, discount and coupons.</span>
+                                    <span class="newsletter__text">Subscribe to the mailing list to receive updates on
+                                        promotions, new arrivals, discount and coupons.</span>
                                 </form>
                             </div>
                         </div>
@@ -545,13 +582,13 @@
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
     <!--====== Vendor Js ======-->
-    <script src='{{ asset("js/vendor.js") }}'></script>
+    <script src='{{ asset('js/vendor.js') }}'></script>
 
     <!--====== jQuery Shopnav plugin ======-->
-    <script src='{{ asset("js/jquery.shopnav.js") }}'></script>
+    <script src='{{ asset('js/jquery.shopnav.js') }}'></script>
 
     <!--====== App ======-->
-    <script src='{{ asset("js/app.js") }}'></script>
+    <script src='{{ asset('js/app.js') }}'></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var message = "{{ session('success') }}";

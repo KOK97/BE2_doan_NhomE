@@ -2,7 +2,6 @@
 @section('main-content')
     <!--====== App Content ======-->
     <div class="app-content">
-
         <!--====== Primary Slider ======-->
         <div class="s-skeleton s-skeleton--h-600 s-skeleton--bg-grey">
             <div class="owl-carousel primary-style-1" id="hero-slider">

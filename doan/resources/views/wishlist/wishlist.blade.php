@@ -2,10 +2,8 @@
 @section('main-content')
     <!--====== App Content ======-->
     <div class="app-content">
-
         <!--====== Section 1 ======-->
         <div class="u-s-p-y-60">
-
             <!--====== Section Content ======-->
             <div class="section__content">
                 <div class="container">
@@ -43,15 +41,15 @@
                 </div>
             </div>
             <!--====== End - Section Intro ======-->
-            @if (session('message'))
-                <div id="alert" class="alert alert-info" role="alert">{{ session('message') }}</div>
-            @endif
 
             @if (auth()->check())
                 @if ($products != null && count($products) > 0)
                     <!--====== Section Content ======-->
                     <div class="section__content">
                         <div class="container">
+                            @if (session('message'))
+                                <div id="alert" class="alert alert-info" role="alert">{{ session('message') }}</div>
+                            @endif
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     @foreach ($products as $product)
@@ -68,17 +66,10 @@
                                                         <span class="w-r__name">
                                                             <a href="product-detail.html">{{ $product->name }}</a>
                                                         </span>
-                                                        <span class="w-r__category">
-                                                            @php
-                                                                $categories = explode(', ', $product->category_names);
-                                                            @endphp
-                                                            @foreach ($categories as $category)
-                                                                <a href="shop-side-version-2.html">{{ $category }}</a>
-                                                            @endforeach
-                                                        </span>
                                                         <span class="w-r__price">{{ $product->price }} VND
-                                                            @if (isset($product->sale))
-                                                                <span class="w-r__discount">{{ $product->sale }}</span>
+                                                            @if (isset($product->sales))
+                                                                <span
+                                                                    class="w-r__discount">{{ $product->sales->discount }}</span>
                                                             @endif
                                                         </span>
                                                     </div>
@@ -87,9 +78,14 @@
                                                     <a class="w-r__link btn--e-brand-b-2" data-modal="modal"
                                                         data-modal-id="#add-to-cart">ADD TO CART</a>
                                                     <a class="w-r__link btn--e-transparent-platinum-b-2"
-                                                        href="product-detail.html">VIEW</a>
-                                                    <a class="w-r__link btn--e-transparent-platinum-b-2"
-                                                        href="#">REMOVE</a>
+                                                        href="">VIEW</a>
+                                                    <form action="{{ route('product.wishlist.destroy') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="wishlist_id"
+                                                            value="{{ $product->wishlist_id }}">
+                                                        <button class="w-r__link btn--e-transparent-platinum-b-2"
+                                                            type="submit">REMOVE</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,10 +99,14 @@
                                                     class="fas fa-long-arrow-alt-left"></i>
                                                 <span>CONTINUE SHOPPING</span></a>
                                         </div>
-                                        <div class="route-box__g">
-                                            <a class="route-box__link" href="wishlist.html"><i class="fas fa-trash"></i>
-                                                <span>CLEAR WISHLIST</span></a>
-                                        </div>
+                                        <form action="{{ route('product.wishlist.remove-all') }}" method="POST">
+                                            @csrf
+                                            <div class="route-box__g">
+                                                <button type="submit" type="submit" class="route-box__link"><i
+                                                        class="fas fa-trash"></i>
+                                                    <span>CLEAR WISHLIST</span></button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
