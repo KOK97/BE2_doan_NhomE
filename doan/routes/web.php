@@ -75,6 +75,9 @@ Route::GET('/editproducts/{id}',[ProductController::class,'getDataEdit'])->name(
 Route::PUT('/updateproducts/{id}', [ProductController::class,'updateProduct'])->name('updateProduct');
 //dele
 Route::DELETE('/destroyproduct/{id}', [ProductController::class,'destroy'])->name('destroyProduct');
+//show 
+Route::GET('/shop',[ProductController::class,'showProductByCategory'])->name('show.shop');
+
 
 ### SALE ###
 Route::GET('/listsale',[SaleController::class,'listSale'])->name('listSale');

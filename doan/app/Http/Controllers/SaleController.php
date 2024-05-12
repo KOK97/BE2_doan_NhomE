@@ -19,28 +19,27 @@ class SaleController extends Controller
     }
     public function createSale(Request $request)
     {
-        $requied = [
-            'discount' => 'required', 'numeric', 'min:1', 'max:100',
-            'sale_content' => 'nullable', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-        ];
 
-        $messages = [
+        $validatedData = Validator::make($request->all(), [
+            'discount' => ['required', 'numeric', 'min:1', 'max:100'],
+            'sale_content' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+        ], [
             'discount.required' => 'Vui lòng nhập mức giảm giá',
             'discount.numeric' => 'Mức giảm giá phải là một số hợp lệ',
             'discount.min' => 'Mức giảm giá phải ít nhất là 1',
             'discount.max' => 'Mức giảm giá không được vượt quá 100',
 
+            'sale_content.required' => 'Vui lòng nhập nội dung giảm',
             'sale_content.min' => 'Nội dung giảm giá phải có ít nhất 10 ký tự',
             'sale_content.max' => 'Nội dung giảm giá không được vượt quá 50 ký tự',
             'sale_content.regex' => 'Nội dung giảm giá không được chứa ký tự đặc biệt',
-        ];
-        $attribute = [
-            'discount' => 'Mức giảm giá',
-            'sale_content' => 'Nội dung giảm giá',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('createSale')
+                ->withErrors($errors)
+                ->withInput();
         }
         $sale = new sale($request->all());
         $sale->save();
@@ -53,28 +52,26 @@ class SaleController extends Controller
     }
     public function updateSale(Request $request, $id)
     {
-        $requied = [
-            'discount' => 'required', 'numeric', 'min:1', 'max:100',
-            'sale_content' => 'nullable', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-        ];
-
-        $messages = [
+        $validatedData = Validator::make($request->all(), [
+            'discount' => ['required', 'numeric', 'min:1', 'max:100'],
+            'sale_content' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+        ], [
             'discount.required' => 'Vui lòng nhập mức giảm giá',
             'discount.numeric' => 'Mức giảm giá phải là một số hợp lệ',
             'discount.min' => 'Mức giảm giá phải ít nhất là 1',
             'discount.max' => 'Mức giảm giá không được vượt quá 100',
 
+            'sale_content.required' => 'Vui lòng nhập nội dung giảm',
             'sale_content.min' => 'Nội dung giảm giá phải có ít nhất 10 ký tự',
             'sale_content.max' => 'Nội dung giảm giá không được vượt quá 50 ký tự',
             'sale_content.regex' => 'Nội dung giảm giá không được chứa ký tự đặc biệt',
-        ];
-        $attribute = [
-            'discount' => 'Mức giảm giá',
-            'sale_content' => 'Nội dung giảm giá',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('getdataeditSale',['id' => $id])
+                ->withErrors($errors)
+                ->withInput();
         }
         $product = Sale::findOrFail($id);
         $product->update($request->all());

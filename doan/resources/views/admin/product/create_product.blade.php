@@ -17,8 +17,7 @@
                 <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="name">Tên Sản Phẩm</label>
-                        <input type="text" placeholder="Name" id="name" class="form-control" name="name" required
-                            autofocus>
+                        <input type="text" placeholder="Name" id="name" class="form-control" name="name" autofocus>
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -43,7 +42,7 @@
                     <div class="form-group mb-3">
                         <label for="price">Giá Sản Phẩm</label>
                         <input type="text" placeholder="Price" id="price" class="form-control" name="price"
-                            required autofocus>
+                            autofocus>
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
@@ -53,7 +52,9 @@
                         <select class ="form-control custom-select" name="sale_id">
                             <option selected disabled>Select one</option>
                             @foreach ($sales as $sale)
-                            <option value="{{$sale->id}}">{{$sale->discount}}%<p>-|{{$sale->sale_content}}|</p></option>
+                                <option value="{{ $sale->id }}">{{ $sale->discount }}%<p>-|{{ $sale->sale_content }}|
+                                    </p>
+                                </option>
                             @endforeach
                         </select>
 
@@ -63,7 +64,8 @@
                         <select class ="form-control custom-select" name="author_id">
                             <option selected disabled>Select one</option>
                             @foreach ($authors as $author)
-                            <option value="{{$author->id}}">{{$author->author_name}}<p>-|{{$author->pseudonym}}|</p></option>
+                                <option value="{{ $author->id }}">{{ $author->author_name }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -75,18 +77,23 @@
                             <span class="text-danger">{{ $errors->first('publishing_year') }}</span>
                         @endif
                     </div>
-                    
+
                 </div>
                 <div class="col-md-2">
                     <div class="form-group mb-2">
                         <label for="category_id">Danh Mục Sản Phẩm</label>
-                            @foreach ($categories as $category)
+                        @foreach ($categories as $category)
                             <div class="form-check">
-                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" id="category_{{ $category->id }}" class="form-check-input">
-                                <label for="category_{{ $category->id }}" class="form-check-label">{{ $category->category_name }}</label>
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    id="category_{{ $category->id }}" class="form-check-input">
+                                <label for="category_{{ $category->id }}"
+                                    class="form-check-label">{{ $category->category_name }}</label>
+
                             </div>
-                            @endforeach
-                        
+                        @endforeach
+                        @if ($errors->has('categories'))
+                            <span class="text-danger">{{ $errors->first('categories') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>

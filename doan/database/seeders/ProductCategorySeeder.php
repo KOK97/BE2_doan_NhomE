@@ -15,8 +15,15 @@ class ProductCategorySeeder extends Seeder
     public function run(): void
     {
         ProductCategory::factory()->create([
-            'product_id' =>'4',
-            'category_id' =>'1',
+            'product_id' => '4',
+            'category_id' => '1',
         ]);
+
+        for ($i = 1; $i < 8; $i++) {
+            ProductCategory::factory()->create([
+                'product_id' => ''.$i,
+                'category_id' => ''.$i,
+            ]);
+        }
     }
 }

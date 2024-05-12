@@ -20,13 +20,12 @@ class AuthorController extends Controller
     }
     public function createAuthor(Request $request)
     {
-        $requied = [
-            'author_name'=> 'required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'pseudonym'=> 'nullable', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'year_of_birth'=>'required', 'numeric','min:1900', 'max:2000',
-        ];
-
-        $messages = [
+        
+        $validatedData = Validator::make($request->all(), [
+            'author_name'=> ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'pseudonym'=> ['nullable', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'year_of_birth'=>['required', 'numeric','min:1900', 'max:2000'],
+        ], [
             'author_name.required' => 'Vui lòng nhập tên tác giả',
             'author_name.min' => 'Tên tác giả phải có ít nhất 10 ký tự',
             'author_name.max' => 'Tên tác giả không được vượt quá 50 ký tự',
@@ -40,15 +39,13 @@ class AuthorController extends Controller
             'year_of_birth.numeric' => 'Năm sinh tác giả phải là một số hợp lệ',
             'year_of_birth.min' => 'Năm sinh tác giả phải ít nhất là 1900',
             'year_of_birth.max' => 'Năm sinh tác giả không được vượt quá 2000',
-        ];
-        $attribute = [
-            'author_name' => 'Tên tác giả',
-            'pseudonym' => 'Bút danh tác giả',
-            'year_of_birth' => 'Năm sinh tác giả',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('createAuthor')
+                ->withErrors($errors)
+                ->withInput();
         }
         $sale = new Author($request->all());
         $sale->save();
@@ -61,13 +58,11 @@ class AuthorController extends Controller
     }
     public function updateAuthor(Request $request, $id)
     {
-        $requied = [
-            'author_name'=> 'required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'pseudonym'=> 'nullable', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'year_of_birth'=>'required', 'numeric','min:1900', 'max:2000',
-        ];
-
-        $messages = [
+        $validatedData = Validator::make($request->all(), [
+            'author_name'=> ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'pseudonym'=> ['nullable', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'year_of_birth'=>['required', 'numeric','min:1900', 'max:2000'],
+        ], [
             'author_name.required' => 'Vui lòng nhập tên tác giả',
             'author_name.min' => 'Tên tác giả phải có ít nhất 10 ký tự',
             'author_name.max' => 'Tên tác giả không được vượt quá 50 ký tự',
@@ -81,15 +76,13 @@ class AuthorController extends Controller
             'year_of_birth.numeric' => 'Năm sinh tác giả phải là một số hợp lệ',
             'year_of_birth.min' => 'Năm sinh tác giả phải ít nhất là 1900',
             'year_of_birth.max' => 'Năm sinh tác giả không được vượt quá 2000',
-        ];
-        $attribute = [
-            'author_name' => 'Tên tác giả',
-            'pseudonym' => 'Bút danh tác giả',
-            'year_of_birth' => 'Năm sinh tác giả',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('getDataEditAuthor', ['id' => $id])
+                ->withErrors($errors)
+                ->withInput();
         }
         $author = Author::findOrFail($id);
         $author->update($request->all());
