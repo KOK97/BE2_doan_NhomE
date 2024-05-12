@@ -16,25 +16,24 @@ class UserController extends Controller
         $startIndex = ($currentPage - 1) * $users->perPage() + 1;
         return view('admin.user.index', compact('users', 'startIndex'));
     }
-    
 
     public function search(Request $request)
     {
         $users = User::orderBy('created_at', 'desc');
-    
+
         if ($request->has('search')) { // Kiểm tra xem có tham số search không
             $searchTerm = $request->input('search');
             $users = $users->where('name', 'like', '%' . $searchTerm . '%');
         }
-        
+
         $users = $users->paginate(5)->withPath(route('user.index'));
         $currentPage = $users->currentPage();
         $startIndex = ($currentPage - 1) * $users->perPage() + 1;
-    
+
         if ($users->isEmpty()) {
             return redirect()->route('user.index')->with('message', 'Không tìm thấy !!!');
         } else {
-            return view('admin.user.index', compact('users','startIndex'));
+            return view('admin.user.index', compact('users', 'startIndex'));
         }
     }
 
@@ -45,15 +44,35 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:20',
-            'phone' => 'required|string|max:11',
-            'email' => 'required|string|email|max:255|unique:users',
-            'address' => 'required|string|max:255',
-            'avatar' => 'nullable|image|max:2048',
-            'password' => 'required|string|min:6,max:255',
-            'role' => 'required|string',
-        ]);
+        $validatedData = $request->validate(
+            [
+                'name' => 'required|string|max:20',
+                'phone' => 'required|string|max:11',
+                'email' => 'required|string|email|max:50|unique:users',
+                'address' => 'required|string|max:255',
+                'avatar' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif',
+                'password' => 'required|string|min:6|max:50',
+                'role' => 'required|string',
+            ],
+            [
+                'name.required' => 'Vui lòng cung cấp tên của bạn.',
+                'name.max' => 'Tên của bạn không được vượt quá 20 ký tự.',
+                'phone.required' => 'Vui lòng cung cấp số điện thoại của bạn.',
+                'phone.max' => 'Số điện thoại của bạn không được vượt quá 11 ký tự.',
+                'email.required' => 'Vui lòng cung cấp địa chỉ email của bạn.',
+                'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
+                'email.max' => 'Địa chỉ email của bạn không được vượt quá 50 ký tự.',
+                'email.unique' => 'Địa chỉ email này đã được đăng ký.',
+                'address.required' => 'Vui lòng cung cấp địa chỉ của bạn.',
+                'address.max' => 'Địa chỉ của bạn không được vượt quá 255 ký tự.',
+                'avatar.image' => 'Ảnh đại diện phải là một tệp hình ảnh.',
+                'avatar.max' => 'Ảnh đại diện không được lớn hơn 2MB.',
+                'avatar.mimes' => 'Ảnh đại diện phải là tệp JPEG, PNG, JPG, hoặc GIF.',
+                'password.required' => 'Vui lòng cung cấp mật khẩu.',
+                'password.min' => 'Mật khẩu của bạn phải ít nhất 6 ký tự.',
+                'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
+            ]
+        );
         //create user
         $user = new User();
         $user->name = $validatedData['name'];

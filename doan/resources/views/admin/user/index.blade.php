@@ -34,7 +34,7 @@
     <table class="table table table-striped table-hover">
         <thead class="thead-dark" style="text-align: center;">
             <tr>
-                <th scope="col">STT<button class="mx-2" id="sortButton"><i class="fa-solid fa-sort"></i></button></th>
+                <th scope="col">STT</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
@@ -81,34 +81,5 @@
     setTimeout(function() {
         document.getElementById('alert').style.display = 'none';
     }, 10000); // 10 giây (10000 miligiây)
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("sortButton").addEventListener("click", function() {
-            sortTable();
-        });
-    });
-
-    function sortTable() {
-        var table, rows, switching, i, x, y, shouldSwitch;
-        table = document.querySelector(".table");
-        switching = true;
-        while (switching) {
-            switching = false;
-            rows = table.getElementsByTagName("tr");
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("th")[0];
-                y = rows[i + 1].getElementsByTagName("th")[0];
-                if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
-    }
 </script>
 @endsection

@@ -37,10 +37,34 @@ class AccountController extends Controller
 
     public function customLogin(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $validatedData = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|string|email|max:255',
+                'password' => 'required|string|min:6|max:50',
+            ],
+            [
+                'email.required' => 'Vui lòng cung cấp địa chỉ email của bạn.',
+                'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
+                'email.max' => 'Địa chỉ email của bạn không được vượt quá 255 ký tự.',
+                'password.required' => 'Vui lòng cung cấp mật khẩu.',
+                'password.min' => 'Mật khẩu của bạn phải ít nhất 6 ký tự.',
+                'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
+            ]
+        );
+
+        if ($validatedData->fails()) {
+            if ($validatedData->errors()->has('email')) {
+                $errors['email'] = $validatedData->errors()->first('email');
+            }
+
+            if ($validatedData->errors()->has('password')) {
+                $errors['password'] = $validatedData->errors()->first('password');
+            }
+            return redirect()->route('auth.login')
+                ->withErrors($errors)
+                ->withInput();
+        }
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
@@ -60,24 +84,27 @@ class AccountController extends Controller
         $validatedData = Validator::make($request->all(), [
             'name' => 'required|string|max:20',
             'phone' => 'required|string|max:11',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:50|unique:users',
+            'address' => 'required|string|max:255',
             'avatar' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif',
-            'password' => 'required|string|min:6,max:255',
+            'password' => 'required|string|min:6|max:50',
         ], [
-            'name.required' => 'Please provide your name.',
-            'name.max' => 'Your name must not exceed 20 characters.',
-            'phone.required' => 'Please provide your phone number.',
-            'phone.max' => 'Your phone number must not exceed 11 characters.',
-            'email.required' => 'Please provide your email address.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.max' => 'Your email address must not exceed 255 characters.',
-            'email.unique' => 'This email address has already been registered.',
-            'avatar.image' => 'The avatar must be an image file.',
-            'avatar.max' => 'The avatar must not be larger than 2MB.',
-            'avatar.mimes' => 'The avatar must be a JPEG, PNG, JPG, or GIF file.',
-            'password.required' => 'Please provide a password.',
-            'password.min' => 'Your password must be at least 6 characters long.',
-            'password.max' => 'Your password must not exceed 255 characters.',
+            'name.required' => 'Vui lòng cung cấp tên của bạn.',
+            'name.max' => 'Tên của bạn không được vượt quá 20 ký tự.',
+            'phone.required' => 'Vui lòng cung cấp số điện thoại của bạn.',
+            'phone.max' => 'Số điện thoại của bạn không được vượt quá 11 ký tự.',
+            'email.required' => 'Vui lòng cung cấp địa chỉ email của bạn.',
+            'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
+            'email.max' => 'Địa chỉ email của bạn không được vượt quá 50 ký tự.',
+            'email.unique' => 'Địa chỉ email này đã được đăng ký.',
+            'address.required' => 'Vui lòng cung cấp địa chỉ của bạn.',
+            'address.max' => 'Địa chỉ của bạn không được vượt quá 255 ký tự.',
+            'avatar.image' => 'Ảnh đại diện phải là một tệp hình ảnh.',
+            'avatar.max' => 'Ảnh đại diện không được lớn hơn 2MB.',
+            'avatar.mimes' => 'Ảnh đại diện phải là tệp JPEG, PNG, JPG, hoặc GIF.',
+            'password.required' => 'Vui lòng cung cấp mật khẩu.',
+            'password.min' => 'Mật khẩu của bạn phải ít nhất 6 ký tự.',
+            'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
         ]);
 
         if ($validatedData->fails()) {
@@ -91,6 +118,10 @@ class AccountController extends Controller
 
             if ($validatedData->errors()->has('name')) {
                 $errors['name'] = $validatedData->errors()->first('name');
+            }
+            
+            if ($validatedData->errors()->has('address')) {
+                $errors['address'] = $validatedData->errors()->first('address');
             }
 
             if ($validatedData->errors()->has('password')) {
@@ -124,6 +155,6 @@ class AccountController extends Controller
         $user->role = "customer";
         $user->save();
 
-        return redirect()->route('auth.login')->with('success', 'Registration successful!');
+        return redirect()->route('auth.login')->with('success', 'Đăng ký thành công !');
     }
 }

@@ -25,6 +25,11 @@
         </div>
 
         <div class="form-group">
+            <label for="ip_address">Address</label>
+            <input type="text" class="form-control" name="address" id="ip_address" value="{{$user->address}}"> 
+        </div>
+
+        <div class="form-group">
             <label for="ip_password">Password</label>
             <input type="password" class="form-control" name="password" id="ip_password" value="{{$user->password}}">
         </div>

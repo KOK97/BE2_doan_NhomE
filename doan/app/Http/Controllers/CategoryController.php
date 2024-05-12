@@ -19,20 +19,24 @@ class CategoryController extends Controller
     public function search(Request $request)
     {
         $categories = Category::orderBy('created_at', 'desc');
-    
+
         if ($request->has('search')) { // Kiểm tra xem có tham số search không
             $searchTerm = $request->input('search');
             $categories = $categories->where('category_name', 'like', '%' . $searchTerm . '%');
         }
-        
-        $categories = $categories->paginate(5)->withPath(route('category.index'));
+
+        $categories = $categories->paginate(5)->withQueryString();
+
+        // Thêm từ khóa tìm kiếm vào URL phân trang
+        $categories->appends(['search' => $searchTerm]);
+
         $currentPage = $categories->currentPage();
         $startIndex = ($currentPage - 1) * $categories->perPage() + 1;
-    
+
         if ($categories->isEmpty()) {
             return redirect()->route('category.index')->with('message', 'Không tìm thấy !!!');
         } else {
-            return view('admin.category.index', compact('categories','startIndex'));
+            return view('admin.category.index', compact('categories', 'startIndex'));
         }
     }
 

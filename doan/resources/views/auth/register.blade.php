@@ -73,6 +73,13 @@
                                         @endif
                                     </div>
                                     <div class="u-s-m-b-30">
+                                        <label class="gl-label" for="reg-address">ADDRESS *</label>
+                                        <input class="input-text input-text--primary-style" type="text" id="reg-address" name="address" placeholder="Enter address">
+                                        @if ($errors->has('address'))
+                                        <span class="textdanger" style="color: red;">{{ $errors->first('address') }}</span>
+                                        @endif
+                                    </div>
+                                    <div class="u-s-m-b-30">
                                         <label class="gl-label" for="reg-password">PASSWORD *</label>
                                         <input class="input-text input-text--primary-style" type="password" id="reg-password" name="password" placeholder="Enter Password">
                                         @if ($errors->has('password'))
