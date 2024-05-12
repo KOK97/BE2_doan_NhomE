@@ -31,7 +31,7 @@
     @if(session('message'))
     <div id="alert" class="alert alert-info" role="alert">{{ session('message') }}</div>
     @endif
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover" style="text-align: center">
         <thead class="thead-dark">
             <tr>
                 <th scope="col" style="text-align: center;">STT<button id="sortButton"><i class="fa-solid fa-sort"></i></button></th>

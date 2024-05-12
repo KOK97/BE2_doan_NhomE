@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Author;
+use App\Models\Category;
+use App\Models\ProductCategory;
 
 class ProductController extends Controller
 {
@@ -23,7 +25,8 @@ class ProductController extends Controller
     {
         $sales = Sale::all();
         $authors = Author::all();
-        return view('admin.product.create_product', ['sales' => $sales,'authors'=>$authors]);
+        $categories =  Category::all();
+        return view('admin.product.create_product', ['sales' => $sales, 'authors' => $authors, 'categories' => $categories]);
     }
     public function createProduct(Request $request)
     {
@@ -35,7 +38,6 @@ class ProductController extends Controller
             'publishing_year' => 'required', 'numeric', 'max:2024',
             'author_id' => 'required',
             'sale_id' => 'nullable',
-            'category_id' => 'required',
         ];
 
         $messages = [
@@ -63,7 +65,6 @@ class ProductController extends Controller
 
             'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
 
-            'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
         ];
         $attribute = [
             'name' => 'Tên sản phẩm',
@@ -73,7 +74,6 @@ class ProductController extends Controller
             'publishing_year' => 'Năm xuất bản',
             'sale_id' => 'Giảm giá',
             'author_id' => 'Tác giả',
-            'category_id' => 'Danh mục sản phẩm',
         ];
         $validator = Validator::make($request->all(), $requied, $messages, $attribute);
         if ($validator->fails()) {
@@ -98,6 +98,10 @@ class ProductController extends Controller
             $product->reduced_price = $newReducedPrice;
         }
         $product->save();
+        if ($request->has('categories')) {
+            $categories = $request->input('categories');
+            $product->categories()->attach($categories);
+        }
         return redirect("listproduct")->with('success', 'Thêm Sản Phẩm Thành Công');
     }
     public function getDataEdit($id)
@@ -105,7 +109,14 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $sales = Sale::all();
         $authors = Author::all();
-        return view('admin.product.edit_product', compact('product', 'sales', 'authors'));
+        $categories =  Category::all();
+        $allproductCategory = ProductCategory::where('product_id', 'like', $id)->get();
+        $categorySelect = collect([]);
+        foreach ($allproductCategory as $key => $value) {
+            $categorySelect->push($value->category_id);
+        };
+
+        return view('admin.product.edit_product', compact('product', 'sales', 'authors', 'categories', 'categorySelect'));
     }
     public function updateProduct(Request $request, $id)
     {
@@ -117,7 +128,6 @@ class ProductController extends Controller
             'publishing_year' => 'required', 'numeric', 'max:2024',
             'author_id' => 'required',
             'sale_id' => 'nullable',
-            'category_id' => 'required',
         ];
 
         $messages = [
@@ -145,7 +155,6 @@ class ProductController extends Controller
 
             'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
 
-            'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
         ];
         $attribute = [
             'name' => 'Tên sản phẩm',
@@ -155,7 +164,6 @@ class ProductController extends Controller
             'publishing_year' => 'Năm xuất bản',
             'sale_id' => 'Giảm giá',
             'author_id' => 'Tác giả',
-            'category_id' => 'Danh mục sản phẩm',
         ];
         $validator = Validator::make($request->all(), $requied, $messages, $attribute);
         if ($validator->fails()) {
@@ -186,13 +194,45 @@ class ProductController extends Controller
         if ($product->reduced_price !== $newReducedPrice) {
             $product->reduced_price = $newReducedPrice;
         }
+
+        $allproductCategory = ProductCategory::where('product_id', 'like', $id)->get();
+        $array1 = collect([]);
+        $array2 = collect([]);
+        foreach ($allproductCategory as $key => $value) {
+            $array1->push($value->category_id);
+        }
+        foreach ($request->categories as $key => $value) {
+            $array2->push($value);
+        }
+        $oldPC = array_map('strval', $array1->toArray());
+        $newPC = array_map('strval', $array2->toArray());
+        var_dump($oldPC);
+        var_dump($newPC);
+        if ($oldPC === $newPC) {
+        } else {
+            foreach ($allproductCategory as $value) {
+                $value->delete();
+            }
+            if ($request->has('categories')) {
+                $categories = $request->input('categories');
+                $product->categories()->attach($categories);
+            }
+        }
         $product->update($request->all());
         return redirect("listproduct")->with('success', 'Sửa Sản Phẩm Thành Công');
     }
     public function destroy($id)
     {
+        $allproductCategory = ProductCategory::where('product_id', 'like', $id)->get();
         $product = Product::findOrFail($id);
-        $product->delete();
+        if ($allproductCategory->count() != 0) {
+            foreach ($allproductCategory as $value) {
+                $value->delete();
+            }
+            $product->delete();
+        } else {
+            $product->delete();
+        }
         return redirect("listproduct")->with('success', 'Xóa Sản Phẩm Thành Công');
     }
 }

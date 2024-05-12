@@ -14,7 +14,7 @@
         <form action="{{ route('saveProduct') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="name">Tên Sản Phẩm</label>
                         <input type="text" placeholder="Name" id="name" class="form-control" name="name" required
@@ -39,17 +39,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-3">
-                        <label for="category_id">Danh Mục Sản Phẩm</label>
-                        <select placeholder="ID Category" name="category_id" id="category_id"
-                            class="form-control custom-select">
-                            <option disabled>Select one</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-
-                        </select>
-                    </div>
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label for="price">Giá Sản Phẩm</label>
                         <input type="text" placeholder="Price" id="price" class="form-control" name="price"
@@ -86,6 +76,18 @@
                         @endif
                     </div>
                     
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group mb-2">
+                        <label for="category_id">Danh Mục Sản Phẩm</label>
+                            @foreach ($categories as $category)
+                            <div class="form-check">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" id="category_{{ $category->id }}" class="form-check-input">
+                                <label for="category_{{ $category->id }}" class="form-check-label">{{ $category->category_name }}</label>
+                            </div>
+                            @endforeach
+                        
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

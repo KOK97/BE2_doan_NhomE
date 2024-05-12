@@ -45,31 +45,35 @@
                             </td>
                             <td>
                                 <img class="img-fluid" src="{{ asset('images/products/' . $product->image) }}"
-                                width="50px"class="img-thumbnail" alt="">
+                                    width="50px"class="img-thumbnail" alt="">
                             </td>
                             <td>
                                 @if (strlen(strip_tags($product->description)) > 100)
-                                <?php
-                                $truncatedDescription = substr(strip_tags($product->description), 0, 100);
-                                $lastSpacePos = strrpos($truncatedDescription, ' ');
-                                echo substr($truncatedDescription, 0, $lastSpacePos) . ' ...';
-                                ?>
+                                    <?php
+                                    $truncatedDescription = substr(strip_tags($product->description), 0, 100);
+                                    $lastSpacePos = strrpos($truncatedDescription, ' ');
+                                    echo substr($truncatedDescription, 0, $lastSpacePos) . ' ...';
+                                    ?>
                                 @else
-                                {{ strip_tags($product->description) }}
+                                    {{ strip_tags($product->description) }}
                                 @endif
-                            
+
                             </td>
                             <td>{{ $product->reduced_price }}</td>
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->author->author_name }}</td>
                             <td>{{ $product->publishing_year }}</td>
-                            <td>{{ $product->category_id }}</td>
+                            <td>
+                                @foreach ($product->categories as $category)
+                                    {{ $category->category_name }},
+                                @endforeach
+                            </td>
                             <td>
                                 <form action="{{ route('destroyProduct', $product->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <a href="{{ route('getdataeditProduct', $product->id) }}" class="btn btn-sm btn-info"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('getdataeditProduct', $product->id) }}"
+                                        class="btn btn-sm btn-info"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <button onclick="confirmDelete()" class="btn btn-sm btn-danger"><i
                                             class="fa-solid fa-trash"></i></button>
                                 </form>
@@ -88,7 +92,7 @@
         </div>
         <a href="{{ route('createProduct') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
                 class="fa-solid fa-box nav-icon"></i></a>
-       
+
     </div>
     <script>
         function confirmDelete() {

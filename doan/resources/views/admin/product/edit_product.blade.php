@@ -15,7 +15,7 @@
             @csrf
             @method('PUT')
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="name">Tên Sản Phẩm</label>
                         <input type="text" placeholder="Name" id="name" class="form-control" name="name" required
@@ -33,16 +33,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group mb-3">
-                        <label for="category_id">Danh Mục Sản Phẩm</label>
-                        <select placeholder="ID Category" name="category_id" id="category_id"
-                            class="form-control custom-select">
-                            <option selected disabled>Select one</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
+                <div class="col-md-3">
                     <div class="form-group mb-3">
                         <label for="price">Giá Sản Phẩm</label>
                         <input type="text" placeholder="Price" id="price" class="form-control" name="price"
@@ -76,7 +67,8 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="publishing_year">Năm Xuất Bản</label>
-                        <input class ="form-control" name="publishing_year" id="publishing_year" type="text"  value="{{ $product->publishing_year }}">
+                        <input class ="form-control" name="publishing_year" id="publishing_year" type="text"
+                            value="{{ $product->publishing_year }}">
                         @if ($errors->has('publishing_year'))
                             <span class="text-danger">{{ $errors->first('publishing_year') }}</span>
                         @endif
@@ -87,6 +79,22 @@
                         @if ($errors->has('image'))
                             <span class="text-danger">{{ $errors->first('image') }}</span>
                         @endif
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group mb-2">
+                        <label for="category_id">Danh Mục Sản Phẩm</label>
+                        @foreach ($categories as $category)
+                            <div class="form-check">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    id="category_{{ $category->id }}" class="form-check-input"
+                                    {{ in_array($category->id, $categorySelect->toArray()) ? 'checked' : '' }}>
+                                <label for="category_{{ $category->id }}"
+                                    class="form-check-label">{{ $category->category_name }}</label>
+                            </div>
+                        @endforeach
+
+
                     </div>
                 </div>
             </div>
