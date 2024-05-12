@@ -14,22 +14,30 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        $categories = Category::get();
-
+        $categories = Category::all();
+        var_dump($categories->category_id);
+        die();
         if (auth()->check()) {
             // Lấy ID của người dùng hiện tại
             $userId = Auth::id();
 
-            // Lấy tất cả các sản phẩm trong danh sách mong muốn của người dùng
+            // Lấy tất cả các sản phẩm trong danh sách mong muốn của người dùng cùng với thông tin về thể loại
             $products = Wishlist::where('user_id', $userId)
                 ->join('products', 'wishlist.product_id', '=', 'products.id')
+                ->leftJoin('product_category', 'products.id', '=', 'product_category.product_id')
+                ->leftJoin('categories', 'product_category.category_id', '=', 'categories.id')
                 ->select('products.*')
+                ->selectRaw('GROUP_CONCAT(categories.category_name SEPARATOR ", ") as category_name')
+                ->groupBy('products.id', 'products.name', 'products.price', 'products.reduced_price', 'products.description', 'products.image', 'products.publishing_year', 'products.sale_id', 'products.author_id', 'products.created_at', 'products.updated_at')
                 ->get();
+            // return view('wishlist.wishlist', compact('products', 'categories'));
         } else {
             $products = null;
         }
-        return view('wishlist.wishlist', compact('products', 'categories'));
     }
+
+
+
 
     public function add(Request $request)
     {

@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('publishing_year');
             $table->integer('sale_id')->nullable();
             $table->integer('author_id');
-            $table->integer('category_id')->nullable();
             $table->timestamps();
         });
     }

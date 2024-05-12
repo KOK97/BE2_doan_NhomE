@@ -8,7 +8,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\AuthorController;
 
+Route::get('/', function () {
+    return view('content.home');
+})->name('Book Store');
 Route::get('/', [HomeController::class, 'index'])->name('Book Store');
 
 ### ADMIN ###
@@ -40,11 +45,35 @@ Route::prefix('/')->middleware('isAdmin')->group(function () {
     Route::GET('/edit-user/{user_id}', [UserController::class, 'edit'])->name('user.edit');
     Route::POST('/update-user/{user_id}', [UserController::class, 'update'])->name('user.update');
     Route::POST('/delete-user/{user_id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    ### PRODUCT ###
+    Route::GET('/listproduct', [ProductController::class, 'listProduct'])->name('listProduct');
+    Route::GET('/createproduct', [ProductController::class, 'showAddProduct'])->name('createProduct');
+    Route::POST('/createproduct', [ProductController::class, 'createProduct'])->name('saveProduct');
+    Route::GET('/editproducts/{id}', [ProductController::class, 'getDataEdit'])->name('getdataeditProduct');
+    Route::PUT('/updateproducts/{id}', [ProductController::class, 'updateProduct'])->name('updateProduct');
+    Route::DELETE('/destroyproduct/{id}', [ProductController::class, 'destroy'])->name('destroyProduct');
+
+    ### SALE ###
+    Route::GET('/listsale', [SaleController::class, 'listSale'])->name('listSale');
+    Route::GET('/createsale', [SaleController::class, 'showAddSale'])->name('createSale');
+    Route::POST('/createsale', [SaleController::class, 'createSale'])->name('saveSale');
+    Route::GET('/editsale/{id}', [SaleController::class, 'getDataEdit'])->name('getdataeditSale');
+    Route::PUT('/updatesale/{id}', [SaleController::class, 'updateSale'])->name('updateSale');
+    Route::DELETE('/destroysale/{id}', [SaleController::class, 'destroySale'])->name('destroySale');
+
+    ### AUTHOR ###
+    Route::GET('/listauthor', [AuthorController::class, 'listAuthor'])->name('listAuthor');
+    Route::GET('/createauthor', [AuthorController::class, 'showAddAuthor'])->name('createAuthor');
+    Route::POST('/createauthor', [AuthorController::class, 'createAuthor'])->name('saveAuthor');
+    Route::GET('/editauthor/{id}', [AuthorController::class, 'getDataEditAuthor'])->name('getDataEditAuthor');
+    Route::PUT('/updateauthor/{id}', [AuthorController::class, 'updateAuthor'])->name('updateAuthor');
+    Route::DELETE('/destroyauthor/{id}', [AuthorController::class, 'destroyAuthor'])->name('destroyAuthor');
 });
 
 
 //Account
-//Login
+// Login
 Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
 Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
 //Register

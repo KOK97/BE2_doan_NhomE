@@ -1,21 +1,3 @@
-<!-- index.blade.php -->
-@extends('admin.base')
-<!-- title -->
-@section('title') Trang Quan ly @endsection
-<!-- breadcrumb -->
-@section('breadcrumb') Cateory @endsection
-<!-- content -->
-@section('content')
-<div class="container">
-    @if(session('success'))
-    <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
-    @endif
-    @if(session('destroy'))
-    <div id="alert" class="alert alert-danger" role="alert">{{ session('destroy') }}</div>
-    @endif
-    @if(session('update'))
-    <div id="alert" class="alert alert-info" role="alert">{{ session('update') }}</div>
-    @endif
     <div class="row mb-3">
         <div class="col-md-6">
             <form action="{{ route('category.search') }}" method="GET" class="form-inline">
@@ -31,7 +13,7 @@
     @if(session('message'))
     <div id="alert" class="alert alert-info" role="alert">{{ session('message') }}</div>
     @endif
-    <table class="table table-striped table-hover" style="text-align: center">
+    <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
                 <th scope="col" style="text-align: center;">STT<button id="sortButton"><i class="fa-solid fa-sort"></i></button></th>
@@ -44,7 +26,7 @@
             @if(isset($categories) && count($categories) > 0)
             @foreach($categories as $key => $category)
             <tr>
-                <th scope="row" style="text-align: center;">{{ $startIndex + $key }}</th>
+                <th scope="row" style="text-align: center;">{{ ++$key }}</th>
                 <td><a href="{{ route('category.edit', $category->id) }}" style="color: black;">{{ $category->category_name }}</a></td>
                 <td>
                     @if (strlen(strip_tags($category->category_description)) > 100)
@@ -99,34 +81,5 @@
             $(this).html(strippedText);
         });
     });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("sortButton").addEventListener("click", function() {
-            sortTable();
-        });
-    });
-
-    function sortTable() {
-        var table, rows, switching, i, x, y, shouldSwitch;
-        table = document.querySelector(".table");
-        switching = true;
-        while (switching) {
-            switching = false;
-            rows = table.getElementsByTagName("tr");
-            for (i = 1; i < (rows.length - 1); i++) {
-                shouldSwitch = false;
-                x = rows[i].getElementsByTagName("th")[0];
-                y = rows[i + 1].getElementsByTagName("th")[0];
-                if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-            if (shouldSwitch) {
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-            }
-        }
-    }
 </script>
 @endsection
