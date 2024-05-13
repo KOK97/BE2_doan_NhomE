@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -155,13 +156,17 @@ class AccountController extends Controller
     {
         $user = auth()->user();
         $categories = Category::get();
-        return view('auth.dashboard', compact('user', 'categories'));
+        // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
+        $totalItems = Wishlist::where('user_id', $user->id)->count();
+        return view('auth.dashboard', compact('user', 'categories', 'totalItems'));
     }
 
     public function profile()
     {
         $user = auth()->user();
         $categories = Category::get();
-        return view('auth.myprofile', compact('user', 'categories'));
+        // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
+        $totalItems = Wishlist::where('user_id', $user->id)->count();
+        return view('auth.myprofile', compact('user', 'categories', 'totalItems'));
     }
 }

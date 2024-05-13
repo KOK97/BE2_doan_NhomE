@@ -11,9 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\AuthorController;
 
-Route::get('/', function () {
-    return view('content.home');
-})->name('Book Store');
+
 Route::get('/', [HomeController::class, 'index'])->name('Book Store');
 
 ### ADMIN ###
@@ -78,6 +76,7 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
     Route::GET('/dashboard/my-profile', [AccountController::class, 'profile'])->name('auth.profile');
     //Wishlist
     Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
+    Route::GET('/wishlist/search/', [WishlistController::class, 'search'])->name('product.wishlist.search');
     Route::POST('/add-wishlist', [WishlistController::class, 'add'])->name('product.wishlist.add');
     Route::POST('/destroy-wishlist', [WishlistController::class, 'destroy'])->name('product.wishlist.destroy');
     Route::POST('/remove-all', [WishlistController::class, 'removeAll'])->name('product.wishlist.remove-all');

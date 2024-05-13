@@ -31,6 +31,33 @@ class WishlistController extends Controller
         return view('wishlist.wishlist', compact('products', 'categories'));
     }
 
+    public function search(Request $request)
+    {
+        $categories = Category::all();
+        if ($request->has('search')) {
+            $searchQuery = $request->input('search');
+            $userId = auth()->id();
+
+            $query = Wishlist::query()
+                ->join('products', 'wishlist.product_id', '=', 'products.id')
+                ->select('products.*', 'wishlist.wishlist_id AS wishlist_id');
+
+            if (auth()->check()) {
+                $query->where('wishlist.user_id', $userId);
+            }
+
+            $products = $query->where('products.name', 'LIKE', "%$searchQuery%")
+                ->orderBy('wishlist.created_at', 'desc')
+                ->paginate(5);
+            $products->appends(['search' => $searchQuery]);
+
+            if ($products->isEmpty()) {
+                return redirect()->route('product.wishlist')->with('message', 'Không tìm thấy kết quả tìm kiếm!');
+            }
+            return view('wishlist.wishlist', compact('products', 'categories'));
+        }
+    }
+
 
     public function add(Request $request)
     {
@@ -74,15 +101,10 @@ class WishlistController extends Controller
 
     public function removeAll()
     {
-        $userId = Auth::id();
+        $userId = auth()->id();
 
-        // Tìm tất cả các sản phẩm trong danh sách mong muốn của người dùng
-        $wishlistItems = Wishlist::where('user_id', $userId)->get();
-
-        // Xóa từng sản phẩm trong danh sách mong muốn
-        foreach ($wishlistItems as $item) {
-            $item->delete();
-        }
+        // Xóa tất cả các sản phẩm trong danh sách mong muốn của người dùng
+        Wishlist::where('user_id', $userId)->delete();
 
         // Chuyển hướng về trang wishlist với thông báo
         return redirect()->route('product.wishlist')->with('success', 'Tất cả các sản phẩm đã được xóa khỏi danh sách wishlist của bạn.');

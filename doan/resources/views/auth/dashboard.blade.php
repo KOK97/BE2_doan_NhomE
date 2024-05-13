@@ -13,12 +13,10 @@
                         <div class="breadcrumb__wrap">
                             <ul class="breadcrumb__list">
                                 <li class="has-separator">
-
-                                    <a href="index.html">Home</a>
+                                    <a href="{{ route('Book Store') }}">Home</a>
                                 </li>
                                 <li class="is-marked">
-
-                                    <a href="dashboard.html">My Account</a>
+                                    <a href="{{ route('auth.dashboard') }}">My Account</a>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +41,8 @@
                                         <span class="dash__text u-s-m-b-16">Hello, {{ $user->name }}</span>
                                         <ul class="dash__f-list">
                                             <li>
-                                                <a class="dash-active" href="{{route('auth.dashboard')}}">Manage My Account</a>
+                                                <a class="dash-active" href="{{ route('auth.dashboard') }}">Manage My
+                                                    Account</a>
                                             </li>
                                             <li>
                                                 <a href="{{ route('auth.profile') }}">My Profile</a>
@@ -51,6 +50,11 @@
                                             <li>
                                                 <a href="dash-my-order.html">My Orders</a>
                                             </li>
+                                            @if (auth()->user()->role === 'admin')
+                                                <li>
+                                                    <a href="{{ route('admin.index') }}">Admin</a>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -69,7 +73,7 @@
                                                 <div class="dash__w-wrap">
                                                     <span class="dash__w-icon dash__w-icon-style-3"><i
                                                             class="far fa-heart"></i></span>
-                                                    <span class="dash__w-text">0</span>
+                                                    <span class="dash__w-text">{{ $totalItems }}</span>
                                                     <span class="dash__w-name">Wishlist</span>
                                                 </div>
                                             </li>

@@ -18,10 +18,10 @@
                         <div class="breadcrumb__wrap">
                             <ul class="breadcrumb__list">
                                 <li class="has-separator">
-                                    <a href="index.html">Home</a>
+                                    <a href="{{route('Book Store')}}">Home</a>
                                 </li>
                                 <li class="is-marked">
-                                    <a href="dash-my-profile.html">My Account</a>
+                                    <a href="{{route('auth.profile')}}">My Account</a>
                                 </li>
                             </ul>
                         </div>
@@ -72,7 +72,7 @@
                                                 <div class="dash__w-wrap">
                                                     <span class="dash__w-icon dash__w-icon-style-3"><i
                                                             class="far fa-heart"></i></span>
-                                                    <span class="dash__w-text">0</span>
+                                                    <span class="dash__w-text">{{$totalItems}}</span>
                                                     <span class="dash__w-name">Wishlist</span>
                                                 </div>
                                             </li>

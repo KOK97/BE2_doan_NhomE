@@ -95,7 +95,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="section__text-wrap">
-                                <h1 class="section__heading u-c-secondary">Wishlist</h1>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h1 class="section__heading u-c-secondary">Wishlist</h1>
+                                    <form action="{{route('product.wishlist.search')}}" method="GET" class="form-inline">
+                                        <div class="input-group">
+                                            <input id="keyword" type="text" name="search" class="form-control"
+                                                placeholder="Tìm sản phẩm theo tên">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="submit"><i
+                                                        class="fa-solid fa-search"></i> Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
