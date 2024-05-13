@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
-    <title>Ludus - Books</title>
+    <title>Books</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--====== Google Font ======-->
@@ -87,7 +87,8 @@
                                                 </li>
                                             @else
                                                 <li>
-                                                    <a href=""><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                                    <a href="{{ route('auth.dashboard') }}"><i
+                                                            class="fas fa-user-circle u-s-m-r-6"></i>
                                                         <span>Account</span></a>
                                                 </li>
                                                 <li>
@@ -592,6 +593,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var message = "{{ session('success') }}";
+            if (message) {
+                alert(message);
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            var message = "{{ session('error') }}";
             if (message) {
                 alert(message);
             }

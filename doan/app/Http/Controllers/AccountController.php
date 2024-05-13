@@ -150,4 +150,18 @@ class AccountController extends Controller
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công !');
     }
+
+    public function account()
+    {
+        $user = auth()->user();
+        $categories = Category::get();
+        return view('auth.dashboard', compact('user', 'categories'));
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        $categories = Category::get();
+        return view('auth.myprofile', compact('user', 'categories'));
+    }
 }

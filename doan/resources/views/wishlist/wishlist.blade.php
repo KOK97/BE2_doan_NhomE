@@ -1,4 +1,65 @@
 @extends('layout')
+<style>
+    .pagination>.active>a,
+    .pagination>.active>a:focus,
+    .pagination>.active>a:hover,
+    .pagination>.active>span,
+    .pagination>.active>span:focus,
+    .pagination>.active>span:hover {
+        background-color: #3b4952;
+        border-color: #3b4952;
+    }
+
+    .pagination>li>a,
+    .pagination>li>span {
+        color: #2c3840;
+        margin: 0px 5px;
+        border-radius: 3px;
+        -webkit-box-shadow: 0px 1px 3px 0px rgba(44, 56, 64, 0.2);
+        -moz-box-shadow: 0px 1px 3px 0px rgba(44, 56, 64, 0.2);
+        box-shadow: 0px 1px 3px 0px rgba(44, 56, 64, 0.2);
+        border: none;
+        font-size: 16px;
+    }
+
+    .pagination>li>a:focus,
+    .pagination>li>a:hover,
+    .pagination>li>span:focus,
+    .pagination>li>span:hover {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+        color: #fff;
+    }
+
+    .pagination {
+        margin: 20px 0;
+    }
+
+    .pagination a,
+    .pagination span {
+        color: #333;
+        border-radius: 3px;
+        padding: 5px 10px;
+        margin: 0 2px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+    }
+
+    .pagination a:hover,
+    .pagination a:focus,
+    .pagination span:hover,
+    .pagination span:focus {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination-wrap {
+        width: 100%;
+        float: left;
+        margin-bottom: 35px;
+    }
+</style>
 @section('main-content')
     <!--====== App Content ======-->
     <div class="app-content">
@@ -66,31 +127,37 @@
                                                         <span class="w-r__name">
                                                             <a href="product-detail.html">{{ $product->name }}</a>
                                                         </span>
-                                                        <span class="w-r__price">{{ $product->price }} VND
-                                                            @if (isset($product->sales))
-                                                                <span
-                                                                    class="w-r__discount">{{ $product->sales->discount }}</span>
-                                                            @endif
-                                                        </span>
+                                                        @if ($product->reduced_price != $product->price)
+                                                            <span class="w-r__price">{{ $product->reduced_price }} VND
+                                                                <span class="w-r__discount">{{ $product->price }} VND</span>
+                                                            </span>
+                                                        @else
+                                                            <span class="w-r__price">{{ $product->price }}VND
+                                                                <span class="w-r__discount"></span>
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <div class="w-r__wrap-2">
-                                                    <a class="w-r__link btn--e-brand-b-2" data-modal="modal"
-                                                        data-modal-id="#add-to-cart">ADD TO CART</a>
-                                                    <a class="w-r__link btn--e-transparent-platinum-b-2"
-                                                        href="">VIEW</a>
-                                                    <form action="{{ route('product.wishlist.destroy') }}" method="post">
+                                                <form action="{{ route('product.wishlist.destroy') }}" method="post">
+                                                    <div class="w-r__wrap-2">
+                                                        <a class="w-r__link btn--e-brand-b-2" data-modal="modal"
+                                                            data-modal-id="#add-to-cart">ADD TO CART</a>
+                                                        <a class="w-r__link btn--e-transparent-platinum-b-2"
+                                                            href="">VIEW</a>
                                                         @csrf
                                                         <input type="hidden" name="wishlist_id"
                                                             value="{{ $product->wishlist_id }}">
                                                         <button class="w-r__link btn--e-transparent-platinum-b-2"
                                                             type="submit">REMOVE</button>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <!--====== End - Wishlist Product ======-->
                                     @endforeach
+                                    <div class="pagination-wrap">
+                                        {{ $products->links('pagination::bootstrap-5') }}
+                                    </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="route-box">

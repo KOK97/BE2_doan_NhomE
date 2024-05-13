@@ -23,7 +23,8 @@ class WishlistController extends Controller
             $products = Wishlist::where('wishlist.user_id', $userId)
                 ->join('products', 'wishlist.product_id', '=', 'products.id')
                 ->select('products.*', 'wishlist.wishlist_id AS wishlist_id')
-                ->get();
+                ->orderBy('wishlist.created_at', 'desc')
+                ->paginate(5);
         } else {
             $products = null;
         }

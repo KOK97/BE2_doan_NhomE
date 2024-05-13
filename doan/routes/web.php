@@ -71,8 +71,19 @@ Route::prefix('/')->middleware('isAdmin')->group(function () {
     Route::DELETE('/destroyauthor/{id}', [AuthorController::class, 'destroyAuthor'])->name('destroyAuthor');
 });
 
+Route::prefix('/')->middleware('loginRequired')->group(function () {
+    //Dashboard
+    //Account
+    Route::GET('/dashboard', [AccountController::class, 'account'])->name('auth.dashboard');
+    Route::GET('/dashboard/my-profile', [AccountController::class, 'profile'])->name('auth.profile');
+    //Wishlist
+    Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
+    Route::POST('/add-wishlist', [WishlistController::class, 'add'])->name('product.wishlist.add');
+    Route::POST('/destroy-wishlist', [WishlistController::class, 'destroy'])->name('product.wishlist.destroy');
+    Route::POST('/remove-all', [WishlistController::class, 'removeAll'])->name('product.wishlist.remove-all');
+});
 
-//Account
+
 // Login
 Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
 Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
@@ -81,9 +92,3 @@ Route::GET('/register', [AccountController::class, 'register'])->name('auth.regi
 Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
 //Log out
 Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
-
-//Wishlist
-Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
-Route::POST('/add-wishlist', [WishlistController::class, 'add'])->name('product.wishlist.add');
-Route::POST('/destroy-wishlist', [WishlistController::class, 'destroy'])->name('product.wishlist.destroy');
-Route::POST('/remove-all', [WishlistController::class, 'removeAll'])->name('product.wishlist.remove-all');
