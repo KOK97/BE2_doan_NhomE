@@ -16,19 +16,23 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'reduced_price'.
+        'reduced_price',
         'image',
         'publishing_year',
         'sale_id',
         'author_id',
     ];
-    public function sales():HasMany
+    public function sale():HasMany
     {
         return $this->hasMany(Sale::class);
     }
     public function author():BelongsTo
     {
         return $this->belongsTo(Author::class);
+    }
+    public function reviews():BelongsTo
+    {
+        return $this->belongsTo(Review::class);
     }
     public function categories() : BelongsToMany {
         return $this->belongsToMany(Category::class,'product_category','product_id','category_id');

@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return view('content.home');
@@ -78,6 +79,10 @@ Route::DELETE('/destroyproduct/{id}', [ProductController::class,'destroy'])->nam
 //show 
 Route::GET('/shop',[ProductController::class,'showProductByCategory'])->name('show.shop');
 
+//show detail
+Route::GET('/detailproduct/{id}',[ProductController::class,'showDetail'])->name('show.detail');
+
+
 
 ### SALE ###
 Route::GET('/listsale',[SaleController::class,'listSale'])->name('listSale');
@@ -102,3 +107,6 @@ Route::PUT('/updateauthor/{id}', [AuthorController::class,'updateAuthor'])->name
 Route::DELETE('/destroyauthor/{id}', [AuthorController::class,'destroyAuthor'])->name('destroyAuthor');
 
 // Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
+### REVIEWS ###
+// Route::POST('/detailproduct/{id}',[ProductController::class,'store'])->name('store.review');
+Route::POST('/detailproduct/{id}', [ReviewController::class,'store'])->name('product.comment');

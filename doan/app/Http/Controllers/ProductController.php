@@ -11,7 +11,9 @@ use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Review;
 use App\Models\ProductCategory;
+use App\Models\User;
 use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
@@ -22,16 +24,32 @@ class ProductController extends Controller
         $categories = Category::take(5)->get();
 
         $productshow = collect([]);
+        $addedProductIds = [];
+
         foreach ($products as $value) {
             foreach ($value->categories as $cate) {
                 foreach ($categories as $category) {
-                    if ($cate->id == $category->id) {
+                    if ($cate->id == $category->id && !in_array($value->id, $addedProductIds)) {
                         $productshow->push($value);
+                        $addedProductIds[] = $value->id;
                     }
                 }
             }
         }
-        return view('content.home', ['products' => $products,'categories'=>$categories,'productshow'=>$productshow]);
+        return view('content.home', ['products' => $products, 'categories' => $categories, 'productshow' => $productshow]);
+    }
+    public function showDetail($id) {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $sales = Sale::all();
+        $reviews = Review::where('product_id', 'like', $id)->get();
+        foreach ($sales as  $vsale) {
+          if($vsale->id == $product->sale_id){
+            $sale = $vsale->discount;
+          }
+        }
+        $users = User::all();
+        return view('content.detail', compact('product','categories','sale','reviews','users'));
     }
     public function listProduct()
     {

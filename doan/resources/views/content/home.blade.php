@@ -173,7 +173,7 @@
 
                                                     <span class="product-o__name">
 
-                                                        <a href="product-detail.html">{{ $product->name }}</a></span>
+                                                        <a href="{{ route('show.detail', $product->id) }}">{{ $product->name }}</a></span>
                                                     <div class="product-o__rating gl-rating-style"><i
                                                             class="fas fa-star"></i><i class="fas fa-star"></i><i
                                                             class="fas fa-star"></i><i class="fas fa-star"></i><i
@@ -196,7 +196,6 @@
                                             </div>
                                         @endforeach
                                     @endforeach
-                                   \
                                 </div>
                             </div>
                         </div>
