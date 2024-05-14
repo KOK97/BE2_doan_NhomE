@@ -1,11 +1,4 @@
 @extends('layout')
-<style>
-    .avatar-image-lg {
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%;
-    }
-</style>
 @section('main-content')
     <!--====== App Content ======-->
     <div class="app-content">
@@ -18,10 +11,10 @@
                         <div class="breadcrumb__wrap">
                             <ul class="breadcrumb__list">
                                 <li class="has-separator">
-                                    <a href="{{route('Book Store')}}">Home</a>
+                                    <a href="{{ route('Book Store') }}">Home</a>
                                 </li>
                                 <li class="is-marked">
-                                    <a href="{{route('auth.profile')}}">My Account</a>
+                                    <a href="{{ route('auth.profile') }}">My Account</a>
                                 </li>
                             </ul>
                         </div>
@@ -54,6 +47,14 @@
                                             <li>
                                                 <a href="dash-my-order.html">My Orders</a>
                                             </li>
+                                            <li>
+                                                <a href="{{ route('auth.productrecent') }}">Product recent</a>
+                                            </li>
+                                            @if (auth()->user()->role === 'admin')
+                                                <li>
+                                                    <a href="{{ route('admin.index') }}">Admin</a>
+                                                </li>
+                                            @endif
                                         </ul>
                                     </div>
                                 </div>
@@ -72,7 +73,7 @@
                                                 <div class="dash__w-wrap">
                                                     <span class="dash__w-icon dash__w-icon-style-3"><i
                                                             class="far fa-heart"></i></span>
-                                                    <span class="dash__w-text">{{$totalItems}}</span>
+                                                    <span class="dash__w-text">{{ $totalItems }}</span>
                                                     <span class="dash__w-name">Wishlist</span>
                                                 </div>
                                             </li>
@@ -91,7 +92,7 @@
                                             <div class="col-lg-4 u-s-m-b-30">
                                                 <h2 class="dash__h2 u-s-m-b-8" style="text-align: center">Avatar</h2>
                                                 <img src="{{ asset('images/users/' . auth()->user()->avatar) }}"
-                                                    class="avatar-image-lg">
+                                                    class="avatar-image-lg" style="max-width: 100%; height: auto; border-radius: 50%;">
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="row">

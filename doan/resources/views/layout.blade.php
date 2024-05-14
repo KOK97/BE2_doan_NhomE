@@ -9,11 +9,11 @@
     <meta name="author" content="">
     <link href="images/favicon.png" rel="shortcut icon">
     <title>Books</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
     <!--====== Vendor Css ======-->
@@ -28,7 +28,7 @@
 <body class="config">
     <div class="preloader is-active">
         <div class="preloader__wrap">
-            <img class="preloader__img" src="{{ asset('images/logo/30.gif')}}" alt="">
+            <img class="preloader__img" src="{{ asset('images/logo/30.gif') }}" alt="">
         </div>
     </div>
 
@@ -48,7 +48,7 @@
                         <!--====== Main Logo ======-->
 
                         <a class="main-logo" href="{{ url('/') }}">
-                            <img src="{{ asset('images/logo/logo-1.png')}}" alt=""></a>
+                            <img src="{{ asset('images/logo/logo-1.png') }}" alt=""></a>
                         <!--====== End - Main Logo ======-->
 
 
@@ -198,32 +198,24 @@
 
                         <!--====== Dropdown Main plugin ======-->
                         <div class="menu-init" id="navigation3">
-
                             <button
                                 class="btn btn--icon toggle-button toggle-button--secondary fas fa-shopping-bag toggle-button-shop"
                                 type="button"></button>
-
                             <span class="total-item-round">2</span>
 
                             <!--====== Menu ======-->
                             <div class="ah-lg-mode">
-
                                 <span class="ah-close">✕ Close</span>
-
                                 <!--====== List ======-->
                                 <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
                                     <li>
-
                                         <a href="{{ url('/') }}"><i class="fas fa-home u-c-brand"></i></a>
                                     </li>
                                     <li>
-
                                         <a href="{{ url('/wishlist') }}"><i class="far fa-heart"></i></a>
                                     </li>
                                     <li class="has-dropdown">
-
                                         <a class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
-
                                             <span class="total-item-round">2</span></a>
 
                                         <!--====== Dropdown ======-->
@@ -582,6 +574,17 @@
         </footer>
     </div>
     <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 

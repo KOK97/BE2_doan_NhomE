@@ -74,6 +74,8 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
     //Account
     Route::GET('/dashboard', [AccountController::class, 'account'])->name('auth.dashboard');
     Route::GET('/dashboard/my-profile', [AccountController::class, 'profile'])->name('auth.profile');
+    //Product recent
+    Route::GET('/dashboard/product-recent', [AccountController::class, 'productRecent'])->name('auth.productrecent');
     //Wishlist
     Route::GET('/wishlist', [WishlistController::class, 'index'])->name('product.wishlist');
     Route::GET('/wishlist/search/', [WishlistController::class, 'search'])->name('product.wishlist.search');

@@ -50,6 +50,9 @@
                                             <li>
                                                 <a href="dash-my-order.html">My Orders</a>
                                             </li>
+                                            <li>
+                                                <a href="{{route('auth.productrecent')}}">Product recent</a>
+                                            </li>
                                             @if (auth()->user()->role === 'admin')
                                                 <li>
                                                     <a href="{{ route('admin.index') }}">Admin</a>

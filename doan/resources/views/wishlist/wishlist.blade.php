@@ -103,7 +103,7 @@
                                                 placeholder="Tìm sản phẩm theo tên">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="submit"><i
-                                                        class="fa-solid fa-search"></i> Search</button>
+                                                        class="fas fa-search"></i> Search</button>
                                             </div>
                                         </div>
                                     </form>

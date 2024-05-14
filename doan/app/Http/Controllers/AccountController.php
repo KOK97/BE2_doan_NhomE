@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -78,7 +80,6 @@ class AccountController extends Controller
             return redirect()->route('auth.login')->withInput()->withErrors(['error' => 'Thông tin đăng nhập không chính xác!']);
         }
     }
-
 
     public function customRegister(Request $request)
     {
@@ -168,5 +169,23 @@ class AccountController extends Controller
         // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
         $totalItems = Wishlist::where('user_id', $user->id)->count();
         return view('auth.myprofile', compact('user', 'categories', 'totalItems'));
+    }
+
+    public function productRecent()
+    {
+        $user = auth()->user();
+        $categories = Category::get();
+        // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
+        $totalItems = Wishlist::where('user_id', $user->id)->count();
+
+        $productViews = DB::table('product_views')
+            ->where('user_id', $user->id)
+            ->orderBy('viewed_at', 'desc')
+            ->get();
+
+        // Assuming you have a Product model with necessary relationships set up
+        $products = Product::whereIn('id', $productViews->pluck('product_id'))->get();
+
+        return view('auth.product-recent', compact('user', 'categories', 'totalItems','products'));
     }
 }
