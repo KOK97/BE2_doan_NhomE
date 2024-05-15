@@ -53,10 +53,10 @@
 
 
                         <!--====== Search Form ======-->
-                        <form class="main-form">
+                        <form class="main-form" action="{{route('product.search')}}" method="GET">
                             <label for="main-search"></label>
                             <input class="input-text input-text--border-radius input-text--style-1" type="text"
-                                id="main-search" placeholder="Bạn cần tìm gì ?">
+                                id="main-search" name="keyword" placeholder="Bạn cần tìm gì ?">
                             <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
                         </form>
                         <!--====== End - Search Form ======-->

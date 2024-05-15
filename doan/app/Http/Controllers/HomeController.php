@@ -48,21 +48,26 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword');
+        $query = $request->input('keyword', '');  // Default to empty string if keyword is not present
+        $categories = Category::all();
 
-        $products = Product::select('products.id as idProduct', 'products.productName', 'products.productPrice', DB::raw('MIN(product_images.product_imageName) AS product_imageName'))
-            ->join('categories', 'products.productCategory', '=', 'categories.id')
-            ->leftJoin('product_images', 'products.id', '=', 'product_images.product_id')
-            ->where('products.productName', 'like', '%' . $keyword . '%')
-            ->groupBy('products.id', 'products.productName', 'products.productPrice')
-            ->orderBy('products.created_at', 'desc')
-            ->get();
+        $products = Product::when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->where('name', 'LIKE', "%$query%")
+                ->orWhereHas('categories', function ($q) use ($query) {
+                    $q->where('category_name', 'LIKE', "%$query%");
+                });
+        })
+            ->paginate(5);
 
-        $count = 0;
-        foreach ($products as $value) {
-            $count++;
+        $products->appends(['keyword' => $query]);
+
+        $count = $products->total();
+
+        if ($products->isEmpty()) {
+            $message = 'Không tìm thấy kết quả tìm kiếm!';
+            return view('product.search', compact('count', 'query', 'products', 'categories', 'message'));
         }
 
-        return view('website.search_products', compact('count', 'keyword', 'products'));
+        return view('product.search', compact('count', 'query', 'products', 'categories'));
     }
 }

@@ -100,3 +100,5 @@ Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
 
 //Show detail
 Route::GET('product/detailproduct/{id}', [ProductController::class, 'showDetail'])->name('show.detail');
+//Search
+Route::GET('product/search', [HomeController::class, 'search'])->name('product.search');
