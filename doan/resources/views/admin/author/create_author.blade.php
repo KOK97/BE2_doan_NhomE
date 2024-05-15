@@ -18,7 +18,7 @@
                     <div class="form-group mb-6">
                         <label for="author_name">Author Name</label>
                         <input type="text" placeholder="Author Name" id="author_name" class="form-control"
-                            name="author_name" required autofocus>
+                            name="author_name"  autofocus>
                         @if ($errors->has('author_name'))
                             <span class="text-danger">{{ $errors->first('author_name') }}</span>
                         @endif
@@ -34,7 +34,7 @@
                     <div class="form-group mb-6">
                         <label for="year_of_birth">Year of Birth</label>
                         <input type="text" placeholder="Year of Birth" id="year_of_birth" class="form-control"
-                            name="year_of_birth" required autofocus>
+                            name="year_of_birth"  autofocus>
                         @if ($errors->has('year_of_birth'))
                             <span class="text-danger">{{ $errors->first('year_of_birth') }}</span>
                         @endif

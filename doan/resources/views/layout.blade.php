@@ -10,10 +10,10 @@
     <link href="images/favicon.png" rel="shortcut icon">
     <title>Books</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
     <!--====== Vendor Css ======-->
@@ -481,11 +481,11 @@
                                             <ul>
                                                 <li>
 
-                                                    <a href="about.html">About us</a>
+                                                    <a href="{{ url('/') }}">About us</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="contact.html">Contact Us</a>
+                                                    <a href="{{ url('/') }}">Contact Us</a>
                                                 </li>
                                                 <li>
 
@@ -493,11 +493,11 @@
                                                 </li>
                                                 <li>
 
-                                                    <a href="dash-my-order.html">Delivery</a>
+                                                    <a href="{{ url('/') }}">Delivery</a>
                                                 </li>
                                                 <li>
 
-                                                    <a href="shop-side-version-2.html">Store</a>
+                                                    <a href="{{ url('/') }}">Store</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -525,16 +525,12 @@
                                         </div>
                                     </div>
                                     <div class="newsletter__group">
-
                                         <label for="newsletter"></label>
-
                                         <input class="input-text input-text--only-white" type="text"
                                             id="newsletter" placeholder="Enter your Email">
-
                                         <button class="btn btn--e-brand newsletter__btn"
                                             type="submit">SUBSCRIBE</button>
                                     </div>
-
                                     <span class="newsletter__text">Subscribe to the mailing list to receive updates on
                                         promotions, new arrivals, discount and coupons.</span>
                                 </form>
@@ -585,6 +581,29 @@
         ga.l = +new Date;
         ga('create', 'UA-XXXXX-Y', 'auto');
         ga('send', 'pageview')
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var message = "{{ session('success') }}";
+            if (message) {
+                alert(message);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var message = "{{ session('error') }}";
+            if (message) {
+                alert(message);
+            }
+        });
+
+        $(document).ready(function() {
+            // Loại bỏ các thẻ HTML khỏi nội dung mô tả
+            $("u-s-m-b-15.pd-detail__preview-desc").each(function() {
+                var text = $(this).html();
+                var strippedText = text.replace(/<[^>]+>/g, '');
+                $(this).html(strippedText);
+            });
+        });
     </script>
     <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
@@ -596,20 +615,6 @@
 
     <!--====== App ======-->
     <script src='{{ asset('js/app.js') }}'></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var message = "{{ session('success') }}";
-            if (message) {
-                alert(message);
-            }
-        });
-        document.addEventListener("DOMContentLoaded", function() {
-            var message = "{{ session('error') }}";
-            if (message) {
-                alert(message);
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -20,15 +20,15 @@
                     <div class="form-group mb-3">
                         <label for="discount">Mức giảm</label>
                         <input type="text" placeholder="discount" id="discount" class="form-control" name="discount"
-                            required autofocus value="{{ $sale->discount }}">
+                             autofocus value="{{ $sale->discount }}">
                         @if ($errors->has('discount'))
                             <span class="text-danger">{{ $errors->first('discount') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
                         <label for="sale_content">Nội dung giảm</label>
-                        <input type="text" placeholder="sale_content" id="sale_content" class="form-control"
-                            name="sale_content" required autofocus value="{{ $sale->sale_content }}">
+                        <input type="text" placeholder="Sale Content" id="sale_content" class="form-control"
+                            name="sale_content"  autofocus value="{{ $sale->sale_content }}">
                         @if ($errors->has('sale_content'))
                             <span class="text-danger">{{ $errors->first('sale_content') }}</span>
                         @endif

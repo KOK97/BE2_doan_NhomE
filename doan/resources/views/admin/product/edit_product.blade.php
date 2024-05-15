@@ -18,8 +18,8 @@
                 <div class="col-md-7">
                     <div class="form-group mb-3">
                         <label for="name">Tên Sản Phẩm</label>
-                        <input type="text" placeholder="Name" id="name" class="form-control" name="name" required
-                            autofocus value="{{ $product->name }}">
+                        <input type="text" placeholder="Name" id="name" class="form-control" name="name" autofocus
+                            value="{{ $product->name }}">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -37,7 +37,7 @@
                     <div class="form-group mb-3">
                         <label for="price">Giá Sản Phẩm</label>
                         <input type="text" placeholder="Price" id="price" class="form-control" name="price"
-                            required autofocus value="{{ $product->price }}">
+                            autofocus value="{{ $product->price }}">
                         @if ($errors->has('price'))
                             <span class="text-danger">{{ $errors->first('price') }}</span>
                         @endif
@@ -60,7 +60,8 @@
                             @foreach ($authors as $author)
                                 <option value="{{ $author->id }}"
                                     {{ $author->id == $product->author_id ? 'selected' : '' }}>
-                                    {{ $author->author_name }}</option>
+                                    {{ $author->author_name }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -93,7 +94,9 @@
                                     class="form-check-label">{{ $category->category_name }}</label>
                             </div>
                         @endforeach
-
+                        @if ($errors->has('categories'))
+                            <span class="text-danger">{{ $errors->first('categories') }}</span>
+                        @endif
 
                     </div>
                 </div>

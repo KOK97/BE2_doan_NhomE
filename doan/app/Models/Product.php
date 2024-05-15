@@ -22,7 +22,7 @@ class Product extends Model
         'sale_id',
         'author_id',
     ];
-    public function sales(): HasMany
+    public function sale():HasMany
     {
         return $this->hasMany(Sale::class);
     }
@@ -30,8 +30,11 @@ class Product extends Model
     {
         return $this->belongsTo(Author::class);
     }
-    public function categories(): BelongsToMany
+    public function reviews():BelongsTo
     {
-        return $this->belongsToMany(Category::class, 'product_category', 'product_id', 'category_id');
+        return $this->belongsTo(Review::class);
+    }
+    public function categories() : BelongsToMany {
+        return $this->belongsToMany(Category::class,'product_category','product_id','category_id');
     }
 }

@@ -18,7 +18,7 @@
                     <div class="form-group mb-6">
                         <label for="discount">Mức Giảm</label>
                         <input type="text" placeholder="Discount" id="discount" class="form-control"
-                            name="discount" required autofocus>
+                            name="discount"  autofocus>
                         @if ($errors->has('discount'))
                             <span class="text-danger">{{ $errors->first('discount') }}</span>
                         @endif
@@ -26,7 +26,7 @@
                     <div class="form-group mb-6">
                         <label for="sale_content">Nội Dung Giảm</label>
                         <input type="text" placeholder="Sale Content" id="sale_content" class="form-control"
-                            name="sale_content" required autofocus>
+                            name="sale_content"  autofocus>
                         @if ($errors->has('sale_content'))
                             <span class="text-danger">{{ $errors->first('sale_content') }}</span>
                         @endif

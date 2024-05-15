@@ -47,7 +47,7 @@
                                 <img class="img-fluid" src="{{ asset('images/products/' . $product->image) }}"
                                     width="50px"class="img-thumbnail" alt="">
                             </td>
-                            <td>
+                            <td id="description">
                                 @if (strlen(strip_tags($product->description)) > 100)
                                     <?php
                                     $truncatedDescription = substr(strip_tags($product->description), 0, 100);
@@ -105,5 +105,14 @@
         setTimeout(function() {
             document.getElementById('alert').style.display = 'none';
         }, 10000); // 10 giây (10000 miligiây)
+
+        $(document).ready(function() {
+            // Loại bỏ các thẻ HTML khỏi nội dung mô tả
+            $("td.description").each(function() {
+                var text = $(this).html();
+                var strippedText = text.replace(/<[^>]+>/g, '');
+                $(this).html(strippedText);
+            });
+        });
     </script>
 @endsection

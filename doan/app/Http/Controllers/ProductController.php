@@ -11,7 +11,11 @@ use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Review;
 use App\Models\ProductCategory;
+use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
+use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
 {
@@ -31,17 +35,16 @@ class ProductController extends Controller
     }
     public function createProduct(Request $request)
     {
-        $requied = [
-            'name' => 'required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'description' => 'required', 'min:1', 'max:255',
-            'price' => 'required', 'numeric', 'min:1', 'max:9999999.99',
-            'image' => 'required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048',
-            'publishing_year' => 'required', 'numeric', 'max:2024',
-            'author_id' => 'required',
-            'sale_id' => 'nullable',
-        ];
-
-        $messages = [
+        $validatedData = Validator::make($request->all(), [
+            'name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'description' => ['required', 'min:1', 'max:255'],
+            'price' => ['required', 'numeric', 'min:1', 'max:9999999.99'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'publishing_year' => ['required', 'numeric', 'max:2024'],
+            'author_id' => ['required'],
+            'sale_id' => ['nullable'],
+            'categories' => ['required'],
+        ], [
             'name.required' => 'Vui lòng nhập tên sản phẩm',
             'name.min' => 'Tên sản phẩm phải có ít nhất 10 ký tự',
             'name.max' => 'Tên sản phẩm không được vượt quá 50 ký tự',
@@ -60,27 +63,21 @@ class ProductController extends Controller
             'image.mimes' => 'Hình ảnh sản phẩm phải ở một trong các định dạng sau: jpeg, png, jpg, gif',
             'image.max' => 'Dung lượng ảnh vượt quá giới hạn',
 
-            'publishing_year.required ' => 'Vui lòng nhập năm xuất bản',
+            'publishing_year.required' => 'Vui lòng nhập năm xuất bản',
             'publishing_year.numeric' => 'Năm xuất bản phải là số',
             'publishing_year.max' => 'Năm xuất bản không được vượt quá năm hiện tại',
 
-            'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
+            'author_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
 
-        ];
-        $attribute = [
-            'name' => 'Tên sản phẩm',
-            'description' => 'Mô tả sản phẩm',
-            'price' => 'Giá sản phẩm',
-            'image' => 'Ảnh sản phẩm',
-            'publishing_year' => 'Năm xuất bản',
-            'sale_id' => 'Giảm giá',
-            'author_id' => 'Tác giả',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            'categories.required' => 'Vui lòng chọn danh mục cho sản phẩm',
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('createProduct')
+                ->withErrors($errors)
+                ->withInput();
         }
-
         $file = $request->file('image');
         $path = 'images/products';
         $fileName = $file->getClientOriginalName();
@@ -121,17 +118,16 @@ class ProductController extends Controller
     }
     public function updateProduct(Request $request, $id)
     {
-        $requied = [
-            'name' => 'required', 'regex:/^[0-9a-zA-Z\s]+$/', 'min:10', 'max:50',
-            'description' => 'required', 'min:1', 'max:255',
-            'price' => 'required', 'numeric', 'min:1', 'max:9999999.99',
-            'image' => 'nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048',
-            'publishing_year' => 'required', 'numeric', 'max:2024',
-            'author_id' => 'required',
-            'sale_id' => 'nullable',
-        ];
-
-        $messages = [
+        $validatedData = Validator::make($request->all(), [
+            'name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'description' => ['required', 'min:1', 'max:255'],
+            'price' => ['required', 'numeric', 'min:1', 'max:9999999.99'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'publishing_year' => ['required', 'numeric', 'max:2024'],
+            'author_id' => ['required'],
+            'sale_id' => ['nullable'],
+            'categories' => ['required'],
+        ], [
             'name.required' => 'Vui lòng nhập tên sản phẩm',
             'name.min' => 'Tên sản phẩm phải có ít nhất 10 ký tự',
             'name.max' => 'Tên sản phẩm không được vượt quá 50 ký tự',
@@ -141,7 +137,6 @@ class ProductController extends Controller
             'description.min' => 'Mô tả sản phẩm phải có ít nhất 1 ký tự',
             'description.max' => 'Mô tả sản phẩm không được vượt quá 255 ký tự',
 
-            'price.required' => 'Vui lòng nhập giá sản phẩm',
             'price.numeric' => 'Giá sản phẩm phải là một số hợp lệ',
             'price.min' => 'Giá sản phẩm phải ít nhất là 1',
             'price.max' => 'Giá sản phẩm không được vượt quá 9,999,999.99',
@@ -150,25 +145,20 @@ class ProductController extends Controller
             'image.mimes' => 'Hình ảnh sản phẩm phải ở một trong các định dạng sau: jpeg, png, jpg, gif',
             'image.max' => 'Dung lượng ảnh vượt quá giới hạn',
 
-            'publishing_year.required ' => 'Vui lòng nhập năm xuất bản',
+            'publishing_year.required' => 'Vui lòng nhập năm xuất bản',
             'publishing_year.numeric' => 'Năm xuất bản phải là số',
             'publishing_year.max' => 'Năm xuất bản không được vượt quá năm hiện tại',
 
-            'auth_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
+            'author_id.required' => 'Vui lòng chọn tác giả cho sản phẩm',
 
-        ];
-        $attribute = [
-            'name' => 'Tên sản phẩm',
-            'description' => 'Mô tả sản phẩm',
-            'price' => 'Giá sản phẩm',
-            'image' => 'Ảnh sản phẩm',
-            'publishing_year' => 'Năm xuất bản',
-            'sale_id' => 'Giảm giá',
-            'author_id' => 'Tác giả',
-        ];
-        $validator = Validator::make($request->all(), $requied, $messages, $attribute);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            'categories.required' => 'Vui lòng chọn danh mục cho sản phẩm',
+        ]);
+
+        if ($validatedData->fails()) {
+            $errors = $validatedData->errors()->messages();
+            return redirect()->route('getdataeditProduct', ['id' => $id])
+                ->withErrors($errors)
+                ->withInput();
         }
         $product = Product::findOrFail($id);
 
@@ -235,5 +225,43 @@ class ProductController extends Controller
             $product->delete();
         }
         return redirect("listproduct")->with('success', 'Xóa Sản Phẩm Thành Công');
+    }
+
+    public function showDetail($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $sales = Sale::all();
+        $reviews = Review::where('product_id', $id)->get(); // Simplified the query to match product_id
+        $sale = null;
+
+        foreach ($sales as $vsale) {
+            if ($vsale->id == $product->sale_id) {
+                $sale = $vsale->discount;
+                break; // Exit loop once the sale is found
+            }
+        }
+        $users = User::all();
+
+        // Get the recently viewed products from the cookie
+        $recentProducts = json_decode(Cookie::get('recent_products', '[]'), true);
+
+        // Remove the product if it already exists in the array
+        if (($key = array_search($id, $recentProducts)) !== false) {
+            unset($recentProducts[$key]);
+        }
+        
+        // Add the product ID to the beginning of the array
+        array_unshift($recentProducts, $id);
+
+        // Keep only the latest 5 products
+        if (count($recentProducts) > 5) {
+            $recentProducts = array_slice($recentProducts, 0, 5);
+        }
+
+        // Save the updated array back to the cookie
+        Cookie::queue('recent_products', json_encode($recentProducts), 1440); // 1 day
+
+        return view('product.detail', compact('product', 'categories', 'sale', 'reviews', 'users'));
     }
 }

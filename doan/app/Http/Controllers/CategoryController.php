@@ -49,13 +49,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'category_name' => 'required|unique:categories|max:255',
-            'category_description' => 'required|max:1000',
+            'category_name' => 'required|unique:categories|max:255|min:2|regex:/^[\p{L}0-9\s\-]+$/u',
+            'category_description' => 'required|max:1000|min:2',
         ], [
             'category_name.required' => 'Tên thể loại là bắt buộc.',
-            'category_description.required' => 'Mô tả là bắt buộc.',
             'category_name.unique' => 'Tên thể loại đã tồn tại.',
             'category_name.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
+            'category_name.min' => 'Tên thể loại không được dưới 2 ký tự.',
+            'category_name.regex' => 'Tên thể loại không được chứa ký tự đặc biệt',
+            'category_description.required' => 'Mô tả là bắt buộc.',
+            'category_description.min' => 'Mô tả không đượ dưới 2 ký tự.',
             'category_description.max' => 'Mô tả không được vượt quá 1000 ký tự.',
         ]);
 
@@ -96,37 +99,31 @@ class CategoryController extends Controller
         }
 
         $validatedData = Validator::make($request->all(), [
-            'category_name' => 'required|max:255',
+            'category_name' => 'required|max:255|min:2|regex:/^[\p{L}0-9\s\-]+$/u',
             'category_description' => 'required|max:1000',
         ], [
             'category_name.required' => 'Tên thể loại là bắt buộc.',
-            'category_description.required' => 'Mô tả là bắt buộc.',
             'category_name.unique' => 'Tên thể loại đã tồn tại.',
             'category_name.max' => 'Tên thể loại không được vượt quá 255 ký tự.',
+            'category_name.min' => 'Tên thể loại không được dưới 2 ký tự.',
+            'category_name.regex' => 'Tên thể loại không được chứa ký tự đặc biệt',
+            'category_description.required' => 'Mô tả là bắt buộc.',
+            'category_description.min' => 'Mô tả không đượ dưới 2 ký tự.',
             'category_description.max' => 'Mô tả không được vượt quá 1000 ký tự.',
         ]);
 
         if ($validatedData->fails()) {
-
-            if ($validatedData->errors()->has('category_name')) {
-                $errors['category_name'] = $validatedData->errors()->first('category_name');
-            }
-
-            if ($validatedData->errors()->has('category_description')) {
-                $errors['category_description'] = $validatedData->errors()->first('category_description');
-            }
-
-            return redirect()->route('category.edit')
-                ->withErrors($errors)
+            return redirect()->route('category.edit', $category_id)
+                ->withErrors($validatedData)
                 ->withInput();
-        } else {
-            $category->category_name = $request->input('category_name');
-            $category->category_description = $request->input('category_description');
-            $category->save();
-            return redirect()->route('category.index')->with('success', 'Đã cập nhật thành công thể loại!');
         }
-    }
 
+        $category->category_name = $request->input('category_name');
+        $category->category_description = $request->input('category_description');
+        $category->save();
+
+        return redirect()->route('category.index')->with('success', 'Đã cập nhật thành công thể loại!');
+    }
 
     public function destroy($category_id)
     {

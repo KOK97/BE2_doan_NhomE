@@ -14,26 +14,11 @@ class ProductCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        ProductCategory::factory()->create([
-            'product_id' =>'1',
-            'category_id' =>'4',
-        ]);
-        ProductCategory::factory()->create([
-            'product_id' =>'1',
-            'category_id' =>'11',
-        ]);
-
-        ProductCategory::factory()->create([
-            'product_id' =>'4',
-            'category_id' =>'1',
-        ]);
-        ProductCategory::factory()->create([
-            'product_id' =>'4',
-            'category_id' =>'11',
-        ]);
-        ProductCategory::factory()->create([
-            'product_id' =>'4',
-            'category_id' =>'13',
-        ]);
+        for ($i = 1; $i < 19; $i++) {
+            ProductCategory::factory()->create([
+                'product_id' => ''.$i,
+                'category_id' => ''.$i,
+            ]);
+        }
     }
 }

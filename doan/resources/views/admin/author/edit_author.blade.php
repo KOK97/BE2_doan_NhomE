@@ -19,8 +19,8 @@
 
                     <div class="form-group mb-3">
                         <label for="author_name">Author Name</label>
-                        <input type="text" placeholder="Author Name" id="author_name" class="form-control" name="author_name"
-                            required autofocus value="{{ $author->author_name }}">
+                        <input type="text" placeholder="Author Name" id="author_name" class="form-control"
+                            name="author_name" autofocus value="{{ $author->author_name }}">
                         @if ($errors->has('author_name'))
                             <span class="text-danger">{{ $errors->first('author_name') }}</span>
                         @endif
@@ -28,15 +28,15 @@
                     <div class="form-group mb-3">
                         <label for="pseudonym">Pseudonym</label>
                         <input type="text" placeholder="Pseudonym" id="pseudonym" class="form-control" name="pseudonym"
-                            required autofocus value="{{ $author->pseudonym }}">
+                            autofocus value="{{ $author->pseudonym }}">
                         @if ($errors->has('pseudonym'))
                             <span class="text-danger">{{ $errors->first('pseudonym') }}</span>
                         @endif
                     </div>
                     <div class="form-group mb-3">
                         <label for="year_of_birth">Year of Birth</label>
-                        <input type="text" placeholder="Year of Birth" id="year_of_birth" class="form-control" name="year_of_birth"
-                            required autofocus value="{{ $author->year_of_birth }}">
+                        <input type="text" placeholder="Year of Birth" id="year_of_birth" class="form-control"
+                            name="year_of_birth" autofocus value="{{ $author->year_of_birth }}">
                         @if ($errors->has('year_of_birth'))
                             <span class="text-danger">{{ $errors->first('year_of_birth') }}</span>
                         @endif

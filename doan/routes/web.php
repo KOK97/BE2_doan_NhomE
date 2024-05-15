@@ -10,9 +10,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ReviewController;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('Book Store');
+Route::get('/', [HomeController::class, 'showProductByCategory'])->name('Book Store');
 
 ### ADMIN ###
 Route::prefix('/')->middleware('isAdmin')->group(function () {
@@ -83,8 +84,8 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
     Route::POST('/destroy-wishlist', [WishlistController::class, 'destroy'])->name('product.wishlist.destroy');
     Route::POST('/remove-all', [WishlistController::class, 'removeAll'])->name('product.wishlist.remove-all');
 
-    //Show detail
-    Route::GET('/detailproduct/{id}', [ProductController::class, 'showDetail'])->name('show.detail');
+    //Comment
+    Route::POST('product/detailproduct/{id}', [ReviewController::class, 'store'])->name('product.comment');
 });
 
 
@@ -96,3 +97,6 @@ Route::GET('/register', [AccountController::class, 'register'])->name('auth.regi
 Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
 //Log out
 Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
+
+//Show detail
+Route::GET('product/detailproduct/{id}', [ProductController::class, 'showDetail'])->name('show.detail');
