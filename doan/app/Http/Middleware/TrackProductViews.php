@@ -27,7 +27,6 @@ class TrackProductViews
                 ['viewed_at' => now()]
             );
         }
-    
         return $response;
     }
 }
