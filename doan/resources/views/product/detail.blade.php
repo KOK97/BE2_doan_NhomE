@@ -532,7 +532,7 @@
     </div>
     <!--====== End - App Content ======-->
     <script>
-        function confirmDelete() {
+          function confirmDelete() {
             var result = confirm("Bạn có chắc muốn xóa?");
             if (result) {
                 document.getElementById("deleteForm").submit();
@@ -542,8 +542,9 @@
         setTimeout(function() {
             document.getElementById('alert').style.display = 'none';
         }, 10000);
-    </script>
-    <script>
+
+
+        
         $(document).ready(function() {
             // Loại bỏ các thẻ HTML khỏi nội dung mô tả
             $("#description").each(function() {
