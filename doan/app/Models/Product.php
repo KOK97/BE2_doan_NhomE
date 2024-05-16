@@ -22,19 +22,20 @@ class Product extends Model
         'sale_id',
         'author_id',
     ];
-    public function sale():HasMany
+    public function sale(): HasMany
     {
         return $this->hasMany(Sale::class);
     }
-    public function author():BelongsTo
+    public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
     }
-    public function reviews():BelongsTo
+    public function reviews(): BelongsTo
     {
         return $this->belongsTo(Review::class);
     }
-    public function categories() : BelongsToMany {
-        return $this->belongsToMany(Category::class,'product_category','product_id','category_id');
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'product_category', 'product_id', 'category_id');
     }
 }

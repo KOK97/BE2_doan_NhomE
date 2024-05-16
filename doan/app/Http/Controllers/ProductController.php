@@ -14,48 +14,17 @@ use App\Models\Category;
 use App\Models\Review;
 use App\Models\ProductCategory;
 use App\Models\User;
+use Illuminate\Support\Facades\Cookie;
 use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
 {
-    public function showProductByCategory()
-    {
-        $products = Product::all();
-        $categories = Category::take(5)->get();
-
-        $productshow = collect([]);
-        $addedProductIds = [];
-
-        foreach ($products as $value) {
-            foreach ($value->categories as $cate) {
-                foreach ($categories as $category) {
-                    if ($cate->id == $category->id && !in_array($value->id, $addedProductIds)) {
-                        $productshow->push($value);
-                        $addedProductIds[] = $value->id;
-                    }
-                }
-            }
-        }
-        return view('content.home', ['products' => $products, 'categories' => $categories, 'productshow' => $productshow]);
-    }
-    public function showDetail($id) {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        $sales = Sale::all();
-        $reviews = Review::where('product_id', 'like', $id)->get();
-        foreach ($sales as  $vsale) {
-          if($vsale->id == $product->sale_id){
-            $sale = $vsale->discount;
-          }
-        }
-        $users = User::all();
-        return view('content.detail', compact('product','categories','sale','reviews','users'));
-    }
     public function listProduct()
     {
-        $products = Product::paginate(5);
-
-        return view('admin.product.list_product', ['products' => $products]);
+        $products = Product::paginate(7)->withPath(route('listProduct'));
+        $currentPage = $products->currentPage();
+        $startIndex = ($currentPage - 1) * $products->perPage() + 1;
+        return view('admin.product.list_product', ['products' => $products, 'startIndex' => $startIndex]);
     }
     public function showAddProduct()
     {
@@ -64,10 +33,28 @@ class ProductController extends Controller
         $categories =  Category::all();
         return view('admin.product.create_product', ['sales' => $sales, 'authors' => $authors, 'categories' => $categories]);
     }
+    public function search(Request $request)
+    {
+        $products = Product::orderBy('created_at', 'desc');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $products = $products->where('name', 'like', '%' . $searchTerm . '%');
+        }
+
+        $products = $products->paginate(5);
+
+        if ($products->isEmpty()) {
+            return redirect()->route('listProduct')->with('destroy', 'Không tìm thấy sản phẩm trong tên có ký tự (' . $searchTerm . ')!!!');
+        } else {
+            return view('admin.product.list_product', compact('products'));
+        }
+    }
+
     public function createProduct(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
             'description' => ['required', 'min:1', 'max:255'],
             'price' => ['required', 'numeric', 'min:1', 'max:9999999.99'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
@@ -150,7 +137,7 @@ class ProductController extends Controller
     public function updateProduct(Request $request, $id)
     {
         $validatedData = Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
             'description' => ['required', 'min:1', 'max:255'],
             'price' => ['required', 'numeric', 'min:1', 'max:9999999.99'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
@@ -256,5 +243,43 @@ class ProductController extends Controller
             $product->delete();
         }
         return redirect("listproduct")->with('success', 'Xóa Sản Phẩm Thành Công');
+    }
+
+    public function showDetail($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $sales = Sale::all();
+        $reviews = Review::where('product_id', $id)->get(); // Simplified the query to match product_id
+        $sale = null;
+
+        foreach ($sales as $vsale) {
+            if ($vsale->id == $product->sale_id) {
+                $sale = $vsale->discount;
+                break; // Exit loop once the sale is found
+            }
+        }
+        $users = User::all();
+
+        // Get the recently viewed products from the cookie
+        $recentProducts = json_decode(Cookie::get('recent_products', '[]'), true);
+
+        // Remove the product if it already exists in the array
+        if (($key = array_search($id, $recentProducts)) !== false) {
+            unset($recentProducts[$key]);
+        }
+
+        // Add the product ID to the beginning of the array
+        array_unshift($recentProducts, $id);
+
+        // Keep only the latest 5 products
+        if (count($recentProducts) > 5) {
+            $recentProducts = array_slice($recentProducts, 0, 5);
+        }
+
+        // Save the updated array back to the cookie
+        Cookie::queue('recent_products', json_encode($recentProducts), 1440); // 1 day
+
+        return view('product.detail', compact('product', 'categories', 'sale', 'reviews', 'users'));
     }
 }

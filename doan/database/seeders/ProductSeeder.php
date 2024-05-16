@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
     {
         //
         Product::factory()->create([
-            'name' => 'The End of Money',
+            'name' => 'The End of Money1',
             'price' => '307000',
             'reduced_price' => '291650',
             'description' => 'The End of Money: Counterfeiters, Preachers, Techies, Dreamers--and the Coming Cashless Society
@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
             'author_id' => '2',
         ]);
         Product::factory()->create([
-            'name' => 'The End of Money',
+            'name' => 'The End of Money2',
             'price' => '307000',
             'reduced_price' => '291650',
             'description' => 'Thông tin sản phẩm
@@ -70,7 +70,8 @@ class ProductSeeder extends Seeder
             'sale_id' => '3',
             'author_id' => '3',
         ]);
-        for ($i = 1; $i < 4; $i++) {
+
+        for ($i = 1; $i < 16; $i++) {
             Product::factory()->create([
                 'name' => 'Tết Ở Làng Địa Ngục'.$i,
                 'price' => '169000',

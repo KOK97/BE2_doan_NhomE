@@ -70,5 +70,14 @@ class CategorySeeder extends Seeder
             'created_at' => $now,
             'updated_at' => $now,
         ]);
+
+        for ($i = 1; $i < 12; $i++) {
+            Category::factory()->create([
+                'category_name' => 'Thể loại' . $i,
+                'category_description' => 'Test' . $i,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
     }
 }

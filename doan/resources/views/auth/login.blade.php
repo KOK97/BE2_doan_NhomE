@@ -63,16 +63,16 @@
                                     <div class="u-s-m-b-30">
                                         <label class="gl-label" for="login-email">E-MAIL *</label>
                                         <input class="input-text input-text--primary-style" type="text" id="login-email" name="email" placeholder="Enter E-mail" required autofocus>
-                                        @if($errors->has('error'))
-                                        <span style="color: red;">{{ $errors->first('error') }}</span>
+                                        @if($errors->has('email'))
+                                        <span style="color: red;">{{ $errors->first('email') }}</span>
                                         @endif
 
                                     </div>
                                     <div class="u-s-m-b-30">
                                         <label class="gl-label" for="login-password">PASSWORD *</label>
                                         <input class="input-text input-text--primary-style" type="password" id="login-password" name="password" placeholder="Enter Password" required autofocus>
-                                        @if($errors->has('error'))
-                                        <span style="color: red;">{{ $errors->first('error') }}</span>
+                                        @if($errors->has('password'))
+                                        <span style="color: red;">{{ $errors->first('password') }}</span>
                                         @endif
                                     </div>
                                     <div class="gl-inline">

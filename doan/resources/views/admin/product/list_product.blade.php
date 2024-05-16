@@ -11,6 +11,20 @@
 <!-- content -->
 @section('content')
     <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <form action="{{ route('admin.product.search') }}" method="GET" class="form-inline">
+                    <div class="input-group">
+                        <input id="keyword" type="text" name="search" class="form-control"
+                            placeholder="Tìm theo thể loại">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i>
+                                Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         @if (session('success'))
             <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
         @endif
@@ -87,6 +101,7 @@
                 @endif
             </tbody>
         </table>
+
         <div class="pagination-wrap">
             {{ $products->links('pagination::bootstrap-5') }}
         </div>

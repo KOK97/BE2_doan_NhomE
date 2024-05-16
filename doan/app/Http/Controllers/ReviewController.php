@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
@@ -47,7 +48,7 @@ class ReviewController extends Controller
         //
         $review = new Review($request->all());
         $review->product_id = $productId;
-        $review->user_id = 1;
+        $review->user_id = Auth::id();
         $review->save();
         return redirect()->route('show.detail', ['id' => $productId]);
     }

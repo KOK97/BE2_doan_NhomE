@@ -46,7 +46,7 @@
             @if(isset($users))
             @foreach($users as $key => $user)
             <tr>
-                <th scope="row">{{++$key}}</th>
+                <th scope="row" style="text-align: center;">{{ $startIndex + $key }}</th>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone}}</td>

@@ -2,11 +2,11 @@
 @extends('admin.base')
 <!-- title -->
 @section('title')
-    Trang Quan ly
+Trang Quan ly
 @endsection
 <!-- breadcrumb -->
 @section('breadcrumb')
-    Product
+Product
 @endsection
 <!-- content -->
 @section('content')
@@ -57,7 +57,6 @@
                                 </option>
                             @endforeach
                         </select>
-
                     </div>
                     <div class="form-group mb-3">
                         <label for="author_id">Tác Giả</label>
@@ -68,7 +67,6 @@
                                 </option>
                             @endforeach
                         </select>
-
                     </div>
                     <div class="form-group mb-3">
                         <label for="publishing_year">Năm Xuất Bản</label>
@@ -98,6 +96,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 @endsection

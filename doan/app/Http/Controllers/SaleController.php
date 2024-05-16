@@ -22,7 +22,7 @@ class SaleController extends Controller
 
         $validatedData = Validator::make($request->all(), [
             'discount' => ['required', 'numeric', 'min:1', 'max:100'],
-            'sale_content' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'sale_content' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
         ], [
             'discount.required' => 'Vui lòng nhập mức giảm giá',
             'discount.numeric' => 'Mức giảm giá phải là một số hợp lệ',
@@ -54,7 +54,7 @@ class SaleController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'discount' => ['required', 'numeric', 'min:1', 'max:100'],
-            'sale_content' => ['required', 'regex:/^[\p{L}\s]+$/u', 'min:10', 'max:50'],
+            'sale_content' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
         ], [
             'discount.required' => 'Vui lòng nhập mức giảm giá',
             'discount.numeric' => 'Mức giảm giá phải là một số hợp lệ',

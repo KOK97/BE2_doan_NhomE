@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Author extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'author_name',
         'pseudonym',
         'year_of_birth',
     ];
-    public function products():BelongsTo
+    public function products(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
