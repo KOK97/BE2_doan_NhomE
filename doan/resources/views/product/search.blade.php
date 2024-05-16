@@ -16,6 +16,18 @@
                                 </h1>
                                 <div class="shop-w-master__sidebar">
                                     <div class="u-s-m-b-30">
+                                        {{-- <div class="shop-w shop-w--style">
+                                            <form action="" method="GET" class="form-inline">
+                                                <div class="input-group">
+                                                    <input id="keyword" type="text" name="search" class="form-control"
+                                                        placeholder="Tìm sản phẩm theo tên">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="submit"><i
+                                                                class="fas fa-search"></i> Search</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div> --}}
                                         <div class="shop-w shop-w--style">
                                             <div class="shop-w__intro-wrap">
                                                 <h1 class="shop-w__h">Thể loại</h1>
@@ -26,7 +38,8 @@
                                                 <ul class="shop-w__category-list gl-scroll">
                                                     @foreach ($categories as $category)
                                                         <li class="has-list">
-                                                            <a href="#">{{ $category->category_name }}</a>
+                                                            <a
+                                                                href="{{ route('product.category.filter', $category->id) }}">{{ $category->category_name }}</a>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -168,46 +181,6 @@
 
                                                         <span class="shop-w__total-text">(23)</span>
                                                     </li>
-                                                    <li>
-                                                        <div class="list__content">
-
-                                                            <input type="checkbox">
-
-                                                            <span>Diesel</span>
-                                                        </div>
-
-                                                        <span class="shop-w__total-text">(2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="list__content">
-
-                                                            <input type="checkbox">
-
-                                                            <span>Polo</span>
-                                                        </div>
-
-                                                        <span class="shop-w__total-text">(2)</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="list__content">
-
-                                                            <input type="checkbox">
-
-                                                            <span>Tommy Hilfiger</span>
-                                                        </div>
-
-                                                        <span class="shop-w__total-text">(9)</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="list__content">
-
-                                                            <input type="checkbox">
-
-                                                            <span>Ndoge</span>
-                                                        </div>
-
-                                                        <span class="shop-w__total-text">(3)</span>
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -329,7 +302,7 @@
                                 <div class="shop-p">
                                     <div class="shop-p__toolbar u-s-m-b-30">
                                         <div class="shop-p__meta-wrap u-s-m-b-60">
-                                            <span class="shop-p__meta-text-1">Kết quả tìm kiếm cho từ khóa:
+                                            <span class="shop-p__meta-text-1">Kết quả tìm kiếm cho:
                                                 {{ $query }}</span>
                                             <span class="shop-p__meta-text-1">Tìm thấy {{ $count }} kết quả</span>
                                             <div class="shop-p__tool-style">

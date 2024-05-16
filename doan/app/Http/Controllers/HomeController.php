@@ -32,7 +32,7 @@ class HomeController extends Controller
             ->get();
 
         // Lấy 3 bình luận mới nhất
-        $latestReviews = Review::with('user')
+        $latestReviews = Review::with('user', 'product')
             ->orderBy('created_at', 'desc')
             ->take(3)
             ->get();
@@ -69,5 +69,21 @@ class HomeController extends Controller
         }
 
         return view('product.search', compact('count', 'query', 'products', 'categories'));
+    }
+
+    public function filterByCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        $products = $category->products()->paginate(5);
+        $categories = Category::all();
+        $count = $products->total();
+        $query = $category->category_name;  // Để hiển thị tên thể loại làm từ khóa tìm kiếm
+
+        return view('product.search', compact('count', 'query', 'products', 'categories'));
+    }
+
+    public function searchVSfilter()
+    {
+        
     }
 }

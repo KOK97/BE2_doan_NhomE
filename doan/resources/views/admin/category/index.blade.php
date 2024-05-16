@@ -40,8 +40,7 @@
         <table class="table table-striped table-hover" style="text-align: center">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col" style="text-align: center;">STT<button id="sortButton"><i
-                                class="fa-solid fa-sort"></i></button></th>
+                    <th scope="col" style="text-align: center;">STT</th>
                     <th scope="col" style="text-align: center;">Tên thể loại</th>
                     <th scope="col" style="text-align: center;">Mô tả</th>
                     <th scope="col">Actions</th>

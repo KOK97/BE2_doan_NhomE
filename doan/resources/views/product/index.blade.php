@@ -216,21 +216,21 @@
 
         <!--====== Section 11 ======-->
         <div class="u-s-p-b-90 u-s-m-b-30">
-
-            <!--====== Section Intro ======-->
-            <div class="section__intro u-s-m-b-46">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section__text-wrap">
-                                <h1 class="section__heading u-c-secondary u-s-m-b-12">Bình luận mới nhất của người dùng</h1>
+            @if (isset($latestReviews) && $latestReviews->count() > 0)
+                <!--====== Section Intro ======-->
+                <div class="section__intro u-s-m-b-46">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section__text-wrap">
+                                    <h1 class="section__heading u-c-secondary u-s-m-b-12">Bình luận mới nhất của người dùng
+                                    </h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--====== End - Section Intro ======-->
-
+                <!--====== End - Section Intro ======-->
 
                 <!--====== Section Content ======-->
                 <div class="section__content">
@@ -239,17 +239,23 @@
                         <div class="slider-fouc">
                             <div class="owl-carousel" id="testimonial-slider">
                                 @foreach ($latestReviews as $review)
-                                <div class="testimonial">
-                                    <div class="testimonial__img-wrap">
-                                        <img class="testimonial__img" src="{{ asset('images/users/' . ($review->user->avatar ?? 'default.jpg')) }}" alt=""></div>
-                                    <div class="testimonial__content-wrap">
-                                        <span class="testimonial__double-quote"><i class="fas fa-quote-right"></i></span>
-                                        <blockquote class="testimonial__block-quote">
-                                            <p>"{{ $review->review_content }}"</p>
-                                        </blockquote>
-                                        <span class="testimonial__author">{{ $review->user->name }}</span>
+                                    <div class="testimonial">
+                                        <div class="testimonial__img-wrap">
+                                            <img class="testimonial__img"
+                                                src="{{ asset('images/users/' . ($review->user->avatar ?? 'default.jpg')) }}"
+                                                alt="">
+                                        </div>
+                                        <div class="testimonial__content-wrap">
+                                            <a href="{{ route('show.detail', $review->product->id) }}">
+                                                <span class="testimonial__double-quote"><i
+                                                        class="fas fa-quote-right"></i></span>
+                                                <blockquote class="testimonial__block-quote">
+                                                    <p>"{{ $review->review_content }}"</p>
+                                                </blockquote>
+                                                <span class="testimonial__author">{{ $review->user->name }}</span>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -257,6 +263,9 @@
                     </div>
                 </div>
                 <!--====== End - Section Content ======-->
+            @else
+                <div class="u-s-p-b-90 u-s-m-b-30"></div>
+            @endif
         </div>
         <!--====== End - Section 11 ======-->
 
