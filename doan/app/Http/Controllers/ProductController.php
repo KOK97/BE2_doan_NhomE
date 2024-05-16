@@ -33,6 +33,24 @@ class ProductController extends Controller
         $categories =  Category::all();
         return view('admin.product.create_product', ['sales' => $sales, 'authors' => $authors, 'categories' => $categories]);
     }
+    public function search(Request $request)
+    {
+        $products = Product::orderBy('created_at', 'desc');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $products = $products->where('name', 'like', '%' . $searchTerm . '%');
+        }
+
+        $products = $products->paginate(5);
+
+        if ($products->isEmpty()) {
+            return redirect()->route('listProduct')->with('destroy', 'Không tìm thấy sản phẩm trong tên có ký tự (' . $searchTerm . ')!!!');
+        } else {
+            return view('admin.product.list_product', compact('products'));
+        }
+    }
+
     public function createProduct(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
@@ -250,7 +268,7 @@ class ProductController extends Controller
         if (($key = array_search($id, $recentProducts)) !== false) {
             unset($recentProducts[$key]);
         }
-        
+
         // Add the product ID to the beginning of the array
         array_unshift($recentProducts, $id);
 

@@ -35,6 +35,7 @@ Route::prefix('/')->middleware('isAdmin')->group(function () {
     Route::GET('/editproducts/{id}', [ProductController::class, 'getDataEdit'])->name('getdataedit');
     Route::PUT('/updateproducts/{id}', [ProductController::class, 'updateProduct'])->name('updateProduct');
     Route::DELETE('/destroyproduct/{id}', [ProductController::class, 'destroy'])->name('destroyProduct');
+    Route::GET('/search-product', [ProductController::class, 'search'])->name('admin.product.search');
 
     ### USER ###
     Route::GET('/user', [UserController::class, 'index'])->name('user.index');
@@ -68,6 +69,7 @@ Route::prefix('/')->middleware('isAdmin')->group(function () {
     Route::GET('/editauthor/{id}', [AuthorController::class, 'getDataEditAuthor'])->name('getDataEditAuthor');
     Route::PUT('/updateauthor/{id}', [AuthorController::class, 'updateAuthor'])->name('updateAuthor');
     Route::DELETE('/destroyauthor/{id}', [AuthorController::class, 'destroyAuthor'])->name('destroyAuthor');
+    Route::GET('/search-author', [AuthorController::class, 'search'])->name('author.search');
 });
 
 Route::prefix('/')->middleware('loginRequired')->group(function () {

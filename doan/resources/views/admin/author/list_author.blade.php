@@ -11,6 +11,20 @@
 <!-- content -->
 @section('content')
     <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <form action="{{ route('author.search') }}" method="GET" class="form-inline">
+                    <div class="input-group">
+                        <input id="keyword" type="text" name="search" class="form-control"
+                            placeholder="Tìm theo thể loại">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i>
+                                Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         @if (session('success'))
             <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
         @endif
@@ -68,7 +82,7 @@
         </div>
         <a href="{{ route('createAuthor') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
                 class="fa-solid fa-at nav-icon"></i></a>
-       
+
     </div>
     <script>
         function confirmDelete() {

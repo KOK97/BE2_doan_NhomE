@@ -11,6 +11,20 @@
 <!-- content -->
 @section('content')
     <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <form action="{{ route('admin.product.search') }}" method="GET" class="form-inline">
+                    <div class="input-group">
+                        <input id="keyword" type="text" name="search" class="form-control"
+                            placeholder="Tìm theo thể loại">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i>
+                                Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         @if (session('success'))
             <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
         @endif
@@ -39,7 +53,7 @@
                 @if (isset($products) && count($products) > 0)
                     @foreach ($products as $key => $product)
                         <tr>
-                            <th scope="row">{{ $startIndex + $key }}</th>
+                            <th scope="row">{{ ++$key }}</th>
                             <td><a href="{{ route('getdataeditProduct', $product->id) }}"
                                     style="color: black;">{{ $product->name }}</a>
                             </td>
@@ -47,7 +61,7 @@
                                 <img class="img-fluid" src="{{ asset('images/products/' . $product->image) }}"
                                     width="50px"class="img-thumbnail" alt="">
                             </td>
-                            <td id="description">
+                            <td>
                                 @if (strlen(strip_tags($product->description)) > 100)
                                     <?php
                                     $truncatedDescription = substr(strip_tags($product->description), 0, 100);
@@ -65,7 +79,7 @@
                             <td>{{ $product->publishing_year }}</td>
                             <td>
                                 @foreach ($product->categories as $category)
-                                    {{ $category->category_name }} ,
+                                    {{ $category->category_name }},
                                 @endforeach
                             </td>
                             <td>
@@ -87,6 +101,7 @@
                 @endif
             </tbody>
         </table>
+
         <div class="pagination-wrap">
             {{ $products->links('pagination::bootstrap-5') }}
         </div>
@@ -105,14 +120,5 @@
         setTimeout(function() {
             document.getElementById('alert').style.display = 'none';
         }, 10000); // 10 giây (10000 miligiây)
-
-        $(document).ready(function() {
-            // Loại bỏ các thẻ HTML khỏi nội dung mô tả
-            $("td.description").each(function() {
-                var text = $(this).html();
-                var strippedText = text.replace(/<[^>]+>/g, '');
-                $(this).html(strippedText);
-            });
-        });
     </script>
 @endsection

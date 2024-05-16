@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $startIndex = ($currentPage - 1) * $categories->perPage() + 1;
 
         if ($categories->isEmpty()) {
-            return redirect()->route('category.index')->with('message', 'Không tìm thấy !!!');
+            return redirect()->route('category.index')->with('message', 'Không tìm thấy thể loại trong tên có ký tự (' . $searchTerm . ') !!!');
         } else {
             return view('admin.category.index', compact('categories', 'startIndex'));
         }

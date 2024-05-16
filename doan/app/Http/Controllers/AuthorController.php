@@ -18,13 +18,30 @@ class AuthorController extends Controller
     {
         return view('admin.author.create_author');
     }
+    public function search(Request $request)
+    {
+        $authors = Author::orderBy('created_at', 'desc');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $authors = $authors->where('author_name', 'like', '%' . $searchTerm . '%');
+        }
+
+        $authors = $authors->paginate(5);
+
+        if ($authors->isEmpty()) {
+            return redirect()->route('listAuthor')->with('destroy', 'Không tìm thấy tác giả trong tên có ký tự ' . $searchTerm . '!!!');
+        } else {
+            return view('admin.author.list_author', compact('authors'));
+        }
+    }
     public function createAuthor(Request $request)
     {
-        
+
         $validatedData = Validator::make($request->all(), [
-            'author_name'=> ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
-            'pseudonym'=> ['nullable', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
-            'year_of_birth'=>['required', 'numeric','min:1900', 'max:2000'],
+            'author_name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'pseudonym' => ['nullable', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'year_of_birth' => ['required', 'numeric', 'min:1900', 'max:2000'],
         ], [
             'author_name.required' => 'Vui lòng nhập tên tác giả',
             'author_name.min' => 'Tên tác giả phải có ít nhất 10 ký tự',
@@ -59,9 +76,9 @@ class AuthorController extends Controller
     public function updateAuthor(Request $request, $id)
     {
         $validatedData = Validator::make($request->all(), [
-            'author_name'=> ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
-            'pseudonym'=> ['nullable', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
-            'year_of_birth'=>['required', 'numeric','min:1900', 'max:2000'],
+            'author_name' => ['required', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'pseudonym' => ['nullable', 'regex:/^[^!@#$%^&*()_+\[\]{}|;\'":,.\/<>?]*$/', 'min:10', 'max:50'],
+            'year_of_birth' => ['required', 'numeric', 'min:1900', 'max:2000'],
         ], [
             'author_name.required' => 'Vui lòng nhập tên tác giả',
             'author_name.min' => 'Tên tác giả phải có ít nhất 10 ký tự',
