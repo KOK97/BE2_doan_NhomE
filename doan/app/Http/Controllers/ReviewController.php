@@ -28,7 +28,7 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,$productId)
+    public function store(Request $request, $productId)
     {
 
         $validatedData = Validator::make($request->all(), [
@@ -82,6 +82,15 @@ class ReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $review = Review::find($id);
+        
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            $review->delete();
+            return redirect()->route('show.detail',$review->product_id)->with('destroy', 'Xóa thành công !!!');
+        }
+        else if($review->user_id == Auth::id()) {
+            $review->delete();
+            return redirect()->route('show.detail',$review->product_id)->with('destroy', 'Xóa thành công !!!');
+        }
     }
 }

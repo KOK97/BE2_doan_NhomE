@@ -88,6 +88,7 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
 
     //Comment
     Route::POST('product/detailproduct/{id}', [ReviewController::class, 'store'])->name('product.comment');
+    Route::DELETE('/destroyComment/{id}', [ReviewController::class, 'destroy'])->name('destroy.comment');
 });
 
 
