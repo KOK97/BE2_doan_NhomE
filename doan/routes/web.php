@@ -11,6 +11,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\OrderController;
 
 
 Route::get('/', [HomeController::class, 'showProductByCategory'])->name('Book Store');
@@ -81,6 +84,31 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
     //Comment
     Route::POST('product/detailproduct/{id}', [ReviewController::class, 'store'])->name('product.comment');
     Route::DELETE('/destroyComment/{id}', [ReviewController::class, 'destroy'])->name('destroy.comment');
+
+    ### CART ###
+    Route::GET('/addSanPham/{id}', [CartController::class, 'addToCart'])->name('cart.carts');
+    Route::GET('cart', [CartController::class, 'viewCart'])->name('cart.view');
+    Route::GET('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('cart.delete');
+    Route::GET('updateCart/{id}', [CartController::class, 'updateCart'])->name('cart.update');
+    Route::GET('timKiemCart', [CartController::class, 'search'])->name('cart.timKiem');
+
+    // dia chi
+    Route::GET('diachi', [AddressController::class, 'viewDiaChi'])->name('diachi.view');
+
+    Route::GET('/diachi-add', [AddressController::class, 'addDiaChi'])->name('diachi.add');
+
+    Route::GET('/updateDiaChiMacDinh/{id}', [AddressController::class, 'updateDiaChiMacDinh'])->name('diaChiMacDinh.update');
+
+    Route::GET('/deleteDiaChi/{id}', [AddressController::class, 'deleteDiaChi'])->name('diachi.delete');
+
+    // Oder
+    Route::GET('myoders', [OrderController::class, 'viewMyOders'])->name('oders.view');
+    Route::GET('myoder/{id}', [OrderController::class, 'viewMyOder'])->name('oder.view');
+    Route::POST('/order-sanpham', [OrderController::class, 'addsOrder'])->name('order.add');
+    Route::GET('lichsu-order', [OrderController::class, 'viewlichSuOrder'])->name('lichsu-Order.view');
+    Route::GET('search-order', [OrderController::class, 'searchDonHang'])->name('order.searchOrder');
+    Route::GET('huyDongHang/{id}', [OrderController::class, 'huyOrder'])->name('order.huyDonHang');
+
 });
 
 

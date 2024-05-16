@@ -100,7 +100,7 @@
                                                                                 class="fas fa-search-plus"></i></a>
                                                                     </li>
                                                                     <li>
-                                                                        <a data-modal="modal" data-modal-id="#add-to-cart"
+                                                                        <a href="{{route('cart.carts',$product->id)}}" data-modal="modal" data-modal-id="#add-to-cart"
                                                                             data-tooltip="tooltip" data-placement="top"
                                                                             title="Add to Cart"><i
                                                                                 class="fas fa-plus-circle"></i></a>

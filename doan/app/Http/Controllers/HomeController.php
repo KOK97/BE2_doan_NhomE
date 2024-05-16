@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Cart;
 
 class HomeController extends Controller
 {
@@ -36,14 +38,14 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(3)
             ->get();
-
         return view('product.index', [
             'products' => $products,
             'categories' => $categories,
             'categoriesAll' => $categoriesAll,
             'productshow' => $products,
             'topDiscountedProducts' => $topDiscountedProducts,
-            'latestReviews' => $latestReviews
+            'latestReviews' => $latestReviews,
+            
         ]);
     }
 
@@ -82,11 +84,11 @@ class HomeController extends Controller
         $count = $products->total();
         $query = $category->category_name;  // Để hiển thị tên thể loại làm từ khóa tìm kiếm
 
-        return view('product.search', compact('count', 'query', 'products', 'categories','categoriesAll'));
+        return view('product.search', compact('count', 'query', 'products', 'categories', 'categoriesAll'));
     }
 
     public function searchVSfilter()
     {
-        
+
     }
 }

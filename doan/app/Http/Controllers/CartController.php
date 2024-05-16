@@ -18,7 +18,7 @@ class CartController extends Controller
     public function viewCart()
     {
         if (Auth::check()) {
-            $categories = Category::get();
+            $categoriesAll = Category::get();
             $check = 1;
             $userID = Auth::id();
             $cartItem = Cart::all()->where('userID',$userID );
@@ -26,7 +26,7 @@ class CartController extends Controller
             $products = Product::whereIn('id', $idProduct)->get();
             $authors = Author::all();
             $productcategorys = ProductCategory::all();
-            return view('cart.cart', compact('cartItem', 'categories', 'idProduct', 'products','check','authors','productcategorys'));
+            return view('cart.cart', compact('cartItem', 'categoriesAll', 'idProduct', 'products','check','authors','productcategorys'));
         }
         else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
@@ -78,13 +78,21 @@ class CartController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
+        $categoriesAll = Category::get();
+        //$user = User::find(Auth::id());
         if ($search == null) {
-            $cartItem = Cart::all()->where('userID', 1);
-            $idProduct = Cart::where('userID', 1)->pluck('productID')->toArray();
+            $categoriesAll = Category::get();
+            $check = 1;
+            $userID = Auth::id();
+            $cartItem = Cart::all()->where('userID',$userID );
+            $idProduct = Cart::where('userID', $userID)->pluck('productID')->toArray();
             $products = Product::whereIn('id', $idProduct)->get();
-            return view('cart.cart', compact('cartItem', 'idProduct', 'products'));
+            $authors = Author::all();
+            $productcategorys = ProductCategory::all();
+            return view('cart.cart', compact('cartItem', 'categoriesAll', 'idProduct', 'products','check','authors','productcategorys'));
+        
         } else {
-            $cartItems = Cart::all()->where('userID', 1);
+            $cartItems = Cart::all()->where('userID', Auth::id());
             $productsKey = Product::where('name', 'LIKE', "%$search%")->get();
             $cartId = [];
             $productID = [];
@@ -97,9 +105,20 @@ class CartController extends Controller
                 }
 
             }
+            // $categoriesAll = Category::get();
+            // $check = 1;
+            // $userID = Auth::id();
+            // $cartItem = Cart::all()->where('userID',$userID );
+            // $idProduct = Cart::where('userID', $userID)->pluck('productID')->toArray();
+            // $products = Product::whereIn('id', $idProduct)->where('name', 'LIKE', "%$search%")->get();
+            // $authors = Author::all();
+            // $productcategorys = ProductCategory::all();
+            // return view('cart.cart', compact('cartItem', 'categoriesAll', 'idProduct', 'products','check','authors','productcategorys'));
+            $productcategorys = ProductCategory::all();
             $cartItem = Cart::whereIn('id', $cartId)->get();
             $products = Product::whereIn('id', $productID)->get();
-            return view('cart.cart', compact('cartItems', 'products', 'cartItem'));
+            $authors = Author::all();
+            return view('cart.cart', compact('cartItems', 'products', 'cartItem','categoriesAll','productcategorys','authors'));
         }
 
     }

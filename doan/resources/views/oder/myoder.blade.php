@@ -135,7 +135,7 @@
 
                                                                             <span>Thể loại: <?php foreach($productcategorys as $productcategory){
                                                                               if($product->id == $productcategory->product_id){
-                                                                                foreach($categories as $categorie){
+                                                                                foreach($categoriesAll as $categorie){
                                                                                     if($productcategory->category_id == $categorie->id){
                                                                                         $theloai = $categorie->category_name;
                                                                                     }

@@ -13,14 +13,15 @@ class AddressController extends Controller
 {
     public function viewDiaChi()
     {
+        
         if (Auth::check()) {
             $userID = Auth::id();
             $diachi = Address::all()->where('userID', $userID);
             $cartItem = Cart::all()->where('userID', $userID);
             $products = Product::all();
-            $categories = Category::get();
+            $categoriesAll = Category::get();
             $user = User::find($userID);
-            return view('address.diachi', compact('cartItem', 'diachi', 'products','categories','user'));
+            return view('address.diachi', compact('cartItem', 'user','diachi', 'products','categoriesAll'));
         }
         else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');

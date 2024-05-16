@@ -25,41 +25,42 @@ class OrderController extends Controller
             $userID = Auth::id();
             $cartItem = Cart::all()->where('userID', $userID);
             $ordersID = Order::all()->where('userID', $userID)->pluck('id')->toArray();
+            $user = User::find($userID);
             switch ($searchTrangThai) {
                 case 'choxacnhan':
                     $orders = Order::where('userID', $userID)->where('trangthai', 'Chờ xác nhận')->get();
                     $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
                     $products = Product::all();
-                    $categories = Category::get();
-                    return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+                    $categoriesAll = Category::get();
+                    return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
                     
                 case 'daxacnhan':
                     $orders = Order::where('userID', $userID)->where('trangthai', 'Đã xác nhận')->get();
                     $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
                     $products = Product::all();
-                    $categories = Category::get();
-                    return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+                    $categoriesAll = Category::get();
+                    return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
                     
                 case 'dahuy':
                     $orders = Order::where('userID', $userID)->where('trangthai', 'Đã hủy')->get();
                     $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
                     $products = Product::all();
-                    $categories = Category::get();
-                    return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+                    $categoriesAll = Category::get();
+                    return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
                     
                 case 'dagiao':
                     $orders = Order::where('userID', $userID)->where('trangthai', 'Đã giao')->get();
                     $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
                     $products = Product::all();
-                    $categories = Category::get();
-                    return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+                    $categoriesAll = Category::get();
+                    return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
                     
                 default:
                     $orders = Order::where('userID', $userID)->get();
                     $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
                     $products = Product::all();
-                    $categories = Category::get();
-                    return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+                    $categoriesAll = Category::get();
+                    return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
 
             }
             
@@ -76,9 +77,9 @@ class OrderController extends Controller
             $orders = Order::all()->where('userID', $userID);
             $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
             $products = Product::all();
-            $categories = Category::get();
+            $categoriesAll = Category::get();
             $user = User::find(Auth::user()->id);
-            return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories','user'));
+            return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categoriesAll','user'));
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
         }
@@ -91,18 +92,18 @@ class OrderController extends Controller
             if ($diaChis->count() == 1) {
                 $cartItem = Cart::all()->where('userID', $userID);
                 $products = Product::all();
-                $categories = Category::get();
+                $categoriesAll = Category::get();
                 $authors = Author::all();
                 $productcategorys = ProductCategory::all();
-                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categories','authors','productcategorys'));
+                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
             } else {
                 $diachi = Address::all()->where('userID', $userID);
                 $cartItem = Cart::all()->where('userID', $userID);
                 $products = Product::all();
-                $categories = Category::get();
+                $categoriesAll = Category::get();
                 $authors = Author::all();
                 $productcategorys = ProductCategory::all();
-                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categories','authors','productcategorys'));
+                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categoriesAll','authors','productcategorys'));
             }
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
@@ -116,18 +117,18 @@ class OrderController extends Controller
             if ($diaChis->count() == 1) {
                 $cartItem = Cart::where('userID', $userID)->where('id', $idCart)->get();
                 $products = Product::all();
-                $categories = Category::get();
+                $categoriesAll = Category::get();
                 $authors = Author::all();
                 $productcategorys = ProductCategory::all();
-                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categories','authors','productcategorys'));
+                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
             } else {
                 $diachi = Address::all()->where('userID', $userID);
                 $cartItem = Cart::all()->where('userID', $userID);
                 $products = Product::all();
-                $categories = Category::get();
+                $categoriesAll = Category::get();
                 $authors = Author::all();
                 $productcategorys = ProductCategory::all();
-                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categories','authors','productcategorys'));
+                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categoriesAll','authors','productcategorys'));
             }
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
@@ -174,8 +175,9 @@ class OrderController extends Controller
             $orders = Order::all()->where('userID', $userID);
             $orderItem = OrderItem::whereIn('orderID', $ordersID)->get();
             $products = Product::all();
-            $categories = Category::get();
-            return view('oder.lichsu-order', compact('cartItem', 'orderItem', 'products', 'orders', 'categories'));
+            $categoriesAll = Category::get();
+            $user = User::find($userID);
+            return view('oder.lichsu-order', compact('user','cartItem', 'orderItem', 'products', 'orders', 'categoriesAll'));
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
         }

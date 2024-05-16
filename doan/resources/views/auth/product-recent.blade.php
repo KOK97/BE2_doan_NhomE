@@ -49,7 +49,10 @@
                                                 <a href="{{ route('auth.profile') }}">My Profile</a>
                                             </li>
                                             <li>
-                                                <a href="dash-my-order.html">My Orders</a>
+                                                <a href="{{route('diachi.view')}}">Address</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('lichsu-Order.view')}}">My Orders</a>
                                             </li>
                                             <li>
                                                 <a class="dash-active" href="{{ route('auth.productrecent') }}">Product

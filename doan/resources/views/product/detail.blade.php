@@ -101,7 +101,7 @@
                             </div>
                         </div>
                         <div class="u-s-m-b-15">
-                            <form class="pd-detail__form">
+                            <form class="pd-detail__form" action="{{route('cart.carts',$product->id)}}">
                                 <div class="pd-detail-inline-2">
                                     <div class="u-s-m-b-15">
 
@@ -111,7 +111,7 @@
                                             <span class="input-counter__minus fas fa-minus"></span>
 
                                             <input class="input-counter__text input-counter--text-primary-style"
-                                                type="text" value="1" data-min="1" data-max="1000">
+                                                name="soluong" type="text" value="1" data-min="1" data-max="1000">
 
                                             <span class="input-counter__plus fas fa-plus"></span>
                                         </div>
