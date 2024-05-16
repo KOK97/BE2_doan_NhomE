@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(5)->withPath(route('user.index'));
+        $users = User::where('role', 'like','customer')->paginate(5)->withPath(route('user.index'));
         $currentPage = $users->currentPage();
         $startIndex = ($currentPage - 1) * $users->perPage() + 1;
         return view('admin.user.index', compact('users', 'startIndex'));
@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc');
+        $users = User::orderBy('created_at', 'desc')->where('role', 'like','customer');
 
         if ($request->has('search')) { // Kiểm tra xem có tham số search không
             $searchTerm = $request->input('search');

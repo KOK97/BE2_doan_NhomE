@@ -171,7 +171,7 @@
                                                         </td>
                                                         <td>
 
-                                                            <span class="table-p__price">Tổng: <?php $tong = $item->soluong * $product->price;  echo $tong;?> VNĐ</span>
+                                                            <span class="table-p__price">Tổng: <?php $tong = $item->soluong * $product->reduced_price;  echo $tong;?> VNĐ</span>
                                                         </td>@endif
                                                     @endforeach
                                                         
@@ -239,7 +239,7 @@
                                                                         <?php $soluong = $soluong + $item->soluong;
                                                                         foreach($products as $product){
                                                                             if($product->id == $item->productID){
-                                                                            $tongtien = $product->price * $item->soluong;
+                                                                            $tongtien = $product->reduced_price * $item->soluong;
                                                                             $tongphu = $tongphu + $tongtien;
                                                                             }
                                                                         }  
