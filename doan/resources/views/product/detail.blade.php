@@ -1,5 +1,11 @@
 @extends('layout')
 @section('main-content')
+    @if (session('success'))
+        <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
+    @endif
+    @if (session('destroy'))
+        <div id="alert" class="alert alert-danger" role="alert">{{ session('destroy') }}</div>
+    @endif
     <!--====== App Content ======-->
     <div class="app-content">
 
@@ -224,6 +230,27 @@
                                                             <span>(4)</span>
                                                         </div>
                                                         <p class="review-o__text">{{ $review->review_content }}</p>
+                                                        @if (auth()->check() && auth()->user()->role === 'admin')
+                                                            <form action="{{ route('destroy.comment', $review->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button onclick="confirmDelete()"
+                                                                    class="btn btn-sm btn-danger"><i
+                                                                        class="fa-solid fa-trash"></i></button>
+                                                            </form>
+                                                        @else
+                                                            @if ($review->user_id == Auth::id())
+                                                                <form action="{{ route('destroy.comment', $review->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button onclick="confirmDelete()"
+                                                                        class="btn btn-sm btn-danger"><i
+                                                                            class="fa-solid fa-trash"></i></button>
+                                                                </form>
+                                                            @endif
+                                                        @endif
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -507,6 +534,18 @@
     <!--====== End - Product Detail Tab ======-->
     </div>
     <!--====== End - App Content ======-->
+    <script>
+        function confirmDelete() {
+            var result = confirm("Bạn có chắc muốn xóa?");
+            if (result) {
+                document.getElementById("deleteForm").submit();
+            } else {}
+        }
+        // Ẩn thông báo sau 10 giây
+        setTimeout(function() {
+            document.getElementById('alert').style.display = 'none';
+        }, 10000);
+    </script>
     <script>
         $(document).ready(function() {
             // Loại bỏ các thẻ HTML khỏi nội dung mô tả
