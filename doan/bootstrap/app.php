@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'isAdmin' => \App\Http\Middleware\isAdmin::class,
             'loginRequired' => \App\Http\Middleware\loginRequired::class,
-            'track-views' => \App\Http\Middleware\TrackProductViews::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -3,9 +3,6 @@
     @if (session('success'))
         <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
     @endif
-    @if (session('destroy'))
-        <div id="alert" class="alert alert-danger" role="alert">{{ session('destroy') }}</div>
-    @endif
     <!--====== App Content ======-->
     <div class="app-content">
 
