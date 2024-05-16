@@ -172,17 +172,12 @@
                                                             <div class="table-p__input-counter-wrap">
 
                                                                 <!--====== Input Counter ======-->
-                                                                <div class="input-counter">
-
-                                                                    <span class="input-counter__minus fas fa-minus"></span>
-
+                                                                <div class="input-counter">      
                                                                     <input
                                                                         class="input-counter__text input-counter--text-primary-style"
                                                                         type="text" name="soluong"
                                                                         value="{{ $item->soluong }}" data-min="1"
-                                                                        data-max="1000">
-
-                                                                    <span class="input-counter__plus fas fa-plus"></span>
+                                                                        data-max="1000" readonly>
                                                                 </div>
 
                                                                 <!--====== End - Input Counter ======-->

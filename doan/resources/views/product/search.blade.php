@@ -332,7 +332,7 @@
                                                                     data-placement="top" title="Quick Look"></a>
                                                             </div>
                                                             <div class="product-m__add-cart">
-                                                                <a class="btn--e-brand" data-modal="modal"
+                                                                <a href="{{route('cart.carts',$product->id)}}" class="btn--e-brand" data-modal="modal"
                                                                     data-modal-id="#add-to-cart">Add to Cart</a>
                                                             </div>
                                                         </div>

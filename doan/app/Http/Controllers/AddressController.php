@@ -9,11 +9,13 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Wishlist;
+
 class AddressController extends Controller
 {
     public function viewDiaChi()
     {
-        
+
         if (Auth::check()) {
             $userID = Auth::id();
             $diachi = Address::all()->where('userID', $userID);
@@ -21,9 +23,10 @@ class AddressController extends Controller
             $products = Product::all();
             $categoriesAll = Category::get();
             $user = User::find($userID);
-            return view('address.diachi', compact('cartItem', 'user','diachi', 'products','categoriesAll'));
-        }
-        else {
+            // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
+            $totalItems = Wishlist::where('user_id', $user->id)->count();
+            return view('address.diachi', compact('cartItem', 'user', 'diachi', 'products', 'categoriesAll', 'totalItems'));
+        } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
         }
     }
@@ -56,7 +59,6 @@ class AddressController extends Controller
                         $item->diachimacdinh = 0;
                         $item->save();
                     }
-
                 } else {
                     $diaChi->diachimacdinh = 0;
                 }
@@ -88,8 +90,6 @@ class AddressController extends Controller
                 }
             }
         }
-
-
     }
     // Thay đổi địa chỉ mặc định
     public function updateDiaChiMacDinh($idDiaChi)

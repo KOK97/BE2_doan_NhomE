@@ -49,10 +49,10 @@
                                                 <a href="{{ route('auth.profile') }}">My Profile</a>
                                             </li>
                                             <li>
-                                                <a href="{{route('diachi.view')}}">Address</a>
+                                                <a href="{{ route('diachi.view') }}">Address</a>
                                             </li>
                                             <li>
-                                                <a href="{{route('lichsu-Order.view')}}">My Orders</a>
+                                                <a href="{{ route('lichsu-Order.view') }}">My Orders</a>
                                             </li>
                                             <li>
                                                 <a class="dash-active" href="{{ route('auth.productrecent') }}">Product
@@ -86,7 +86,11 @@
                                                     <span class="dash__w-icon dash__w-icon-style-3"><i
                                                             class="far fa-heart"></i></span>
 
-                                                    <span class="dash__w-text">{{ $totalItems }}</span>
+                                                    @if (!empty($totalItems))
+                                                        <span class="dash__w-text">{{ $totalItems }}</span>
+                                                    @else
+                                                        <span class="dash__w-text">0</span>
+                                                    @endif
 
                                                     <span class="dash__w-name">Wishlist</span>
                                                 </div>

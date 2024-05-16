@@ -45,10 +45,10 @@
                                                 <a class="dash-active" href="{{ route('auth.profile') }}">My Profile</a>
                                             </li>
                                             <li>
-                                                <a href="{{route('diachi.view')}}">Address</a>
+                                                <a href="{{ route('diachi.view') }}">Address</a>
                                             </li>
                                             <li>
-                                                <a href="{{route('lichsu-Order.view')}} ">My Orders</a>
+                                                <a href="{{ route('lichsu-Order.view') }} ">My Orders</a>
                                             </li>
                                             <li>
                                                 <a href="{{ route('auth.productrecent') }}">Product recent</a>
@@ -76,7 +76,11 @@
                                                 <div class="dash__w-wrap">
                                                     <span class="dash__w-icon dash__w-icon-style-3"><i
                                                             class="far fa-heart"></i></span>
-                                                    <span class="dash__w-text">{{ $totalItems }}</span>
+                                                    @if (!empty($totalItems))
+                                                        <span class="dash__w-text">{{ $totalItems }}</span>
+                                                    @else
+                                                        <span class="dash__w-text">0</span>
+                                                    @endif
                                                     <span class="dash__w-name">Wishlist</span>
                                                 </div>
                                             </li>
@@ -95,7 +99,8 @@
                                             <div class="col-lg-4 u-s-m-b-30">
                                                 <h2 class="dash__h2 u-s-m-b-8" style="text-align: center">Avatar</h2>
                                                 <img src="{{ asset('images/users/' . auth()->user()->avatar) }}"
-                                                    class="avatar-image-lg" style="max-width: 100%; height: auto; border-radius: 50%;">
+                                                    class="avatar-image-lg"
+                                                    style="max-width: 100%; height: auto; border-radius: 50%;">
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="row">
