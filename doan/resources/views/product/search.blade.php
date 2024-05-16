@@ -340,7 +340,7 @@
                                                             <div class="product-m__category">
                                                                 @foreach ($product->categories as $category)
                                                                     <a
-                                                                        href="shop-side-version-2.html">{{ $category->category_name }}</a>
+                                                                        href="{{route('product.category.filter', $category->id)}}">{{ $category->category_name }}</a>
                                                                 @endforeach
                                                             </div>
                                                             <div class="product-m__name">

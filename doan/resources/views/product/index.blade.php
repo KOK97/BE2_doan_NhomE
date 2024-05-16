@@ -121,7 +121,7 @@
                                                     <span class="product-o__category">
                                                         @foreach ($product->categories as $category)
                                                             <a
-                                                                href="shop-side-version-2.html">{{ $category->category_name }}</a>
+                                                                href="{{route('product.category.filter', $category->id)}}">{{ $category->category_name }}</a>
                                                         @endforeach
                                                     </span>
                                                     <span class="product-o__name">

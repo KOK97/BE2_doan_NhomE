@@ -177,9 +177,9 @@
                                         <span class="js-menu-toggle"></span>
                                         <ul id="category-columns"
                                             style="max-height: 200px; overflow-y: auto; display: flex; flex-wrap: wrap;">
-                                            @foreach ($categories as $category)
+                                            @foreach ($categoriesAll as $category)
                                                 <li class="column" style="width: 150px;">
-                                                    <a href="#">{{ $category->category_name }}</a>
+                                                    <a href="{{route('product.category.filter', $category->id)}}">{{ $category->category_name }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>

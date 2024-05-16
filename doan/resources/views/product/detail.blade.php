@@ -84,7 +84,6 @@
                                     </div>
                                 @else
                                     <div class="pd-detail__inline">
-
                                         <span class="pd-detail__price">{{ $product->price }}vnd</span>
                                     </div>
                                 @endif
@@ -94,7 +93,7 @@
                                         class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                         class="fas fa-star-half-alt"></i>
                                     <span class="pd-detail__review u-s-m-l-4">
-                                        <a data-click-scroll="#view-review">23 Reviews</a></span>
+                                        <a data-click-scroll="#view-review">{{ $reviews->count() }} Reviews</a></span>
                                 </div>
                             </div>
                             <div class="u-s-m-b-15">
@@ -102,9 +101,13 @@
                             </div>
                             <div class="u-s-m-b-15">
                                 <div class="pd-detail__inline">
-                                    <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-                                        <a href="signin.html">Add to Wishlist</a>
-                                        <span class="pd-detail__click-count">(222)</span></span>
+                                    <form method="POST" action="{{ route('product.wishlist.add') }}">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
+                                            <button type="submit">Add to Wishlist</button>
+                                            <span class="pd-detail__click-count">({{ $totalLikes }})</span></span>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +173,7 @@
                                     <div class="u-s-m-b-30">
                                         <div class="pd-tab__rev-score">
                                             <div class="u-s-m-b-8">
-                                                <h2>23 Reviews - 4.6 (Overall)</h2>
+                                                <h2>{{ $reviews->count() }} Reviews - 4.6 (Overall)</h2>
                                             </div>
                                             <div class="gl-rating-style-2 u-s-m-b-8"><i class="fas fa-star"></i><i
                                                     class="fas fa-star"></i><i class="fas fa-star"></i><i

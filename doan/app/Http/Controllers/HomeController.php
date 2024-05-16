@@ -14,6 +14,7 @@ class HomeController extends Controller
 {
     public function showProductByCategory()
     {
+        $categoriesAll = Category::get();
         // Lấy 5 danh mục mới nhất
         $categories = Category::orderBy('created_at', 'desc')->take(5)->get();
 
@@ -40,6 +41,7 @@ class HomeController extends Controller
         return view('product.index', [
             'products' => $products,
             'categories' => $categories,
+            'categoriesAll' => $categoriesAll,
             'productshow' => $products,
             'topDiscountedProducts' => $topDiscountedProducts,
             'latestReviews' => $latestReviews
@@ -76,10 +78,11 @@ class HomeController extends Controller
         $category = Category::findOrFail($id);
         $products = $category->products()->paginate(5);
         $categories = Category::all();
+        $categoriesAll = Category::all();
         $count = $products->total();
         $query = $category->category_name;  // Để hiển thị tên thể loại làm từ khóa tìm kiếm
 
-        return view('product.search', compact('count', 'query', 'products', 'categories'));
+        return view('product.search', compact('count', 'query', 'products', 'categories','categoriesAll'));
     }
 
     public function searchVSfilter()

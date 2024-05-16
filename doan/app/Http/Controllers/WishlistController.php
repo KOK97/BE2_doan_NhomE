@@ -14,7 +14,7 @@ class WishlistController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categoriesAll = Category::all();
         if (auth()->check()) {
             // Lấy ID của người dùng hiện tại
             $userId = Auth::id();
@@ -28,7 +28,7 @@ class WishlistController extends Controller
         } else {
             $products = null;
         }
-        return view('wishlist.wishlist', compact('products', 'categories'));
+        return view('wishlist.wishlist', compact('products', 'categoriesAll'));
     }
 
     public function search(Request $request)

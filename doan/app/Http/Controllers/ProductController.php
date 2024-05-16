@@ -14,6 +14,7 @@ use App\Models\Category;
 use App\Models\Review;
 use App\Models\ProductCategory;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Cookie;
 use PhpParser\Node\Stmt\Foreach_;
 
@@ -280,6 +281,8 @@ class ProductController extends Controller
         // Save the updated array back to the cookie
         Cookie::queue('recent_products', json_encode($recentProducts), 1440); // 1 day
 
-        return view('product.detail', compact('product', 'categories', 'sale', 'reviews', 'users'));
+        $totalLikes = Wishlist::where('product_id', $id)->count();
+
+        return view('product.detail', compact('product', 'totalLikes', 'categories', 'sale', 'reviews', 'users'));
     }
 }

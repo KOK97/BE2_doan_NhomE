@@ -22,14 +22,14 @@ class AccountController extends Controller
 
     public function login()
     {
-        $categories = Category::get();
-        return view('auth.login', compact('categories'));
+        $categoriesAll = Category::get();
+        return view('auth.login', compact('categoriesAll'));
     }
 
     public function register()
     {
-        $categories = Category::get();
-        return view('auth.register', compact('categories'));
+        $categoriesAll = Category::get();
+        return view('auth.register', compact('categoriesAll'));
     }
     public function logout()
     {
@@ -158,25 +158,25 @@ class AccountController extends Controller
     public function account()
     {
         $user = auth()->user();
-        $categories = Category::get();
+        $categoriesAll = Category::get();
         // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
         $totalItems = Wishlist::where('user_id', $user->id)->count();
-        return view('auth.dashboard', compact('user', 'categories', 'totalItems'));
+        return view('auth.dashboard', compact('user', 'categoriesAll', 'totalItems'));
     }
 
     public function profile()
     {
         $user = auth()->user();
-        $categories = Category::get();
+        $categoriesAll = Category::get();
         // Lấy tổng số sản phẩm đã thêm vào wishlist của người dùng
         $totalItems = Wishlist::where('user_id', $user->id)->count();
-        return view('auth.myprofile', compact('user', 'categories', 'totalItems'));
+        return view('auth.myprofile', compact('user', 'categoriesAll', 'totalItems'));
     }
 
     public function productRecent()
     {
         $user = auth()->user();
-        $categories = Category::get();
+        $categoriesAll = Category::get();
 
         $totalItems = Wishlist::where('user_id', $user->id)->count();
 
@@ -191,6 +191,6 @@ class AccountController extends Controller
             return array_search($product->id, $recentProductIds);
         });
 
-        return view('auth.product-recent', compact('user', 'categories', 'totalItems', 'recentProducts'));
+        return view('auth.product-recent', compact('user', 'categoriesAll', 'totalItems', 'recentProducts'));
     }
 }

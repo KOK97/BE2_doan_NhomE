@@ -4520,8 +4520,8 @@ input::-ms-clear {
   font-size: 13px;
   color: #7f7f7f; }
 
-.pd-detail__click-wrap > a {
-  font-size: 13px;
+.pd-detail__click-wrap > button {
+  font-size: 15px;
   color: #a0a0a0;
   transition: color 110ms ease-in-out; }
   .pd-detail__click-wrap > a:hover {
@@ -4529,7 +4529,7 @@ input::-ms-clear {
     text-decoration: underline; }
 
 .pd-detail__click-count {
-  font-size: 10px;
+  font-size: 15px;
   color: #a0a0a0; }
 
 .pd-detail__form {
