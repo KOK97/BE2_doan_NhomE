@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <form action="{{ route('user.search') }}" method="GET" class="form-inline">
                 <div class="input-group">
-                    <input id="keyword" type="text" name="search" class="form-control" placeholder="Tìm theo thể loại">
+                    <input id="keyword" type="text" name="search" class="form-control" placeholder="Tìm theo tên user">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i> Search</button>
                     </div>

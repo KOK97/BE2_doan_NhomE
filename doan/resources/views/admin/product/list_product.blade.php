@@ -16,7 +16,7 @@
                 <form action="{{ route('admin.product.search') }}" method="GET" class="form-inline">
                     <div class="input-group">
                         <input id="keyword" type="text" name="search" class="form-control"
-                            placeholder="Tìm theo thể loại">
+                            placeholder="Tìm theo tên product">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-search"></i>
                                 Search</button>
