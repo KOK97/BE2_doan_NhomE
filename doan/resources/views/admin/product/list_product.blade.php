@@ -101,7 +101,6 @@
                 @endif
             </tbody>
         </table>
-
         <div class="pagination-wrap">
             {{ $products->links('pagination::bootstrap-5') }}
         </div>

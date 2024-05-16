@@ -250,7 +250,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        $categoriesAll = Category::all();
         $sales = Sale::all();
         $reviews = Review::where('product_id', $id)->get(); // Simplified the query to match product_id
         $sale = null;
@@ -270,7 +269,6 @@ class ProductController extends Controller
         if (($key = array_search($id, $recentProducts)) !== false) {
             unset($recentProducts[$key]);
         }
-
         // Add the product ID to the beginning of the array
         array_unshift($recentProducts, $id);
 
@@ -284,6 +282,6 @@ class ProductController extends Controller
 
         $totalLikes = Wishlist::where('product_id', $id)->count();
 
-        return view('product.detail', compact('product', 'totalLikes', 'categoriesAll', 'categories', 'sale', 'reviews', 'users'));
+        return view('product.detail', compact('product', 'totalLikes', 'categories', 'sale', 'reviews', 'users'));
     }
 }

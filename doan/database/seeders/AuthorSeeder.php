@@ -32,7 +32,6 @@ class AuthorSeeder extends Seeder
             'year_of_birth' => '1955',
 
         ]);
-
         for ($i = 1; $i < 17; $i++) {
             Author::factory()->create([
                 'author_name' => 'Tác giả' . $i,

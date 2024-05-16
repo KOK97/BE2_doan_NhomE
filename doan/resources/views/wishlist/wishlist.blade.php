@@ -155,7 +155,7 @@
                                                         <a class="w-r__link btn--e-brand-b-2" data-modal="modal"
                                                             data-modal-id="#add-to-cart">ADD TO CART</a>
                                                         <a class="w-r__link btn--e-transparent-platinum-b-2"
-                                                            href="">VIEW</a>
+                                                            href="{{ route('show.detail', $product->id) }}">VIEW</a>
                                                         @csrf
                                                         <input type="hidden" name="wishlist_id"
                                                             value="{{ $product->wishlist_id }}">

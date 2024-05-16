@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Author extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'author_name',
         'pseudonym',

@@ -82,7 +82,6 @@
         </div>
         <a href="{{ route('createAuthor') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus nav-icon"></i><i
                 class="fa-solid fa-at nav-icon"></i></a>
-
     </div>
     <script>
         function confirmDelete() {

@@ -86,11 +86,11 @@ class ReviewController extends Controller
         
         if (auth()->check() && auth()->user()->role === 'admin') {
             $review->delete();
-            return redirect()->route('show.detail',$review->product_id)->with('success', 'Xóa thành công !!!');
+            return redirect()->route('show.detail',$review->product_id)->with('destroy', 'Xóa thành công !!!');
         }
         else if($review->user_id == Auth::id()) {
             $review->delete();
-            return redirect()->route('show.detail',$review->product_id)->with('success', 'Xóa thành công !!!');
+            return redirect()->route('show.detail',$review->product_id)->with('destroy', 'Xóa thành công !!!');
         }
     }
 }

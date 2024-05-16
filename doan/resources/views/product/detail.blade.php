@@ -3,6 +3,9 @@
     @if (session('success'))
         <div id="alert" class="alert alert-primary" role="alert">{{ session('success') }}</div>
     @endif
+    @if (session('destroy'))
+        <div id="alert" class="alert alert-danger" role="alert">{{ session('destroy') }}</div>
+    @endif
     <!--====== App Content ======-->
     <div class="app-content">
 
@@ -11,23 +14,6 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
-
-                        <!--====== Product Breadcrumb ======-->
-                        <div class="pd-breadcrumb u-s-m-b-30">
-                            <ul class="pd-breadcrumb__list">
-                                <li class="has-separator">
-                                    <a href="index.hml">Home</a>
-                                </li>
-                                <li class="has-separator">
-                                    <a href="shop-side-version-2.html">Electronics</a>
-                                </li>
-                                <li class="has-separator">
-                                    <a href="shop-side-version-2.html">DSLR Cameras</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--====== End - Product Breadcrumb ======-->
-
 
                         <!--====== Product Detail Zoom ======-->
                         <div class="pd u-s-m-b-30">
@@ -532,7 +518,7 @@
     </div>
     <!--====== End - App Content ======-->
     <script>
-          function confirmDelete() {
+        function confirmDelete() {
             var result = confirm("Bạn có chắc muốn xóa?");
             if (result) {
                 document.getElementById("deleteForm").submit();
@@ -544,7 +530,7 @@
         }, 10000);
 
 
-        
+
         $(document).ready(function() {
             // Loại bỏ các thẻ HTML khỏi nội dung mô tả
             $("#description").each(function() {

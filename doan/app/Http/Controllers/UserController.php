@@ -75,7 +75,6 @@ class UserController extends Controller
         $user->name = $validatedData['name'];
         $user->phone = $validatedData['phone'];
         $user->email = $validatedData['email'];
-        $user->address = $validatedData['address'];
         $user->password = Hash::make($validatedData['password']);
         $user->role = $validatedData['role'];
         //avatar
