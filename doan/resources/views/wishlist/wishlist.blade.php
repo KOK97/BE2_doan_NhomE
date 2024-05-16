@@ -152,7 +152,7 @@
                                                 </div>
                                                 <form action="{{ route('product.wishlist.destroy') }}" method="post">
                                                     <div class="w-r__wrap-2">
-                                                        <a class="w-r__link btn--e-brand-b-2" data-modal="modal"
+                                                        <a href="{{route('cart.carts',$product->id)}}" class="w-r__link btn--e-brand-b-2" data-modal="modal"
                                                             data-modal-id="#add-to-cart">ADD TO CART</a>
                                                         <a class="w-r__link btn--e-transparent-platinum-b-2"
                                                             href="">VIEW</a>
