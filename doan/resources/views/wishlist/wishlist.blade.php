@@ -97,7 +97,8 @@
                             <div class="section__text-wrap">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h1 class="section__heading u-c-secondary">Wishlist</h1>
-                                    <form action="{{route('product.wishlist.search')}}" method="GET" class="form-inline">
+                                    <form action="{{ route('product.wishlist.search') }}" method="GET"
+                                        class="form-inline">
                                         <div class="input-group">
                                             <input id="keyword" type="text" name="search" class="form-control"
                                                 placeholder="Tìm sản phẩm theo tên">
@@ -137,7 +138,8 @@
                                                     </div>
                                                     <div class="w-r__info">
                                                         <span class="w-r__name">
-                                                            <a href="product-detail.html">{{ $product->name }}</a>
+                                                            <a
+                                                                href="{{ route('show.detail', $product->id) }}">{{ $product->name }}</a>
                                                         </span>
                                                         @if ($product->reduced_price != $product->price)
                                                             <span class="w-r__price">{{ $product->reduced_price }} VND

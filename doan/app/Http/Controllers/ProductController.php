@@ -250,6 +250,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $categories = Category::all();
+        $categoriesAll = Category::all();
         $sales = Sale::all();
         $reviews = Review::where('product_id', $id)->get(); // Simplified the query to match product_id
         $sale = null;
@@ -282,6 +283,6 @@ class ProductController extends Controller
 
         $totalLikes = Wishlist::where('product_id', $id)->count();
 
-        return view('product.detail', compact('product', 'totalLikes', 'categories', 'sale', 'reviews', 'users'));
+        return view('product.detail', compact('product', 'categoriesAll' ,'totalLikes', 'categories', 'sale', 'reviews', 'users'));
     }
 }

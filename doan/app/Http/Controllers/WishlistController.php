@@ -33,8 +33,8 @@ class WishlistController extends Controller
 
     public function search(Request $request)
     {
+        $categoriesAll = Category::all();
         if ($request->has('search')) {
-            $categories = Category::all();
             $searchQuery = $request->input('search');
             $userId = auth()->id();
 
@@ -54,7 +54,7 @@ class WishlistController extends Controller
             if ($products->isEmpty()) {
                 return redirect()->route('product.wishlist')->with('message', 'Không tìm thấy kết quả tìm kiếm!');
             }
-            return view('wishlist.wishlist', compact('products', 'categories'));
+            return view('wishlist.wishlist', compact('products', 'categoriesAll'));
         } else {
             return response(view('error'), 403);
         }

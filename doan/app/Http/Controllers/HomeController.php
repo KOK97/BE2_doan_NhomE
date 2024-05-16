@@ -51,6 +51,7 @@ class HomeController extends Controller
     {
         $query = $request->input('keyword', '');  // Default to empty string if keyword is not present
         $categories = Category::all();
+        $categoriesAll = Category::all();
 
         $products = Product::when($query, function ($queryBuilder) use ($query) {
             $queryBuilder->where('name', 'LIKE', "%$query%")
@@ -66,10 +67,10 @@ class HomeController extends Controller
 
         if ($products->isEmpty()) {
             $message = 'Không tìm thấy kết quả tìm kiếm!';
-            return view('product.search', compact('count', 'query', 'products', 'categories', 'message'));
+            return view('product.search', compact('count', 'query', 'products', 'categories', 'categoriesAll','message'));
         }
 
-        return view('product.search', compact('count', 'query', 'products', 'categories'));
+        return view('product.search', compact('count', 'query', 'products', 'categories','categoriesAll'));
     }
 
     public function filterByCategory($id)
