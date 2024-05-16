@@ -94,8 +94,9 @@ class OrderController extends Controller
                 $products = Product::all();
                 $categoriesAll = Category::get();
                 $authors = Author::all();
+                $user = User::find($userID);
                 $productcategorys = ProductCategory::all();
-                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
+                return view('oder.myoder', compact('user','diaChis', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
             } else {
                 $diachi = Address::all()->where('userID', $userID);
                 $cartItem = Cart::all()->where('userID', $userID);
@@ -103,7 +104,8 @@ class OrderController extends Controller
                 $categoriesAll = Category::get();
                 $authors = Author::all();
                 $productcategorys = ProductCategory::all();
-                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categoriesAll','authors','productcategorys'));
+                $user = User::find($userID);
+                return view('address.diachi', compact('user','cartItem', 'diachi', 'products', 'categoriesAll','authors','productcategorys'));
             }
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
@@ -119,16 +121,18 @@ class OrderController extends Controller
                 $products = Product::all();
                 $categoriesAll = Category::get();
                 $authors = Author::all();
+                $user = User::find($userID);
                 $productcategorys = ProductCategory::all();
-                return view('oder.myoder', compact('diaChis', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
+                return view('oder.myoder', compact('diaChis','user', 'cartItem', 'products', 'categoriesAll','authors','productcategorys'));
             } else {
                 $diachi = Address::all()->where('userID', $userID);
                 $cartItem = Cart::all()->where('userID', $userID);
                 $products = Product::all();
                 $categoriesAll = Category::get();
                 $authors = Author::all();
+                $user = User::find($userID);
                 $productcategorys = ProductCategory::all();
-                return view('address.diachi', compact('cartItem', 'diachi', 'products', 'categoriesAll','authors','productcategorys'));
+                return view('address.diachi', compact('cartItem', 'user','diachi', 'products', 'categoriesAll','authors','productcategorys'));
             }
         } else {
             return redirect()->route('auth.login')->with('success', 'Vui lòng đăng nhập');
