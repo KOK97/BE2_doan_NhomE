@@ -85,73 +85,48 @@ class AccountController extends Controller
 
     public function customRegister(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
-            'name' => 'required|string|max:20',
-            'phone' => 'required|string|max:11',
-            'email' => 'required|string|email|max:50|unique:users',
-            'avatar' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif',
-            'password' => 'required|string|min:6|max:50',
-        ], [
-            'name.required' => 'Vui lòng cung cấp tên của bạn.',
-            'name.max' => 'Tên của bạn không được vượt quá 20 ký tự.',
-            'phone.required' => 'Vui lòng cung cấp số điện thoại của bạn.',
-            'phone.max' => 'Số điện thoại của bạn không được vượt quá 11 ký tự.',
-            'email.required' => 'Vui lòng cung cấp địa chỉ email của bạn.',
-            'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
-            'email.max' => 'Địa chỉ email của bạn không được vượt quá 50 ký tự.',
-            'email.unique' => 'Địa chỉ email này đã được đăng ký.',
-            'avatar.image' => 'Ảnh đại diện phải là một tệp hình ảnh.',
-            'avatar.max' => 'Ảnh đại diện không được lớn hơn 2MB.',
-            'avatar.mimes' => 'Ảnh đại diện phải là tệp JPEG, PNG, JPG, hoặc GIF.',
-            'password.required' => 'Vui lòng cung cấp mật khẩu.',
-            'password.min' => 'Mật khẩu của bạn phải ít nhất 6 ký tự.',
-            'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
-        ]);
-
-        if ($validatedData->fails()) {
-
-            if ($validatedData->errors()->has('phone')) {
-                $errors['phone'] = $validatedData->errors()->first('phone');
-            }
-            if ($validatedData->errors()->has('email')) {
-                $errors['email'] = $validatedData->errors()->first('email');
-            }
-
-            if ($validatedData->errors()->has('name')) {
-                $errors['name'] = $validatedData->errors()->first('name');
-            }
-
-            if ($validatedData->errors()->has('password')) {
-                $errors['password'] = $validatedData->errors()->first('password');
-            }
-
-            if ($validatedData->errors()->has('avatar')) {
-                $errors['avatar'] = $validatedData->errors()->first('avatar');
-            }
-            return redirect()->route('auth.register')
-                ->withErrors($errors)
-                ->withInput();
-        }
-
+        $validatedData = $request->validate(
+            [
+                'name' => 'required|string|max:20',
+                'phone' => 'required|string|max:11',
+                'email' => 'required|string|email|max:50|unique:users',
+                'avatar' => 'nullable|image|max:2048|mimes:jpeg,png,jpg,gif',
+                'password' => 'required|string|min:6|max:50',
+            ],
+            [
+                'name.required' => 'Vui lòng cung cấp tên của bạn.',
+                'name.max' => 'Tên của bạn không được vượt quá 20 ký tự.',
+                'phone.required' => 'Vui lòng cung cấp số điện thoại của bạn.',
+                'phone.max' => 'Số điện thoại của bạn không được vượt quá 11 ký tự.',
+                'email.required' => 'Vui lòng cung cấp địa chỉ email của bạn.',
+                'email.email' => 'Vui lòng cung cấp một địa chỉ email hợp lệ.',
+                'email.max' => 'Địa chỉ email của bạn không được vượt quá 50 ký tự.',
+                'email.unique' => 'Địa chỉ email này đã được đăng ký.',
+                'avatar.image' => 'Ảnh đại diện phải là một tệp hình ảnh.',
+                'avatar.max' => 'Ảnh đại diện không được lớn hơn 2MB.',
+                'avatar.mimes' => 'Ảnh đại diện phải là tệp JPEG, PNG, JPG, hoặc GIF.',
+                'password.required' => 'Vui lòng cung cấp mật khẩu.',
+                'password.min' => 'Mật khẩu của bạn phải ít nhất 6 ký tự.',
+                'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
+            ]
+        );
+        //create user
         $user = new User();
         $user->name = $validatedData['name'];
         $user->phone = $validatedData['phone'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
-
-        // Avatar
+        //avatar
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
-            $filename = 'user-' . $user->id . '-' . time() . '.' . $image->getClientOriginalExtension();
+            $filename = 'user' . '-' . time() . rand(1, 999) . '.' . $image->extension();
             $image->move(public_path('images/users'), $filename);
             $user->avatar = $filename;
         } else {
-            $user->avatar = config('app.default_avatar', 'avatar.jpg');
+            $filename = 'avatar.png';
+            $user->avatar = $filename;
         }
-
-        $user->role = "customer";
         $user->save();
-
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công !');
     }
 
