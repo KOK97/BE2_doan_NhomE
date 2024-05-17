@@ -110,6 +110,7 @@ class AccountController extends Controller
                 'password.max' => 'Mật khẩu của bạn không được vượt quá 50 ký tự.',
             ]
         );
+        
         //create user
         $user = new User();
         $user->name = $validatedData['name'];

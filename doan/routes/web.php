@@ -111,13 +111,14 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
 
 });
 
-
+Route::prefix('/')->middleware('checkAuthor')->group(function () {
 // Login
 Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
 Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
 //Register
 Route::GET('/register', [AccountController::class, 'register'])->name('auth.register');
 Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
+});
 //Log out
 Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
 
