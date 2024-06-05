@@ -108,16 +108,15 @@ Route::prefix('/')->middleware('loginRequired')->group(function () {
     Route::GET('lichsu-order', [OrderController::class, 'viewlichSuOrder'])->name('lichsu-Order.view');
     Route::GET('search-order', [OrderController::class, 'searchDonHang'])->name('order.searchOrder');
     Route::GET('huyDongHang/{id}', [OrderController::class, 'huyOrder'])->name('order.huyDonHang');
-
 });
 
 Route::prefix('/')->middleware('checkAuthor')->group(function () {
-// Login
-Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
-Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
-//Register
-Route::GET('/register', [AccountController::class, 'register'])->name('auth.register');
-Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
+    // Login
+    Route::GET('/login', [AccountController::class, 'login'])->name('auth.login');
+    Route::POST('/login', [AccountController::class, 'customLogin'])->name('auth.custom.login');
+    //Register
+    Route::GET('/register', [AccountController::class, 'register'])->name('auth.register');
+    Route::POST('/register', [AccountController::class, 'customRegister'])->name('auth.custom.register');
 });
 //Log out
 Route::GET('logout', [AccountController::class, 'logout'])->name('auth.logout');
