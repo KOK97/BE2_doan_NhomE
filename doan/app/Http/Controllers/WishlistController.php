@@ -10,6 +10,123 @@ use Illuminate\Http\Request;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 
+//API
+/*
+class WishlistController extends Controller
+{
+    public function index()
+    {
+        if (auth()->check()) {
+            $userId = Auth::id();
+            $products = Wishlist::where('wishlist.user_id', $userId)
+                ->join('products', 'wishlist.product_id', '=', 'products.id')
+                ->select('products.*', 'wishlist.wishlist_id AS wishlist_id')
+                ->orderBy('wishlist.created_at', 'desc')
+                ->paginate(5);
+
+            return response()->json([
+                'success' => true,
+                'data' => $products,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not login. Please login !!!',
+            ], 401);
+        }
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->has('search')) {
+            $searchQuery = $request->input('search');
+            $userId = auth()->id();
+
+            $query = Wishlist::query()
+                ->join('products', 'wishlist.product_id', '=', 'products.id')
+                ->select('products.*', 'wishlist.wishlist_id AS wishlist_id');
+
+            if (auth()->check()) {
+                $query->where('wishlist.user_id', $userId);
+            }
+
+            $products = $query->where('products.name', 'LIKE', "%$searchQuery%")
+                ->orderBy('wishlist.created_at', 'desc')
+                ->paginate(5);
+            $products->appends(['search' => $searchQuery]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $products,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không thấy kết quả cần tìm !!',
+            ], 400);
+        }
+    }
+
+    public function add(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $userId = Auth::id();
+
+        $existingWishlistItem = Wishlist::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->first();
+
+        if ($existingWishlistItem) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Sản phẩm đã tồn tại trong wishlist',
+            ], 409);
+        }
+
+        $wishlist = new Wishlist([
+            'product_id' => $productId,
+            'user_id' => $userId,
+        ]);
+
+        $wishlist->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thêm sản phẩm thành công !',
+            'token' => $wishlist->createToken("wishlist_token")->plainTextToken,
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        $wishlist = Wishlist::find($request->input('wishlist_id'));
+
+        if ($wishlist) {
+            $wishlist->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Xóa sản phẩm thành công !',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy sản phẩm !',
+            ], 404);
+        }
+    }
+
+    public function removeAll()
+    {
+        $userId = auth()->id();
+        Wishlist::where('user_id', $userId)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Tất cả sản phẩm đã được xóa',
+        ]);
+    }
+}
+*/
 class WishlistController extends Controller
 {
     public function index()
